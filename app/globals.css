@@ -10,8 +10,11 @@
   --acid: #dce85a;
   --magenta: #cf4d91;
   --line: rgba(233, 230, 223, 0.25);
-  --body-font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --display-font: "Pally", "Avenir Next Condensed", "Helvetica Neue", Arial, sans-serif;
+  --grid-dark: rgba(177, 181, 180, 0.105);
+  --grid-light: rgba(38, 40, 39, 0.095);
+  --grid-size: 32px;
+  --body-font: "Saira", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --display-font: "Saira", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
 }
 
 * {
@@ -73,7 +76,11 @@ a {
   min-height: 650px;
   overflow: hidden;
   isolation: isolate;
-  background: var(--ink);
+  background-color: var(--ink);
+  background-image:
+    linear-gradient(to right, var(--grid-dark) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-dark) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
 }
 
 .hero-nav {
@@ -243,7 +250,11 @@ footer a:hover {
   grid-template-rows: auto 1fr auto;
   gap: 30px;
   align-items: start;
-  background: var(--chalk);
+  background-color: var(--chalk);
+  background-image:
+    linear-gradient(to right, var(--grid-light) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-light) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
   color: var(--ink);
 }
 
@@ -282,7 +293,11 @@ footer a:hover {
   grid-template-rows: auto 1fr auto;
   column-gap: 40px;
   overflow: hidden;
-  background: var(--ink-rich);
+  background-color: var(--ink-rich);
+  background-image:
+    linear-gradient(to right, var(--grid-dark) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-dark) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
 }
 
 .next-scene::after {
@@ -362,6 +377,10 @@ footer a:hover {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  background-image:
+    linear-gradient(to right, var(--grid-light) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-light) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
 }
 
 .archive-head h2 {
@@ -383,7 +402,11 @@ footer a:hover {
   position: relative;
   min-height: 74svh;
   overflow: hidden;
-  background: var(--ink);
+  background-color: var(--ink);
+  background-image:
+    linear-gradient(to right, var(--grid-dark) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-dark) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
   color: var(--chalk);
 }
 
@@ -503,7 +526,11 @@ footer a:hover {
   grid-template-rows: 1fr auto;
   overflow: hidden;
   isolation: isolate;
-  background: var(--ink-rich);
+  background-color: var(--ink-rich);
+  background-image:
+    linear-gradient(to right, var(--grid-dark) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-dark) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
 }
 
 .newsletter-beam {
