@@ -7,7 +7,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { PaperTexture, Warp } from "@paper-design/shaders-react";
+import {
+  MeshGradient,
+  Metaballs,
+  PaperTexture,
+  Warp,
+} from "@paper-design/shaders-react";
 
 const pastEvents = [
   {
@@ -89,9 +94,68 @@ function ShaderField({
   );
 }
 
+function LiquidField({
+  pointer,
+  progress,
+  reducedMotion,
+}: {
+  pointer: { x: number; y: number };
+  progress: number;
+  reducedMotion: boolean;
+}) {
+  const pointerEnergy = Math.min(
+    1,
+    Math.hypot(pointer.x / 0.17, pointer.y / 0.12),
+  );
+
+  return (
+    <div className="liquid-field">
+      <div className="liquid-base">
+        <MeshGradient
+          width="100%"
+          height="100%"
+          colors={["#130d0f", "#e85f47", "#6bd8ce", "#dce85a", "#b73d80", "#24184d"]}
+          distortion={0.72 + pointerEnergy * 0.16}
+          swirl={0.62 + pointerEnergy * 0.22}
+          grainMixer={0.18}
+          grainOverlay={0.035}
+          fit="cover"
+          scale={1.13 + progress * 0.14}
+          rotation={-10 + progress * 15 + pointer.x * 26}
+          offsetX={pointer.x * 0.72}
+          offsetY={pointer.y * 0.72}
+          speed={reducedMotion ? 0 : 0.24}
+          maxPixelCount={1400000}
+        />
+      </div>
+
+      <div className="liquid-response" style={{ opacity: 0.32 + pointerEnergy * 0.28 }}>
+        <Metaballs
+          width="100%"
+          height="100%"
+          colorBack="#00000000"
+          colors={["#6bd8cecc", "#e85f47bb", "#dce85aaa", "#b73d80b8"]}
+          count={11}
+          size={0.4 + pointerEnergy * 0.08}
+          fit="cover"
+          scale={1.08 + pointerEnergy * 0.12}
+          rotation={pointer.x * 52 - pointer.y * 24}
+          offsetX={pointer.x * 2.7}
+          offsetY={pointer.y * 2.7}
+          speed={reducedMotion ? 0 : 0.16}
+          maxPixelCount={900000}
+        />
+      </div>
+    </div>
+  );
+}
+
 export function HomePage() {
   const heroRef = useRef<HTMLElement>(null);
   const animationFrame = useRef<number | null>(null);
+  const pointerFrame = useRef<number | null>(null);
+  const pointerTarget = useRef({ x: 0, y: 0 });
+  const pointerPosition = useRef({ x: 0, y: 0 });
   const reducedMotion = useReducedMotion();
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
   const [heroProgress, setHeroProgress] = useState(0);
@@ -128,13 +192,50 @@ export function HomePage() {
     };
   }, [reducedMotion]);
 
+  useEffect(() => {
+    return () => {
+      if (pointerFrame.current !== null) cancelAnimationFrame(pointerFrame.current);
+    };
+  }, []);
+
+  function easePointerToTarget() {
+    if (reducedMotion || pointerFrame.current !== null) return;
+
+    const tick = () => {
+      const current = pointerPosition.current;
+      const target = pointerTarget.current;
+      const next = {
+        x: current.x + (target.x - current.x) * 0.14,
+        y: current.y + (target.y - current.y) * 0.14,
+      };
+      pointerPosition.current = next;
+      setPointer(next);
+
+      if (Math.abs(target.x - next.x) + Math.abs(target.y - next.y) > 0.0005) {
+        pointerFrame.current = requestAnimationFrame(tick);
+      } else {
+        pointerPosition.current = target;
+        setPointer(target);
+        pointerFrame.current = null;
+      }
+    };
+
+    pointerFrame.current = requestAnimationFrame(tick);
+  }
+
   function handlePointerMove(event: PointerEvent<HTMLElement>) {
     if (reducedMotion) return;
     const rect = event.currentTarget.getBoundingClientRect();
-    setPointer({
+    pointerTarget.current = {
       x: ((event.clientX - rect.left) / rect.width - 0.5) * 0.34,
       y: ((event.clientY - rect.top) / rect.height - 0.5) * 0.24,
-    });
+    };
+    easePointerToTarget();
+  }
+
+  function handlePointerLeave() {
+    pointerTarget.current = { x: 0, y: 0 };
+    easePointerToTarget();
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -173,7 +274,7 @@ export function HomePage() {
           <div
             className="hero-sticky"
             onPointerMove={handlePointerMove}
-            onPointerLeave={() => setPointer({ x: 0, y: 0 })}
+            onPointerLeave={handlePointerLeave}
           >
             <header className="hero-nav">
               <a className="wordmark" href="#top" aria-label="UX Design Den home">
@@ -207,14 +308,44 @@ export function HomePage() {
               aria-hidden="true"
               style={{ transform: `translateX(-50%) rotate(${portalRotation}deg) scale(${portalScale})` }}
             >
-              <ShaderField
-                colors={["#130d0f", "#e85f47", "#6bd8ce", "#dce85a", "#b73d80"]}
-                offsetX={pointer.x}
-                offsetY={pointer.y}
-                rotation={-12 + heroProgress * 14}
-                scale={1.05 + heroProgress * 0.18}
-                speed={reducedMotion ? 0 : 0.13}
+              <LiquidField
+                pointer={pointer}
+                progress={heroProgress}
+                reducedMotion={reducedMotion}
               />
+
+              <div
+                className="hero-photo-space"
+                style={{
+                  perspectiveOrigin: `${50 + pointer.x * 150}% ${48 + pointer.y * 180}%`,
+                }}
+              >
+                <figure
+                  className="hero-photo hero-photo-room"
+                  style={{
+                    transform: `translate3d(${pointer.x * 180}px, ${pointer.y * 160}px, 86px) rotateX(${10 - pointer.y * 92}deg) rotateY(${-18 + pointer.x * 112}deg) rotateZ(${-7 + pointer.x * 22}deg)`,
+                  }}
+                >
+                  <img src="/events/community-room.jpg" alt="" />
+                </figure>
+                <figure
+                  className="hero-photo hero-photo-geek"
+                  style={{
+                    transform: `translate3d(${pointer.x * -110}px, ${pointer.y * 96}px, 38px) rotateX(${-13 + pointer.y * 82}deg) rotateY(${17 + pointer.x * 96}deg) rotateZ(${9 - pointer.y * 28}deg)`,
+                  }}
+                >
+                  <img src="/events/geek-out.jpg" alt="" />
+                </figure>
+                <figure
+                  className="hero-photo hero-photo-hustle"
+                  style={{
+                    transform: `translate3d(${pointer.x * 120}px, ${pointer.y * -124}px, 62px) rotateX(${14 - pointer.y * 104}deg) rotateY(${-12 - pointer.x * 104}deg) rotateZ(${-11 + pointer.x * 32}deg)`,
+                  }}
+                >
+                  <img src="/events/side-hustle.jpg" alt="" />
+                </figure>
+              </div>
+
               <div className="portal-paper">
                 <PaperTexture
                   width="100%"

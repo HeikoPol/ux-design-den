@@ -197,7 +197,12 @@ footer a:hover {
   will-change: transform;
 }
 
-.hero-portal > div:first-child,
+.liquid-field,
+.liquid-base,
+.liquid-base > div,
+.liquid-response,
+.liquid-response > div,
+.hero-photo-space,
 .portal-paper,
 .portal-paper > div,
 .event-art > div:first-child,
@@ -208,7 +213,101 @@ footer a:hover {
   height: 100%;
 }
 
+.liquid-field {
+  z-index: 1;
+  isolation: isolate;
+}
+
+.liquid-base {
+  z-index: 1;
+}
+
+.liquid-response {
+  z-index: 2;
+  mix-blend-mode: screen;
+  filter: blur(9px) saturate(1.14);
+  transform: scale(1.06);
+  transform-origin: center;
+  pointer-events: none;
+  transition: opacity 360ms ease;
+}
+
+.hero-photo-space {
+  z-index: 3;
+  perspective: 900px;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.hero-photo {
+  position: absolute;
+  margin: 0;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transform-origin: center;
+  backface-visibility: hidden;
+  will-change: transform;
+  filter: drop-shadow(0 24px 28px rgba(10, 7, 10, 0.25));
+}
+
+.hero-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(128deg, rgba(107, 216, 206, 0.2), transparent 44%),
+    linear-gradient(310deg, rgba(232, 95, 71, 0.2), transparent 46%);
+  mix-blend-mode: color;
+  pointer-events: none;
+}
+
+.hero-photo img {
+  width: 108%;
+  height: 108%;
+  display: block;
+  object-fit: cover;
+  transform: translate3d(-4%, -4%, 1px) scale(1.04);
+  filter: saturate(0.72) contrast(1.08) brightness(0.92);
+}
+
+.hero-photo-room {
+  top: 19%;
+  left: 11%;
+  width: 38%;
+  height: 43%;
+  clip-path: polygon(3% 15%, 76% 0, 100% 29%, 88% 96%, 19% 100%, 0 69%);
+}
+
+.hero-photo-room img {
+  object-position: 54% 56%;
+}
+
+.hero-photo-geek {
+  top: 8%;
+  right: 13%;
+  width: 22%;
+  height: 45%;
+  clip-path: polygon(13% 0, 100% 8%, 89% 100%, 0 88%, 5% 28%);
+}
+
+.hero-photo-geek img {
+  object-position: 50% 39%;
+}
+
+.hero-photo-hustle {
+  right: 25%;
+  bottom: 4%;
+  width: 25%;
+  height: 39%;
+  clip-path: polygon(7% 9%, 87% 0, 100% 71%, 72% 100%, 0 91%, 4% 34%);
+}
+
+.hero-photo-hustle img {
+  object-position: 50% 42%;
+}
+
 .portal-paper {
+  z-index: 4;
   opacity: 0.18;
   mix-blend-mode: screen;
   pointer-events: none;
@@ -789,6 +888,21 @@ footer p {
     width: 112vw;
     height: 52svh;
     min-height: 360px;
+  }
+
+  .hero-photo-room {
+    left: 9%;
+    width: 42%;
+  }
+
+  .hero-photo-geek {
+    right: 10%;
+    width: 25%;
+  }
+
+  .hero-photo-hustle {
+    right: 22%;
+    width: 28%;
   }
 
   .hero-intro {
