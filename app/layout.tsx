@@ -3,10 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ux-design-den.heiko636955.chatgpt.site"),
-  title: {
-    default: "UX Design Den",
-    template: "%s | UX Design Den",
-  },
+  title: "UX Design Den",
   description:
     "A low-pressure community for designers and design-adjacent people to learn, practice, and grow.",
   openGraph: {
