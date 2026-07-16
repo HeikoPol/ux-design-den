@@ -37,7 +37,7 @@ const pastEvents = [
     summary:
       "A practical workshop for shaping design skills into products, consulting work, and sustainable revenue.",
     href: "https://luma.com/g3izk916",
-    image: "/events/side-hustle.jpg",
+    image: "/events/community-room.jpg",
     colors: ["#150c0d", "#ed674b", "#f0d85b", "#438ed2"],
     className: "event-row-warm",
   },
