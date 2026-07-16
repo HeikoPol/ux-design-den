@@ -173,7 +173,7 @@ footer a:hover {
   font-family: var(--display-font);
   font-size: clamp(5rem, 9.3vw, 9.6rem);
   font-weight: 700;
-  line-height: 0.73;
+  line-height: 0.78;
   letter-spacing: -0.072em;
   text-align: center;
 }
@@ -296,7 +296,7 @@ footer a:hover {
   font-family: var(--display-font);
   font-size: clamp(3.3rem, 7.5vw, 8rem);
   font-weight: 500;
-  line-height: 0.92;
+  line-height: 0.98;
   letter-spacing: -0.065em;
   text-wrap: balance;
 }
@@ -353,7 +353,7 @@ footer a:hover {
   font-family: var(--display-font);
   font-size: clamp(4rem, 10.4vw, 10.8rem);
   font-weight: 500;
-  line-height: 0.75;
+  line-height: 0.82;
   letter-spacing: -0.075em;
 }
 
@@ -413,7 +413,7 @@ footer a:hover {
   font-family: var(--display-font);
   font-size: clamp(3.6rem, 8vw, 8.2rem);
   font-weight: 500;
-  line-height: 0.78;
+  line-height: 0.84;
   letter-spacing: -0.07em;
 }
 
@@ -554,7 +554,7 @@ footer a:hover {
   font-family: var(--display-font);
   font-size: clamp(4rem, 8.6vw, 9rem);
   font-weight: 500;
-  line-height: 0.76;
+  line-height: 0.82;
   letter-spacing: -0.075em;
   text-shadow: 0 2px 24px rgba(10, 7, 8, 0.72);
 }
@@ -627,7 +627,7 @@ footer a:hover {
   font-family: var(--display-font);
   font-size: clamp(4.5rem, 9.6vw, 9.8rem);
   font-weight: 500;
-  line-height: 0.74;
+  line-height: 0.81;
   letter-spacing: -0.078em;
 }
 
@@ -643,8 +643,8 @@ footer a:hover {
   position: relative;
   z-index: 3;
   grid-column: 2 / 4;
-  width: 100%;
-  padding: 10px 24px 0;
+  width: min(100%, 1180px);
+  padding: 8px 10px 8px 26px;
   border: 1px solid rgba(233, 230, 223, 0.72);
   background: rgba(16, 13, 14, 0.97);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
@@ -669,13 +669,13 @@ footer a:hover {
 
 .newsletter-form-row input {
   min-width: 0;
-  height: 88px;
+  height: 76px;
   padding: 0;
   border: 0;
   background: transparent;
   color: var(--chalk);
   font-family: var(--display-font);
-  font-size: clamp(1.2rem, 2.5vw, 2.2rem);
+  font-size: clamp(1.2rem, 2.2vw, 2rem);
   font-weight: 500;
 }
 
@@ -685,9 +685,10 @@ footer a:hover {
 
 .newsletter-form-row button {
   align-self: center;
-  height: 58px;
-  margin-left: 28px;
-  padding: 0 28px;
+  min-width: 184px;
+  height: 60px;
+  margin-left: 22px;
+  padding: 0 30px;
   border: 0;
   background: var(--chalk);
   color: var(--ink);
@@ -709,8 +710,11 @@ footer a:hover {
 }
 
 .form-status {
+  position: absolute;
+  top: calc(100% + 9px);
+  left: 26px;
   min-height: 22px;
-  margin: 12px 0 0;
+  margin: 0;
   color: var(--acid);
   font-size: 0.8rem;
 }
@@ -869,7 +873,7 @@ footer p {
 
   .hero-title-wrap h1 {
     font-size: clamp(4.25rem, 20vw, 5.3rem);
-    line-height: 0.75;
+    line-height: 0.8;
   }
 
   .hero-portal {
@@ -996,7 +1000,7 @@ footer p {
   }
 
   .newsletter-content form {
-    padding: 14px 18px 0;
+    padding: 8px 12px;
   }
 
   .newsletter-form-row {
@@ -1005,9 +1009,14 @@ footer p {
 
   .newsletter-form-row button {
     width: 100%;
+    min-width: 0;
     height: 58px;
-    margin: 0 0 16px;
+    margin: 0;
     padding: 0 20px;
+  }
+
+  .form-status {
+    left: 12px;
   }
 
   footer {
