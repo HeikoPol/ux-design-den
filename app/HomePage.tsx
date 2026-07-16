@@ -24,6 +24,7 @@ const pastEvents = [
     summary:
       "Improv as a design tool for confidence, connection, and speaking up without the pressure to perform.",
     href: "https://luma.com/l3xpha7j",
+    image: "/events/community-room.jpg",
     colors: ["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"],
     className: "event-row-cool",
   },
@@ -36,6 +37,7 @@ const pastEvents = [
     summary:
       "A practical workshop for shaping design skills into products, consulting work, and sustainable revenue.",
     href: "https://luma.com/g3izk916",
+    image: "/events/side-hustle.jpg",
     colors: ["#150c0d", "#ed674b", "#f0d85b", "#438ed2"],
     className: "event-row-warm",
   },
@@ -314,38 +316,6 @@ export function HomePage() {
                 reducedMotion={reducedMotion}
               />
 
-              <div
-                className="hero-photo-space"
-                style={{
-                  perspectiveOrigin: `${50 + pointer.x * 150}% ${48 + pointer.y * 180}%`,
-                }}
-              >
-                <figure
-                  className="hero-photo hero-photo-room"
-                  style={{
-                    transform: `translate3d(${pointer.x * 180}px, ${pointer.y * 160}px, 86px) rotateX(${10 - pointer.y * 92}deg) rotateY(${-18 + pointer.x * 112}deg) rotateZ(${-7 + pointer.x * 22}deg)`,
-                  }}
-                >
-                  <img src="/events/community-room.jpg" alt="" />
-                </figure>
-                <figure
-                  className="hero-photo hero-photo-geek"
-                  style={{
-                    transform: `translate3d(${pointer.x * -110}px, ${pointer.y * 96}px, 38px) rotateX(${-13 + pointer.y * 82}deg) rotateY(${17 + pointer.x * 96}deg) rotateZ(${9 - pointer.y * 28}deg)`,
-                  }}
-                >
-                  <img src="/events/geek-out.jpg" alt="" />
-                </figure>
-                <figure
-                  className="hero-photo hero-photo-hustle"
-                  style={{
-                    transform: `translate3d(${pointer.x * 120}px, ${pointer.y * -124}px, 62px) rotateX(${14 - pointer.y * 104}deg) rotateY(${-12 - pointer.x * 104}deg) rotateZ(${-11 + pointer.x * 32}deg)`,
-                  }}
-                >
-                  <img src="/events/side-hustle.jpg" alt="" />
-                </figure>
-              </div>
-
               <div className="portal-paper">
                 <PaperTexture
                   width="100%"
@@ -412,12 +382,15 @@ export function HomePage() {
                   <span>{event.location}</span>
                 </div>
                 <div className="event-art" aria-hidden="true">
-                  <ShaderField
-                    colors={event.colors}
-                    rotation={eventIndex === 0 ? -18 : 14}
-                    scale={1.1}
-                    speed={reducedMotion ? 0 : 0.09 + eventIndex * 0.025}
-                  />
+                  <img className="event-art-photo" src={event.image} alt="" loading="lazy" />
+                  <div className="event-art-shader">
+                    <ShaderField
+                      colors={event.colors}
+                      rotation={eventIndex === 0 ? -18 : 14}
+                      scale={1.1}
+                      speed={reducedMotion ? 0 : 0.09 + eventIndex * 0.025}
+                    />
+                  </div>
                   <div className="event-art-grain" />
                 </div>
                 <div className="event-copy">
