@@ -1,26 +1,38 @@
 "use client";
 
-import { FormEvent, PointerEvent, useEffect, useRef, useState } from "react";
+import {
+  FormEvent,
+  PointerEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { PaperTexture, Warp } from "@paper-design/shaders-react";
 
 const pastEvents = [
   {
+    index: "01",
     title: "Geek-Out Session: An Improv Night for Designers",
+    shortTitle: "Geek-Out Session",
     date: "June 23",
     location: "Northeastern University Vancouver",
     summary:
-      "A low-pressure improv session for practicing confidence, speaking up, and connecting with other designers.",
-    image: "/events/geek-out.jpg",
+      "Improv as a design tool for confidence, connection, and speaking up without the pressure to perform.",
     href: "https://luma.com/l3xpha7j",
+    colors: ["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"],
+    className: "event-row-cool",
   },
   {
+    index: "02",
     title: "The Side-Hustle Blueprint for Designers",
+    shortTitle: "Side-Hustle Blueprint",
     date: "May 30",
     location: "Northeastern University Vancouver",
     summary:
-      "A hands-on workshop for turning design skills and ideas into products, consulting work, and sustainable revenue.",
-    image: "/events/side-hustle.jpg",
+      "A practical workshop for shaping design skills into products, consulting work, and sustainable revenue.",
     href: "https://luma.com/g3izk916",
+    colors: ["#150c0d", "#ed674b", "#f0d85b", "#438ed2"],
+    className: "event-row-warm",
   },
 ];
 
@@ -40,36 +52,98 @@ function useReducedMotion() {
   return reduced;
 }
 
+function ShaderField({
+  colors,
+  speed = 0.12,
+  offsetX = 0,
+  offsetY = 0,
+  rotation = 0,
+  scale = 1,
+}: {
+  colors: string[];
+  speed?: number;
+  offsetX?: number;
+  offsetY?: number;
+  rotation?: number;
+  scale?: number;
+}) {
+  return (
+    <Warp
+      width="100%"
+      height="100%"
+      colors={colors}
+      proportion={0.5}
+      softness={0.58}
+      distortion={0.42}
+      swirl={0.54}
+      swirlIterations={8}
+      shape="edge"
+      shapeScale={0.48}
+      rotation={rotation}
+      scale={scale}
+      offsetX={offsetX}
+      offsetY={offsetY}
+      speed={speed}
+      maxPixelCount={1400000}
+    />
+  );
+}
+
 export function HomePage() {
+  const heroRef = useRef<HTMLElement>(null);
+  const animationFrame = useRef<number | null>(null);
   const reducedMotion = useReducedMotion();
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
+  const [heroProgress, setHeroProgress] = useState(0);
   const [formState, setFormState] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
-  const frame = useRef<number | null>(null);
 
-  useEffect(
-    () => () => {
-      if (frame.current !== null) cancelAnimationFrame(frame.current);
-    },
-    [],
-  );
+  useEffect(() => {
+    const update = () => {
+      animationFrame.current = null;
+      const hero = heroRef.current;
+      if (!hero || reducedMotion) {
+        setHeroProgress(0);
+        return;
+      }
+      const rect = hero.getBoundingClientRect();
+      const range = Math.max(1, hero.offsetHeight - window.innerHeight);
+      const next = Math.min(1, Math.max(0, -rect.top / range));
+      setHeroProgress(next);
+    };
+
+    const onScroll = () => {
+      if (animationFrame.current === null) {
+        animationFrame.current = requestAnimationFrame(update);
+      }
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (animationFrame.current !== null) cancelAnimationFrame(animationFrame.current);
+    };
+  }, [reducedMotion]);
 
   function handlePointerMove(event: PointerEvent<HTMLElement>) {
     if (reducedMotion) return;
     const rect = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 0.34;
-    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 0.24;
-    if (frame.current !== null) cancelAnimationFrame(frame.current);
-    frame.current = requestAnimationFrame(() => setPointer({ x, y }));
+    setPointer({
+      x: ((event.clientX - rect.left) / rect.width - 0.5) * 0.34,
+      y: ((event.clientY - rect.top) / rect.height - 0.5) * 0.24,
+    });
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formElement = event.currentTarget;
-    setFormState("submitting");
-    setMessage("");
     const form = new FormData(formElement);
     const email = String(form.get("email") ?? "");
+    setFormState("submitting");
+    setMessage("");
 
     try {
       const response = await fetch("/api/newsletter", {
@@ -88,178 +162,195 @@ export function HomePage() {
     }
   }
 
+  const titleShift = reducedMotion ? 0 : heroProgress * 46;
+  const portalScale = reducedMotion ? 1 : 1 + heroProgress * 0.36;
+  const portalRotation = reducedMotion ? -4 : -4 + heroProgress * 9;
+
   return (
     <div className="site-shell">
-      <header className="topbar">
-        <a className="wordmark" href="#top" aria-label="UX Design Den home">
-          UX DESIGN DEN
-        </a>
-        <nav aria-label="Primary navigation">
-          <a href="#events">Events</a>
-          <a href="#newsletter">Newsletter</a>
-          <a href="https://www.linkedin.com/groups/16579023/" target="_blank" rel="noreferrer">
-            LinkedIn <span aria-hidden="true">↗</span>
-          </a>
-        </nav>
-      </header>
+      <main>
+        <section className="hero-stage" ref={heroRef} id="top">
+          <div
+            className="hero-sticky"
+            onPointerMove={handlePointerMove}
+            onPointerLeave={() => setPointer({ x: 0, y: 0 })}
+          >
+            <header className="hero-nav">
+              <a className="wordmark" href="#top" aria-label="UX Design Den home">
+                UX DESIGN<br />DEN
+              </a>
+              <p className="nav-signal"><span aria-hidden="true" /> Vancouver, BC</p>
+              <nav aria-label="Primary navigation">
+                <a href="#next">Next</a>
+                <a href="#past">Past (02)</a>
+                <a href="#newsletter">Newsletter</a>
+              </nav>
+            </header>
 
-      <main id="top">
-        <section
-          className="hero"
-          aria-labelledby="hero-title"
-          onPointerMove={handlePointerMove}
-          onPointerLeave={() => setPointer({ x: 0, y: 0 })}
-        >
-          <div className="hero-art" aria-hidden="true">
-            <img src="/events/community-room.jpg" alt="" />
-            <div className="hero-shader">
-              <Warp
-                width="100%"
-                height="100%"
-                colors={["#160d10", "#f15e47", "#6ed1c8", "#261015"]}
-                proportion={0.52}
-                softness={0.7}
-                distortion={0.3}
-                swirl={0.46}
-                swirlIterations={7}
-                shape="edge"
-                shapeScale={0.5}
-                rotation={-11}
-                scale={1.08}
+            <div className="hero-intro">
+              <p>Design practice.<br />Without the pressure.</p>
+            </div>
+
+            <div className="hero-title-wrap">
+              <h1>
+                <span style={{ transform: `translate3d(${-titleShift * 0.32}px, ${-titleShift}px, 0)` }}>
+                  Welcome
+                </span>
+                <span style={{ transform: `translate3d(${titleShift * 0.45}px, ${-titleShift * 0.62}px, 0)` }}>
+                  to the Den
+                </span>
+              </h1>
+            </div>
+
+            <div
+              className="hero-portal"
+              aria-hidden="true"
+              style={{ transform: `translateX(-50%) rotate(${portalRotation}deg) scale(${portalScale})` }}
+            >
+              <ShaderField
+                colors={["#130d0f", "#e85f47", "#6bd8ce", "#dce85a", "#b73d80"]}
                 offsetX={pointer.x}
                 offsetY={pointer.y}
-                speed={reducedMotion ? 0 : 0.16}
-                maxPixelCount={1500000}
+                rotation={-12 + heroProgress * 14}
+                scale={1.05 + heroProgress * 0.18}
+                speed={reducedMotion ? 0 : 0.13}
               />
-            </div>
-            <div className="paper-layer">
-              <PaperTexture
-                width="100%"
-                height="100%"
-                colorFront="#ead9bd"
-                colorBack="#241115"
-                contrast={0.38}
-                roughness={0.56}
-                fiber={0.48}
-                fiberSize={0.4}
-                crumples={0.18}
-                crumpleSize={0.55}
-                folds={0.08}
-                foldCount={4}
-                drops={0.22}
-                fade={0.25}
-                seed={17}
-                speed={0}
-                maxPixelCount={900000}
-              />
-            </div>
-          </div>
-
-          <div className="hero-content">
-            <p className="hero-kicker">Vancouver, BC · A community for curious designers</p>
-            <h1 id="hero-title">Welcome to the Den</h1>
-            <div className="hero-lower">
-              <p className="mission">
-                A low-pressure place for designers and design-adjacent people to learn, practice, and grow.
-              </p>
-
-              <div className="newsletter" id="newsletter">
-                <div className="newsletter-heading">
-                  <h2>Hear about the next gathering</h2>
-                  <p>Occasional event news. Nothing noisy.</p>
-                </div>
-                <form onSubmit={handleSubmit} noValidate>
-                  <label htmlFor="newsletter-email">Email address</label>
-                  <div className="form-row">
-                    <input
-                      id="newsletter-email"
-                      name="email"
-                      type="email"
-                      inputMode="email"
-                      autoComplete="email"
-                      placeholder="you@example.com"
-                      required
-                      aria-describedby="form-status"
-                      disabled={formState === "submitting"}
-                    />
-                    <button type="submit" disabled={formState === "submitting"}>
-                      {formState === "submitting" ? "Joining…" : "Join the list"}
-                    </button>
-                  </div>
-                  <p
-                    className={`form-status ${formState === "error" ? "is-error" : ""}`}
-                    id="form-status"
-                    aria-live="polite"
-                  >
-                    {message}
-                  </p>
-                </form>
+              <div className="portal-paper">
+                <PaperTexture
+                  width="100%"
+                  height="100%"
+                  colorFront="#ecdcc1"
+                  colorBack="#271216"
+                  contrast={0.42}
+                  roughness={0.62}
+                  fiber={0.58}
+                  fiberSize={0.36}
+                  crumples={0.28}
+                  crumpleSize={0.58}
+                  folds={0.14}
+                  foldCount={5}
+                  drops={0.28}
+                  fade={0.24}
+                  seed={31}
+                  speed={0}
+                  maxPixelCount={800000}
+                />
               </div>
             </div>
+
+            <p className="hero-count" aria-label={`${Math.round(heroProgress * 100)} percent through introduction`}>
+              {String(Math.round(heroProgress * 100)).padStart(2, "0")}<br />/100
+            </p>
+            <p className="scroll-cue">Scroll to enter <span aria-hidden="true">↓</span></p>
           </div>
         </section>
 
-        <section className="events-section" id="events" aria-labelledby="events-title">
-          <div className="section-heading">
-            <p>Events</p>
-            <h2 id="events-title">Make something. Meet someone.</h2>
+        <section className="mission-scene" aria-labelledby="mission-title">
+          <div className="scene-index">/ MISSION</div>
+          <h2 id="mission-title">
+            A low-pressure place for designers and design-adjacent people to learn, practice, and grow.
+          </h2>
+          <p className="mission-note">Curiosity over credentials.</p>
+        </section>
+
+        <section className="next-scene" id="next" aria-labelledby="next-title">
+          <div className="scene-index">01 / NEXT EVENT</div>
+          <p className="next-status"><span aria-hidden="true" /> Nothing announced yet</p>
+          <h2 id="next-title">The next one<br />is brewing.</h2>
+          <p className="next-copy">
+            Workshops, experiments, and good conversations. Follow the calendar for the next drop.
+          </p>
+          <a className="orbit-link" href="https://luma.com/UXDD" target="_blank" rel="noreferrer">
+            <span>Open Luma</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </section>
+
+        <section className="archive" id="past" aria-labelledby="archive-title">
+          <div className="archive-head">
+            <h2 id="archive-title">Past sessions</h2>
+            <p>02 / Vancouver</p>
           </div>
 
-          <article className="upcoming-row">
-            <div className="row-number" aria-hidden="true">01</div>
-            <div className="upcoming-copy">
-              <p className="event-type">Next event</p>
-              <h3>We’re planning the next one.</h3>
-              <p>Follow the Luma calendar and be first to know when a new workshop lands.</p>
-            </div>
-            <a className="text-link" href="https://luma.com/UXDD" target="_blank" rel="noreferrer">
-              View Luma calendar <span aria-hidden="true">↗</span>
-            </a>
-          </article>
-
-          <div className="past-heading">
-            <p>Recent sessions</p>
-            <span>02 gatherings</span>
-          </div>
-
-          <div className="event-grid">
-            {pastEvents.map((event, index) => (
-              <article className="event-card" key={event.href}>
-                <a
-                  className="event-image-link"
-                  href={event.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`${event.title} on Luma`}
-                >
-                  <img src={event.image} alt={`Event artwork for ${event.title}`} />
-                  <span className="event-index" aria-hidden="true">0{index + 2}</span>
-                </a>
-                <div className="event-details">
-                  <p className="event-meta">{event.date} · {event.location}</p>
-                  <h3>
-                    <a href={event.href} target="_blank" rel="noreferrer">{event.title}</a>
-                  </h3>
-                  <p>{event.summary}</p>
-                  <a className="text-link" href={event.href} target="_blank" rel="noreferrer">
-                    Event details <span aria-hidden="true">↗</span>
-                  </a>
+          {pastEvents.map((event, eventIndex) => (
+            <article className={`event-row ${event.className}`} key={event.href}>
+              <a href={event.href} target="_blank" rel="noreferrer" aria-label={`${event.title} on Luma`}>
+                <div className="event-row-top">
+                  <span>{event.index}</span>
+                  <span>{event.date}</span>
+                  <span>{event.location}</span>
                 </div>
-              </article>
-            ))}
+                <div className="event-art" aria-hidden="true">
+                  <ShaderField
+                    colors={event.colors}
+                    rotation={eventIndex === 0 ? -18 : 14}
+                    scale={1.1}
+                    speed={reducedMotion ? 0 : 0.09 + eventIndex * 0.025}
+                  />
+                  <div className="event-art-grain" />
+                </div>
+                <div className="event-copy">
+                  <h3>{event.shortTitle}</h3>
+                  <p>{event.summary}</p>
+                </div>
+                <span className="event-open">View on Luma ↗</span>
+              </a>
+            </article>
+          ))}
+        </section>
+
+        <section className="newsletter-scene" id="newsletter" aria-labelledby="newsletter-title">
+          <div className="newsletter-beam" aria-hidden="true">
+            <ShaderField
+              colors={["#100b0c", "#e85f47", "#dce85a", "#6bd8ce", "#241014"]}
+              rotation={-6}
+              scale={1.08}
+              speed={reducedMotion ? 0 : 0.1}
+            />
           </div>
+          <div className="newsletter-content">
+            <div className="scene-index">03 / NEWSLETTER</div>
+            <h2 id="newsletter-title">Stay close<br />to the Den.</h2>
+            <p>One note when something worth leaving the house for is coming up.</p>
+
+            <form onSubmit={handleSubmit} noValidate>
+              <label htmlFor="newsletter-email">Email address</label>
+              <div className="newsletter-form-row">
+                <input
+                  id="newsletter-email"
+                  name="email"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  placeholder="YOUR EMAIL ADDRESS"
+                  required
+                  aria-describedby="form-status"
+                  disabled={formState === "submitting"}
+                />
+                <button type="submit" disabled={formState === "submitting"}>
+                  {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
+                </button>
+              </div>
+              <p
+                className={`form-status ${formState === "error" ? "is-error" : ""}`}
+                id="form-status"
+                aria-live="polite"
+              >
+                {message}
+              </p>
+            </form>
+          </div>
+
+          <footer>
+            <p>UX DESIGN DEN</p>
+            <a href="mailto:uxdesignden-bc@gmail.com">uxdesignden-bc@gmail.com</a>
+            <a href="https://www.linkedin.com/groups/16579023/" target="_blank" rel="noreferrer">
+              LinkedIn group ↗
+            </a>
+            <span>Vancouver, BC</span>
+          </footer>
         </section>
       </main>
-
-      <footer>
-        <p>UX Design Den</p>
-        <div className="footer-links">
-          <a href="mailto:uxdesignden-bc@gmail.com">uxdesignden-bc@gmail.com</a>
-          <a href="https://www.linkedin.com/groups/16579023/" target="_blank" rel="noreferrer">
-            LinkedIn group <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-      </footer>
     </div>
   );
 }
