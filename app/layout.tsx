@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ux-design-den.sites.openai.com"),
+  metadataBase: new URL("https://ux-design-den.heiko636955.chatgpt.site"),
   title: {
     default: "UX Design Den",
     template: "%s | UX Design Den",
