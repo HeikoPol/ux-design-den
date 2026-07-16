@@ -284,9 +284,9 @@ export function HomePage() {
               </a>
               <p className="nav-signal"><span aria-hidden="true" /> Vancouver, BC</p>
               <nav aria-label="Primary navigation">
+                <a href="#newsletter">Newsletter</a>
                 <a href="#next">Next</a>
                 <a href="#past">Past (02)</a>
-                <a href="#newsletter">Newsletter</a>
               </nav>
             </header>
 
@@ -346,6 +346,49 @@ export function HomePage() {
           </div>
         </section>
 
+        <section className="newsletter-scene" id="newsletter" aria-labelledby="newsletter-title">
+          <div className="newsletter-beam" aria-hidden="true">
+            <ShaderField
+              colors={["#100b0c", "#e85f47", "#dce85a", "#6bd8ce", "#241014"]}
+              rotation={-6}
+              scale={1.08}
+              speed={reducedMotion ? 0 : 0.1}
+            />
+          </div>
+          <div className="newsletter-content">
+            <div className="scene-index">01 / NEWSLETTER</div>
+            <h2 id="newsletter-title">Stay close<br />to the Den.</h2>
+            <p>One note when something worth leaving the house for is coming up.</p>
+
+            <form onSubmit={handleSubmit} noValidate>
+              <label htmlFor="newsletter-email">Email address</label>
+              <div className="newsletter-form-row">
+                <input
+                  id="newsletter-email"
+                  name="email"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  placeholder="YOUR EMAIL ADDRESS"
+                  required
+                  aria-describedby="form-status"
+                  disabled={formState === "submitting"}
+                />
+                <button type="submit" disabled={formState === "submitting"}>
+                  {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
+                </button>
+              </div>
+              <p
+                className={`form-status ${formState === "error" ? "is-error" : ""}`}
+                id="form-status"
+                aria-live="polite"
+              >
+                {message}
+              </p>
+            </form>
+          </div>
+        </section>
+
         <section className="mission-scene" aria-labelledby="mission-title">
           <div className="scene-index">/ MISSION</div>
           <h2 id="mission-title">
@@ -355,7 +398,7 @@ export function HomePage() {
         </section>
 
         <section className="next-scene" id="next" aria-labelledby="next-title">
-          <div className="scene-index">01 / NEXT EVENT</div>
+          <div className="scene-index">02 / NEXT EVENT</div>
           <p className="next-status"><span aria-hidden="true" /> Nothing announced yet</p>
           <h2 id="next-title">The next one<br />is brewing.</h2>
           <p className="next-copy">
@@ -403,57 +446,14 @@ export function HomePage() {
           ))}
         </section>
 
-        <section className="newsletter-scene" id="newsletter" aria-labelledby="newsletter-title">
-          <div className="newsletter-beam" aria-hidden="true">
-            <ShaderField
-              colors={["#100b0c", "#e85f47", "#dce85a", "#6bd8ce", "#241014"]}
-              rotation={-6}
-              scale={1.08}
-              speed={reducedMotion ? 0 : 0.1}
-            />
-          </div>
-          <div className="newsletter-content">
-            <div className="scene-index">03 / NEWSLETTER</div>
-            <h2 id="newsletter-title">Stay close<br />to the Den.</h2>
-            <p>One note when something worth leaving the house for is coming up.</p>
-
-            <form onSubmit={handleSubmit} noValidate>
-              <label htmlFor="newsletter-email">Email address</label>
-              <div className="newsletter-form-row">
-                <input
-                  id="newsletter-email"
-                  name="email"
-                  type="email"
-                  inputMode="email"
-                  autoComplete="email"
-                  placeholder="YOUR EMAIL ADDRESS"
-                  required
-                  aria-describedby="form-status"
-                  disabled={formState === "submitting"}
-                />
-                <button type="submit" disabled={formState === "submitting"}>
-                  {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
-                </button>
-              </div>
-              <p
-                className={`form-status ${formState === "error" ? "is-error" : ""}`}
-                id="form-status"
-                aria-live="polite"
-              >
-                {message}
-              </p>
-            </form>
-          </div>
-
-          <footer>
-            <p>UX DESIGN DEN</p>
-            <a href="mailto:uxdesignden-bc@gmail.com">uxdesignden-bc@gmail.com</a>
-            <a href="https://www.linkedin.com/groups/16579023/" target="_blank" rel="noreferrer">
-              LinkedIn group ↗
-            </a>
-            <span>Vancouver, BC</span>
-          </footer>
-        </section>
+        <footer>
+          <p>UX DESIGN DEN</p>
+          <a href="mailto:uxdesignden-bc@gmail.com">uxdesignden-bc@gmail.com</a>
+          <a href="https://www.linkedin.com/groups/16579023/" target="_blank" rel="noreferrer">
+            LinkedIn group ↗
+          </a>
+          <span>Vancouver, BC</span>
+        </footer>
       </main>
     </div>
   );

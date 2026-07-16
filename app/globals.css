@@ -65,7 +65,7 @@ a {
 
 .hero-stage {
   position: relative;
-  height: 178svh;
+  height: 158svh;
   background: var(--ink);
 }
 
@@ -583,9 +583,7 @@ footer a:hover {
 
 .newsletter-scene {
   position: relative;
-  min-height: 100svh;
-  display: grid;
-  grid-template-rows: 1fr auto;
+  min-height: 92svh;
   overflow: hidden;
   isolation: isolate;
   background-color: var(--ink-rich);
@@ -593,34 +591,41 @@ footer a:hover {
     linear-gradient(to right, var(--grid-dark) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-dark) 1px, transparent 1px);
   background-size: var(--grid-size) var(--grid-size);
+  border-top: 1px solid rgba(233, 230, 223, 0.12);
+  border-bottom: 1px solid rgba(233, 230, 223, 0.12);
 }
 
 .newsletter-beam {
   position: absolute;
-  z-index: -1;
-  left: -8%;
-  top: 33%;
-  width: 116%;
-  height: 33%;
+  z-index: 0;
+  top: 8%;
+  right: -5%;
+  width: min(47vw, 720px);
+  height: 36%;
   overflow: hidden;
-  clip-path: polygon(0 20%, 100% 0, 96% 84%, 4% 100%);
-  transform: rotate(-3deg);
-  opacity: 0.82;
+  clip-path: polygon(8% 7%, 92% 0, 100% 78%, 81% 100%, 0 91%, 4% 19%);
+  transform: rotate(3deg);
+  opacity: 0.72;
+  pointer-events: none;
 }
 
 .newsletter-content {
-  padding: clamp(70px, 8vw, 120px) clamp(24px, 6vw, 92px) 70px;
+  position: relative;
+  z-index: 2;
+  min-height: 92svh;
+  padding: clamp(68px, 7vw, 108px) clamp(24px, 6vw, 92px) clamp(62px, 7vw, 96px);
   display: grid;
-  grid-template-columns: minmax(130px, 0.25fr) 1fr;
-  align-content: center;
+  grid-template-columns: minmax(130px, 0.22fr) minmax(0, 1fr) minmax(260px, 0.42fr);
+  align-content: start;
   column-gap: 38px;
 }
 
 .newsletter-content h2 {
-  grid-column: 2;
+  grid-column: 2 / 4;
   margin: 0;
+  max-width: 980px;
   font-family: var(--display-font);
-  font-size: clamp(4.5rem, 10.5vw, 11rem);
+  font-size: clamp(4.5rem, 9.6vw, 9.8rem);
   font-weight: 500;
   line-height: 0.74;
   letter-spacing: -0.078em;
@@ -629,14 +634,20 @@ footer a:hover {
 .newsletter-content > p {
   grid-column: 2;
   max-width: 450px;
-  margin: 40px 0 50px;
+  margin: 32px 0 38px;
   color: #d1cabf;
   font-size: 0.9rem;
 }
 
 .newsletter-content form {
-  grid-column: 2;
+  position: relative;
+  z-index: 3;
+  grid-column: 2 / 4;
   width: 100%;
+  padding: 10px 24px 0;
+  border: 1px solid rgba(233, 230, 223, 0.72);
+  background: rgba(16, 13, 14, 0.97);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
 }
 
 .newsletter-content label {
@@ -654,12 +665,11 @@ footer a:hover {
 .newsletter-form-row {
   display: grid;
   grid-template-columns: 1fr auto;
-  border-bottom: 2px solid var(--chalk);
 }
 
 .newsletter-form-row input {
   min-width: 0;
-  height: 76px;
+  height: 88px;
   padding: 0;
   border: 0;
   background: transparent;
@@ -670,23 +680,26 @@ footer a:hover {
 }
 
 .newsletter-form-row input::placeholder {
-  color: rgba(233, 230, 223, 0.56);
+  color: rgba(233, 230, 223, 0.68);
 }
 
 .newsletter-form-row button {
-  height: 76px;
-  padding: 0 0 0 32px;
+  align-self: center;
+  height: 58px;
+  margin-left: 28px;
+  padding: 0 28px;
   border: 0;
-  background: transparent;
-  color: var(--chalk);
+  background: var(--chalk);
+  color: var(--ink);
   font-size: 0.78rem;
   font-weight: 760;
   cursor: pointer;
-  transition: color 160ms ease;
+  transition: background 160ms ease, color 160ms ease;
 }
 
 .newsletter-form-row button:hover {
-  color: var(--acid);
+  background: var(--acid);
+  color: var(--ink);
 }
 
 .newsletter-form-row button:disabled,
@@ -712,6 +725,13 @@ footer {
   grid-template-columns: 1.2fr 1fr 1fr auto;
   gap: 30px;
   align-items: end;
+  border-top: 1px solid rgba(233, 230, 223, 0.14);
+  background-color: var(--ink-rich);
+  background-image:
+    linear-gradient(to right, var(--grid-dark) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-dark) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  color: var(--chalk);
   font-size: 0.75rem;
 }
 
@@ -761,6 +781,12 @@ footer p {
   .mission-scene .scene-index,
   .newsletter-content .scene-index {
     margin-bottom: 42px;
+  }
+
+  .newsletter-beam {
+    right: -18%;
+    width: 66%;
+    height: 32%;
   }
 
   .next-scene {
@@ -816,7 +842,7 @@ footer p {
 
 @media (max-width: 620px) {
   .hero-stage {
-    height: 150svh;
+    height: 135svh;
   }
 
   .hero-sticky {
@@ -832,7 +858,7 @@ footer p {
     display: none;
   }
 
-  .hero-nav nav a:first-child {
+  .hero-nav nav a:nth-child(3) {
     display: none;
   }
 
@@ -949,11 +975,28 @@ footer p {
   }
 
   .newsletter-content {
-    padding-top: 80px;
+    min-height: 86svh;
+    padding: 70px 20px 54px;
   }
 
   .newsletter-content h2 {
     font-size: clamp(4.4rem, 21vw, 5.7rem);
+  }
+
+  .newsletter-beam {
+    top: 7%;
+    right: -34%;
+    width: 92%;
+    height: 27%;
+    opacity: 0.62;
+  }
+
+  .newsletter-content > p {
+    margin: 28px 0 32px;
+  }
+
+  .newsletter-content form {
+    padding: 14px 18px 0;
   }
 
   .newsletter-form-row {
@@ -961,9 +1004,10 @@ footer p {
   }
 
   .newsletter-form-row button {
-    width: fit-content;
+    width: 100%;
     height: 58px;
-    padding: 0;
+    margin: 0 0 16px;
+    padding: 0 20px;
   }
 
   footer {
