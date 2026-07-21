@@ -371,13 +371,17 @@ export function HomePage() {
                   autoComplete="email"
                   placeholder="YOUR EMAIL ADDRESS"
                   required
-                  aria-describedby="form-status"
+                  aria-describedby="newsletter-consent form-status"
                   disabled={formState === "submitting"}
                 />
                 <button type="submit" disabled={formState === "submitting"}>
                   {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
                 </button>
               </div>
+              <p className="newsletter-consent" id="newsletter-consent">
+                By subscribing, you agree to receive occasional event and community emails from UX
+                Design Den. Unsubscribe at any time. <a href="/privacy">Privacy</a>
+              </p>
               <p
                 className={`form-status ${formState === "error" ? "is-error" : ""}`}
                 id="form-status"
@@ -452,6 +456,10 @@ export function HomePage() {
           <a href="https://www.linkedin.com/groups/16579023/" target="_blank" rel="noreferrer">
             LinkedIn group ↗
           </a>
+          <nav className="footer-legal" aria-label="Legal">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+          </nav>
           <span>Vancouver, BC</span>
         </footer>
       </main>
