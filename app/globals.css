@@ -83,6 +83,63 @@ a {
   background-size: var(--grid-size) var(--grid-size);
 }
 
+.prism-grid-layer,
+.axis-cursor-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.prism-grid-layer {
+  z-index: 1;
+}
+
+.prism-grid-layer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.axis-cursor-layer {
+  z-index: 3;
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 140ms ease;
+  will-change: opacity;
+}
+
+.axis-line,
+.axis-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  will-change: transform;
+}
+
+.axis-line {
+  background: rgba(184, 190, 188, 0.22);
+}
+
+.axis-line-vertical {
+  width: 1px;
+  height: 100%;
+}
+
+.axis-line-horizontal {
+  width: 100%;
+  height: 1px;
+}
+
+.axis-dot {
+  width: 8px;
+  height: 8px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: #23b7b7;
+  box-shadow: 0 0 14px rgba(35, 183, 183, 0.62);
+}
+
 .hero-nav {
   position: absolute;
   z-index: 8;
@@ -1224,5 +1281,17 @@ footer p {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .prism-grid-layer,
+  .axis-cursor-layer {
+    display: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .prism-grid-layer,
+  .axis-cursor-layer {
+    display: none;
   }
 }

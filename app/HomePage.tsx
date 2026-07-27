@@ -13,6 +13,7 @@ import {
   PaperTexture,
   Warp,
 } from "@paper-design/shaders-react";
+import { HeroPointerEffects } from "./HeroPointerEffects";
 
 const pastEvents = [
   {
@@ -278,6 +279,8 @@ export function HomePage() {
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}
           >
+            <HeroPointerEffects disabled={reducedMotion} />
+
             <header className="hero-nav">
               <a className="wordmark" href="#top" aria-label="UX Design Den home">
                 UX DESIGN<br />DEN
