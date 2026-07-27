@@ -217,19 +217,21 @@ export function HomePage() {
     : 0.08 +
       (1 - Math.pow(1 - portalReveal, 3)) * 0.54 +
       Math.pow(swallowProgress, 1.35) * 3.8;
-  const titleSpread = reducedMotion
-    ? 42
-    : Math.min(1, heroProgress / 0.55) * 140;
+  const titleExitRaw = reducedMotion
+    ? 0
+    : Math.min(1, Math.max(0, (heroProgress - 0.06) / 0.5));
+  const titleExit =
+    titleExitRaw * titleExitRaw * (3 - 2 * titleExitRaw);
   const titleFade = reducedMotion
     ? 1
-    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.58) / 0.18));
+    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.72) / 0.1));
   const chromeFade = reducedMotion
     ? 1
-    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.62) / 0.14));
+    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.42) / 0.12));
   const arrivalProgress = reducedMotion
     ? 0
-    : Math.min(1, Math.max(0, (heroProgress - 0.76) / 0.18));
-  const crossingDistance = (heroProgress - 0.7) / 0.085;
+    : Math.min(1, Math.max(0, (heroProgress - 0.9) / 0.08));
+  const crossingDistance = (heroProgress - 0.78) / 0.08;
   const crossingGlow = reducedMotion
     ? 0
     : Math.exp(-(crossingDistance * crossingDistance)) * 0.88;
@@ -318,10 +320,10 @@ export function HomePage() {
 
             <div className="hero-title-wrap" style={{ opacity: titleFade }}>
               <h1>
-                <span style={{ transform: `translate3d(${-titleSpread * 0.09}px, ${-titleSpread}px, 0)` }}>
+                <span style={{ transform: `translate3d(${-titleExit * 10}vw, ${-titleExit * 82}vh, 0)` }}>
                   Welcome
                 </span>
-                <span style={{ transform: `translate3d(${titleSpread * 0.12}px, ${titleSpread}px, 0)` }}>
+                <span style={{ transform: `translate3d(${titleExit * 12}vw, ${titleExit * 86}vh, 0)` }}>
                   to the Den
                 </span>
               </h1>

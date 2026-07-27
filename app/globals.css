@@ -65,7 +65,7 @@ a {
 
 .hero-stage {
   position: relative;
-  height: 280svh;
+  height: 340svh;
   background: var(--ink);
 }
 
@@ -1133,7 +1133,7 @@ footer p {
 
 @media (max-width: 620px) {
   .hero-stage {
-    height: 245svh;
+    height: 300svh;
   }
 
   .hero-sticky {
