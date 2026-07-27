@@ -13,7 +13,7 @@ import {
   PaperTexture,
   Warp,
 } from "@paper-design/shaders-react";
-import { HeroPointerEffects } from "./HeroPointerEffects";
+import { SitePointerEffects } from "./HeroPointerEffects";
 
 const pastEvents = [
   {
@@ -268,10 +268,12 @@ export function HomePage() {
 
   const titleShift = reducedMotion ? 0 : heroProgress * 46;
   const portalScale = reducedMotion ? 1 : 1 + heroProgress * 0.36;
-  const portalRotation = reducedMotion ? -4 : -4 + heroProgress * 9;
+  const portalRotation = reducedMotion ? -4 : -4 + heroProgress * 180;
 
   return (
     <div className="site-shell">
+      <SitePointerEffects disabled={reducedMotion} />
+
       <main>
         <section className="hero-stage" ref={heroRef} id="top">
           <div
@@ -279,8 +281,6 @@ export function HomePage() {
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}
           >
-            <HeroPointerEffects disabled={reducedMotion} />
-
             <header className="hero-nav">
               <a className="wordmark" href="#top" aria-label="UX Design Den home">
                 UX DESIGN<br />DEN

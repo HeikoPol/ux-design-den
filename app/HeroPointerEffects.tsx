@@ -7,13 +7,13 @@ const TRAIL_DURATION = 1150;
 const TRAIL_COLORS = ["#23b7b7", "#e85f47", "#dce85a", "#b73d80"];
 
 type TrailCell = {
-  column: number;
-  row: number;
+  x: number;
+  documentY: number;
   color: string;
   startedAt: number;
 };
 
-export function HeroPointerEffects({ disabled }: { disabled: boolean }) {
+export function SitePointerEffects({ disabled }: { disabled: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const axisRef = useRef<HTMLDivElement>(null);
   const verticalRef = useRef<HTMLSpanElement>(null);
@@ -61,12 +61,11 @@ export function HeroPointerEffects({ disabled }: { disabled: boolean }) {
       for (const cell of trail) {
         const age = Math.min(1, (time - cell.startedAt) / TRAIL_DURATION);
         const opacity = Math.pow(1 - age, 2) * 0.34;
-        const x = cell.column * GRID_SIZE;
-        const y = cell.row * GRID_SIZE;
+        const y = cell.documentY - window.scrollY;
 
         context.globalAlpha = opacity;
         context.fillStyle = cell.color;
-        context.fillRect(x + 1, y + 1, GRID_SIZE - 2, GRID_SIZE - 2);
+        context.fillRect(cell.x + 1, y + 1, GRID_SIZE - 2, GRID_SIZE - 2);
       }
 
       context.globalAlpha = 1;
@@ -102,15 +101,23 @@ export function HeroPointerEffects({ disabled }: { disabled: boolean }) {
       horizontal.style.transform = `translate3d(0, ${y}px, 0)`;
       dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
 
-      const column = Math.floor(x / GRID_SIZE);
-      const row = Math.floor(y / GRID_SIZE);
-      const cellKey = `${column}:${row}`;
+      const target = event.target instanceof Element ? event.target : null;
+      const surface = target?.closest<HTMLElement>(".hero-sticky, section, footer");
+      const surfaceRect = surface?.getBoundingClientRect();
+      const originX = surfaceRect?.left ?? 0;
+      const originY = surfaceRect?.top ?? 0;
+      const cellX =
+        Math.floor((event.clientX - originX) / GRID_SIZE) * GRID_SIZE + originX;
+      const viewportCellY =
+        Math.floor((event.clientY - originY) / GRID_SIZE) * GRID_SIZE + originY;
+      const documentY = viewportCellY + window.scrollY;
+      const cellKey = `${Math.round(cellX)}:${Math.round(documentY)}`;
 
       if (cellKey !== lastCell) {
         lastCell = cellKey;
         trail.push({
-          column,
-          row,
+          x: cellX,
+          documentY,
           color: TRAIL_COLORS[colorIndex % TRAIL_COLORS.length],
           startedAt: performance.now(),
         });
