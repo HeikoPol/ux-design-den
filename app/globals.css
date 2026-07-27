@@ -251,8 +251,7 @@ footer a:hover {
 .portal-paper,
 .portal-paper > div,
 .event-art-shader,
-.event-art-shader > div,
-.newsletter-beam > div {
+.event-art-shader > div {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -641,20 +640,6 @@ footer a:hover {
   border-bottom: 1px solid rgba(233, 230, 223, 0.12);
 }
 
-.newsletter-beam {
-  position: absolute;
-  z-index: 0;
-  top: 8%;
-  right: -5%;
-  width: min(47vw, 720px);
-  height: 36%;
-  overflow: hidden;
-  clip-path: polygon(8% 7%, 92% 0, 100% 78%, 81% 100%, 0 91%, 4% 19%);
-  transform: rotate(3deg);
-  opacity: 0.72;
-  pointer-events: none;
-}
-
 .newsletter-content {
   position: relative;
   z-index: 2;
@@ -981,12 +966,6 @@ footer p {
     margin-bottom: 42px;
   }
 
-  .newsletter-beam {
-    right: -18%;
-    width: 66%;
-    height: 32%;
-  }
-
   .next-scene {
     grid-template-columns: 1fr 150px;
   }
@@ -1192,14 +1171,6 @@ footer p {
   .newsletter-content h2 {
     font-size: clamp(3.5rem, 16vw, 4.7rem);
     white-space: normal;
-  }
-
-  .newsletter-beam {
-    top: 7%;
-    right: -34%;
-    width: 92%;
-    height: 27%;
-    opacity: 0.62;
   }
 
   .newsletter-content > p {

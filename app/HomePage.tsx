@@ -350,14 +350,6 @@ export function HomePage() {
         </section>
 
         <section className="newsletter-scene" id="newsletter" aria-labelledby="newsletter-title">
-          <div className="newsletter-beam" aria-hidden="true">
-            <ShaderField
-              colors={["#100b0c", "#e85f47", "#dce85a", "#6bd8ce", "#241014"]}
-              rotation={-6}
-              scale={1.08}
-              speed={reducedMotion ? 0 : 0.1}
-            />
-          </div>
           <div className="newsletter-content">
             <div className="scene-index">01 / NEWSLETTER</div>
             <h2 id="newsletter-title">Stay close to what’s next.</h2>
