@@ -267,8 +267,8 @@ export function HomePage() {
   }
 
   const titleShift = reducedMotion ? 0 : heroProgress * 46;
-  const portalScale = reducedMotion ? 1 : 1 + heroProgress * 0.36;
-  const portalRotation = reducedMotion ? -4 : -4 + heroProgress * 180;
+  const portalScale = reducedMotion ? 1 : 1 + heroProgress * 1.75;
+  const portalRotation = reducedMotion ? -4 : -4 + heroProgress * 24;
 
   return (
     <div className="site-shell">
