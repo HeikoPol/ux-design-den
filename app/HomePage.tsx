@@ -239,7 +239,7 @@ export function HomePage() {
   const newsletterContent = (
     <div className="newsletter-content">
       <div className="scene-index">01 / NEWSLETTER</div>
-      <h2 id="newsletter-title">Stay close<br />to what’s next.</h2>
+      <h2 id="newsletter-title">Stay close to what’s next.</h2>
       <p>One note when something worth leaving the house for is coming up.</p>
 
       <form onSubmit={handleSubmit} noValidate>
@@ -386,7 +386,7 @@ export function HomePage() {
           <section className="newsletter-scene" id="newsletter" aria-labelledby="newsletter-title">
             <div className="newsletter-beam" aria-hidden="true">
               <ShaderField
-                colors={["#100b0c", "#e85f47", "#dce85a", "#6bd8ce", "#241014"]}
+                colors={["#100b0c", "#23b7b7", "#dce85a", "#6bd8ce", "#241014"]}
                 rotation={-6}
                 scale={1.08}
                 speed={0}

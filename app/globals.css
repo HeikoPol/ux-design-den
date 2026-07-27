@@ -5,7 +5,8 @@
   --ink-rich: #180e11;
   --chalk: #e9e6df;
   --muted: #aaa49b;
-  --coral: #e8694e;
+  --coral: #23b7b7;
+  --brand-teal: #23b7b7;
   --mint: #6bd8ce;
   --acid: #dce85a;
   --magenta: #cf4d91;
@@ -238,7 +239,7 @@ footer a:hover {
   border: 1px solid rgba(107, 216, 206, 0.65);
   border-radius: 50%;
   background:
-    radial-gradient(ellipse at center, #0f0b0d 0 24%, #cf4d91 25%, #6bd8ce 29%, #111011 45%, transparent 67%);
+    radial-gradient(ellipse at center, #0f0b0d 0 24%, var(--brand-teal) 25%, #6bd8ce 29%, #111011 45%, transparent 67%);
 }
 
 .threshold-label {
@@ -263,7 +264,7 @@ footer a:hover {
   z-index: 6;
   inset: -20%;
   background:
-    radial-gradient(ellipse at center, rgba(233, 230, 223, 0.92) 0 4%, rgba(220, 232, 90, 0.58) 11%, rgba(107, 216, 206, 0.22) 26%, transparent 58%);
+    radial-gradient(ellipse at center, rgba(233, 230, 223, 0.9) 0 4%, rgba(35, 183, 183, 0.72) 12%, rgba(35, 183, 183, 0.25) 30%, transparent 60%);
   mix-blend-mode: screen;
   filter: blur(22px);
   transform: scale(1.2);
@@ -280,15 +281,14 @@ footer a:hover {
   opacity: var(--arrival-opacity);
   transform: translate3d(0, var(--arrival-shift), 0);
   will-change: opacity, transform;
+  background: var(--brand-teal);
 }
 
 .arrival-vignette {
   position: absolute;
   z-index: 0;
   inset: 0;
-  background:
-    radial-gradient(ellipse 52% 44% at 50% 48%, rgba(10, 7, 9, 0.2) 0 38%, rgba(13, 9, 11, 0.56) 72%, rgba(13, 9, 11, 0.9) 100%),
-    linear-gradient(to bottom, rgba(13, 9, 11, 0.25), rgba(13, 9, 11, 0.72));
+  background: var(--brand-teal);
   pointer-events: none;
 }
 
@@ -691,16 +691,14 @@ footer a:hover {
   min-height: 92svh;
   overflow: hidden;
   isolation: isolate;
-  background-color: var(--ink-rich);
-  background-image:
-    linear-gradient(to right, var(--grid-dark) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-dark) 1px, transparent 1px);
-  background-size: var(--grid-size) var(--grid-size);
-  border-top: 1px solid rgba(233, 230, 223, 0.12);
-  border-bottom: 1px solid rgba(233, 230, 223, 0.12);
+  background: var(--brand-teal);
+  color: var(--ink);
+  border-top: 1px solid rgba(17, 16, 17, 0.28);
+  border-bottom: 1px solid rgba(17, 16, 17, 0.28);
 }
 
 .newsletter-beam {
+  display: none;
   position: absolute;
   z-index: 0;
   top: 8%;
@@ -723,24 +721,26 @@ footer a:hover {
   grid-template-columns: minmax(130px, 0.22fr) minmax(0, 1fr) minmax(260px, 0.42fr);
   align-content: start;
   column-gap: 38px;
+  color: var(--ink);
 }
 
 .newsletter-content h2 {
   grid-column: 2 / 4;
   margin: 0;
-  max-width: 980px;
+  max-width: none;
   font-family: var(--display-font);
-  font-size: clamp(4.5rem, 9.6vw, 9.8rem);
+  font-size: clamp(3.2rem, 6.4vw, 6.8rem);
   font-weight: 500;
-  line-height: 0.81;
+  line-height: 0.9;
   letter-spacing: -0.078em;
+  white-space: nowrap;
 }
 
 .newsletter-content > p {
   grid-column: 2;
   max-width: 450px;
   margin: 32px 0 38px;
-  color: #d1cabf;
+  color: rgba(17, 16, 17, 0.78);
   font-size: 0.9rem;
 }
 
@@ -750,9 +750,9 @@ footer a:hover {
   grid-column: 2 / 4;
   width: min(100%, 1180px);
   padding: 8px 10px 8px 26px;
-  border: 1px solid rgba(233, 230, 223, 0.72);
-  background: rgba(16, 13, 14, 0.97);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+  border: 1px solid rgba(17, 16, 17, 0.72);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(17, 16, 17, 0.12);
 }
 
 .newsletter-content label {
@@ -778,14 +778,14 @@ footer a:hover {
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--chalk);
+  color: var(--ink);
   font-family: var(--display-font);
   font-size: clamp(1.2rem, 2.2vw, 2rem);
   font-weight: 500;
 }
 
 .newsletter-form-row input::placeholder {
-  color: rgba(233, 230, 223, 0.68);
+  color: rgba(17, 16, 17, 0.62);
 }
 
 .newsletter-form-row button {
@@ -795,8 +795,8 @@ footer a:hover {
   margin-left: 22px;
   padding: 0 30px;
   border: 0;
-  background: var(--chalk);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--brand-teal);
   font-size: 0.78rem;
   font-weight: 760;
   cursor: pointer;
@@ -804,8 +804,8 @@ footer a:hover {
 }
 
 .newsletter-form-row button:hover {
-  background: var(--acid);
-  color: var(--ink);
+  background: #000;
+  color: var(--chalk);
 }
 
 .newsletter-form-row button:disabled,
@@ -817,20 +817,20 @@ footer a:hover {
 .newsletter-consent {
   max-width: 760px;
   margin: 4px 0 8px;
-  color: var(--muted);
+  color: rgba(17, 16, 17, 0.68);
   font-size: 0.68rem;
   line-height: 1.5;
 }
 
 .newsletter-consent a {
-  color: var(--chalk);
+  color: var(--ink);
   text-decoration: underline;
-  text-decoration-color: rgba(233, 230, 223, 0.45);
+  text-decoration-color: rgba(17, 16, 17, 0.42);
   text-underline-offset: 3px;
 }
 
 .newsletter-consent a:hover {
-  color: var(--acid);
+  color: #000;
 }
 
 .form-status {
@@ -839,7 +839,7 @@ footer a:hover {
   left: 26px;
   min-height: 22px;
   margin: 0;
-  color: var(--acid);
+  color: var(--ink);
   font-size: 0.8rem;
 }
 
@@ -856,18 +856,18 @@ footer a:hover {
 }
 
 .arrival-scene .newsletter-content h2 {
-  text-shadow: 0 3px 42px rgba(0, 0, 0, 0.72);
+  text-shadow: none;
 }
 
 .arrival-scene .newsletter-content > p {
-  color: rgba(233, 230, 223, 0.82);
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.86);
+  color: rgba(17, 16, 17, 0.78);
+  text-shadow: none;
 }
 
 .arrival-scene .newsletter-content form {
-  background: rgba(12, 9, 11, 0.86);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: none;
+  box-shadow: 0 28px 90px rgba(17, 16, 17, 0.14);
 }
 
 footer {
@@ -1280,7 +1280,8 @@ footer p {
   }
 
   .newsletter-content h2 {
-    font-size: clamp(4.4rem, 21vw, 5.7rem);
+    font-size: clamp(3.5rem, 16vw, 4.7rem);
+    white-space: normal;
   }
 
   .newsletter-beam {

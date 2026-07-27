@@ -95,7 +95,7 @@ export function DenPortal3D({
     const positions: number[] = [];
     const colors: number[] = [];
     const indices: number[] = [];
-    const colorA = new THREE.Color("#e8694e");
+    const colorA = new THREE.Color("#23b7b7");
     const colorB = new THREE.Color("#6bd8ce");
     const colorC = new THREE.Color("#dce85a");
     const colorD = new THREE.Color("#cf4d91");
@@ -162,7 +162,7 @@ export function DenPortal3D({
 
     const contourMaterials: THREE.LineBasicMaterial[] = [];
     const contourGeometries: THREE.BufferGeometry[] = [];
-    const contourColors = [0xe8694e, 0x6bd8ce, 0xdce85a, 0xcf4d91];
+    const contourColors = [0x23b7b7, 0x6bd8ce, 0xdce85a, 0xcf4d91];
 
     for (let ring = 0; ring <= depthSegments; ring += 3) {
       const contourPoints: THREE.Vector3[] = [];
@@ -188,7 +188,7 @@ export function DenPortal3D({
     const particlePositions = new Float32Array(particleCount * 3);
     const particleColors = new Float32Array(particleCount * 3);
     const particlePalette = [
-      new THREE.Color("#e8694e"),
+      new THREE.Color("#23b7b7"),
       new THREE.Color("#6bd8ce"),
       new THREE.Color("#dce85a"),
       new THREE.Color("#cf4d91"),
@@ -229,7 +229,7 @@ export function DenPortal3D({
     group.add(particles);
 
     const coreMaterial = new THREE.MeshBasicMaterial({
-      color: 0xe8694e,
+      color: 0x23b7b7,
       transparent: true,
       opacity: 0.48,
       blending: THREE.AdditiveBlending,
