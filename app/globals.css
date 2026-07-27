@@ -5,8 +5,7 @@
   --ink-rich: #180e11;
   --chalk: #e9e6df;
   --muted: #aaa49b;
-  --coral: #23b7b7;
-  --brand-teal: #23b7b7;
+  --coral: #e8694e;
   --mint: #6bd8ce;
   --acid: #dce85a;
   --magenta: #cf4d91;
@@ -66,7 +65,7 @@ a {
 
 .hero-stage {
   position: relative;
-  height: 340svh;
+  height: 158svh;
   background: var(--ink);
 }
 
@@ -78,31 +77,10 @@ a {
   overflow: hidden;
   isolation: isolate;
   background-color: var(--ink);
-}
-
-.hero-depth-grid {
-  position: absolute;
-  z-index: 0;
-  inset: -8%;
   background-image:
     linear-gradient(to right, var(--grid-dark) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-dark) 1px, transparent 1px);
   background-size: var(--grid-size) var(--grid-size);
-  transform: perspective(700px)
-    rotateX(var(--grid-tilt))
-    scale(var(--grid-scale));
-  transform-origin: 50% 56%;
-  opacity: var(--grid-opacity);
-  will-change: transform, opacity;
-}
-
-.hero-depth-grid::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 50% 52%, transparent 0 24%, rgba(17, 16, 17, 0.3) 55%, var(--ink) 82%);
-  pointer-events: none;
 }
 
 .hero-nav {
@@ -115,7 +93,6 @@ a {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: start;
-  transition: opacity 100ms linear;
 }
 
 .wordmark {
@@ -175,7 +152,6 @@ footer a:hover {
   transform: translateY(-50%);
   color: var(--muted);
   font-size: 0.82rem;
-  transition: opacity 100ms linear;
 }
 
 .hero-intro p {
@@ -185,12 +161,11 @@ footer a:hover {
 .hero-title-wrap {
   position: absolute;
   z-index: 4;
-  top: 28%;
+  top: 22%;
   left: 50%;
   width: min(75vw, 980px);
   transform: translateX(-50%);
   pointer-events: none;
-  transition: opacity 100ms linear;
 }
 
 .hero-title-wrap h1 {
@@ -198,7 +173,7 @@ footer a:hover {
   font-family: var(--display-font);
   font-size: clamp(5rem, 9.3vw, 9.6rem);
   font-weight: 700;
-  line-height: 0.82;
+  line-height: 0.78;
   letter-spacing: -0.072em;
   text-align: center;
 }
@@ -212,78 +187,14 @@ footer a:hover {
   position: absolute;
   z-index: 2;
   left: 50%;
-  top: 50%;
-  width: 100vw;
-  height: 100svh;
-  will-change: opacity;
-  pointer-events: none;
-}
-
-.den-portal-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  shape-rendering: geometricPrecision;
-}
-
-.threshold-label {
-  position: absolute;
-  z-index: 6;
-  left: 50%;
-  top: 50%;
-  width: min(60vw, 820px);
-  display: flex;
-  justify-content: space-between;
-  color: rgba(233, 230, 223, 0.58);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  transition: opacity 100ms linear;
-}
-
-.portal-crossing-glow {
-  position: absolute;
-  z-index: 6;
-  inset: -20%;
-  background:
-    radial-gradient(ellipse at center, rgba(233, 230, 223, 0.9) 0 4%, rgba(35, 183, 183, 0.72) 12%, rgba(35, 183, 183, 0.25) 30%, transparent 60%);
-  mix-blend-mode: screen;
-  filter: blur(22px);
-  transform: scale(1.2);
-  pointer-events: none;
-  will-change: opacity;
-}
-
-.arrival-scene {
-  position: absolute;
-  z-index: 7;
-  inset: 0;
+  bottom: -16%;
+  width: min(72vw, 1040px);
+  height: 61svh;
+  min-height: 430px;
   overflow: hidden;
-  isolation: isolate;
-  opacity: var(--arrival-opacity);
-  transform: translate3d(0, var(--arrival-shift), 0);
-  will-change: opacity, transform;
-  background: var(--brand-teal);
-}
-
-.arrival-vignette {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  background: var(--brand-teal);
-  pointer-events: none;
-}
-
-.newsletter-anchor {
-  position: absolute;
-  left: 0;
-  bottom: 100svh;
-  width: 1px;
-  height: 1px;
+  clip-path: polygon(8% 7%, 91% 0, 100% 85%, 81% 100%, 4% 91%, 0 23%);
+  transform-origin: 50% 74%;
+  will-change: transform;
 }
 
 .liquid-field,
@@ -338,7 +249,6 @@ footer a:hover {
   font-size: clamp(1.45rem, 2.2vw, 2.1rem);
   line-height: 0.82;
   letter-spacing: -0.04em;
-  transition: opacity 100ms linear;
 }
 
 .scroll-cue {
@@ -351,7 +261,6 @@ footer a:hover {
   gap: 12px;
   color: var(--muted);
   font-size: 0.78rem;
-  transition: opacity 100ms linear;
 }
 
 .scroll-cue span {
@@ -677,14 +586,16 @@ footer a:hover {
   min-height: 92svh;
   overflow: hidden;
   isolation: isolate;
-  background: var(--brand-teal);
-  color: var(--ink);
-  border-top: 1px solid rgba(17, 16, 17, 0.28);
-  border-bottom: 1px solid rgba(17, 16, 17, 0.28);
+  background-color: var(--ink-rich);
+  background-image:
+    linear-gradient(to right, var(--grid-dark) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-dark) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  border-top: 1px solid rgba(233, 230, 223, 0.12);
+  border-bottom: 1px solid rgba(233, 230, 223, 0.12);
 }
 
 .newsletter-beam {
-  display: none;
   position: absolute;
   z-index: 0;
   top: 8%;
@@ -707,7 +618,6 @@ footer a:hover {
   grid-template-columns: minmax(130px, 0.22fr) minmax(0, 1fr) minmax(260px, 0.42fr);
   align-content: start;
   column-gap: 38px;
-  color: var(--ink);
 }
 
 .newsletter-content h2 {
@@ -726,7 +636,7 @@ footer a:hover {
   grid-column: 2;
   max-width: 450px;
   margin: 32px 0 38px;
-  color: rgba(17, 16, 17, 0.78);
+  color: #d1cabf;
   font-size: 0.9rem;
 }
 
@@ -736,9 +646,9 @@ footer a:hover {
   grid-column: 2 / 4;
   width: min(100%, 1180px);
   padding: 8px 10px 8px 26px;
-  border: 1px solid rgba(17, 16, 17, 0.72);
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 24px 60px rgba(17, 16, 17, 0.12);
+  border: 1px solid rgba(233, 230, 223, 0.72);
+  background: rgba(16, 13, 14, 0.97);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
 }
 
 .newsletter-content label {
@@ -764,14 +674,14 @@ footer a:hover {
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--ink);
+  color: var(--chalk);
   font-family: var(--display-font);
   font-size: clamp(1.2rem, 2.2vw, 2rem);
   font-weight: 500;
 }
 
 .newsletter-form-row input::placeholder {
-  color: rgba(17, 16, 17, 0.62);
+  color: rgba(233, 230, 223, 0.68);
 }
 
 .newsletter-form-row button {
@@ -781,8 +691,8 @@ footer a:hover {
   margin-left: 22px;
   padding: 0 30px;
   border: 0;
-  background: var(--ink);
-  color: var(--brand-teal);
+  background: var(--chalk);
+  color: var(--ink);
   font-size: 0.78rem;
   font-weight: 760;
   cursor: pointer;
@@ -790,8 +700,8 @@ footer a:hover {
 }
 
 .newsletter-form-row button:hover {
-  background: #000;
-  color: var(--chalk);
+  background: var(--acid);
+  color: var(--ink);
 }
 
 .newsletter-form-row button:disabled,
@@ -803,20 +713,20 @@ footer a:hover {
 .newsletter-consent {
   max-width: 760px;
   margin: 4px 0 8px;
-  color: rgba(17, 16, 17, 0.68);
+  color: var(--muted);
   font-size: 0.68rem;
   line-height: 1.5;
 }
 
 .newsletter-consent a {
-  color: var(--ink);
+  color: var(--chalk);
   text-decoration: underline;
-  text-decoration-color: rgba(17, 16, 17, 0.42);
+  text-decoration-color: rgba(233, 230, 223, 0.45);
   text-underline-offset: 3px;
 }
 
 .newsletter-consent a:hover {
-  color: #000;
+  color: var(--acid);
 }
 
 .form-status {
@@ -825,35 +735,12 @@ footer a:hover {
   left: 26px;
   min-height: 22px;
   margin: 0;
-  color: var(--ink);
+  color: var(--acid);
   font-size: 0.8rem;
 }
 
 .form-status.is-error {
   color: #ff9d87;
-}
-
-.arrival-scene .newsletter-content {
-  z-index: 1;
-  min-height: 100svh;
-  padding-top: clamp(76px, 8vw, 120px);
-  padding-bottom: clamp(48px, 6vw, 82px);
-  align-content: center;
-}
-
-.arrival-scene .newsletter-content h2 {
-  text-shadow: none;
-}
-
-.arrival-scene .newsletter-content > p {
-  color: rgba(17, 16, 17, 0.78);
-  text-shadow: none;
-}
-
-.arrival-scene .newsletter-content form {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: none;
-  box-shadow: 0 28px 90px rgba(17, 16, 17, 0.14);
 }
 
 footer {
@@ -1119,7 +1006,7 @@ footer p {
 
 @media (max-width: 620px) {
   .hero-stage {
-    height: 300svh;
+    height: 135svh;
   }
 
   .hero-sticky {
@@ -1140,7 +1027,7 @@ footer p {
   }
 
   .hero-title-wrap {
-    top: 32%;
+    top: 28%;
     width: calc(100vw - 40px);
   }
 
@@ -1150,19 +1037,10 @@ footer p {
   }
 
   .hero-portal {
-    top: 51%;
-    width: 122vw;
-    height: 100svh;
-  }
-
-  .threshold-label {
-    width: 74vw;
-  }
-
-  .arrival-scene .newsletter-content {
-    min-height: 100svh;
-    padding-top: 68px;
-    padding-bottom: 42px;
+    bottom: -5%;
+    width: 112vw;
+    height: 52svh;
+    min-height: 360px;
   }
 
   .hero-intro {

@@ -1,15 +1,18 @@
 "use client";
 
 import {
-  CSSProperties,
   FormEvent,
   PointerEvent,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { Warp } from "@paper-design/shaders-react";
-import { DenPortal3D } from "./DenPortal3D";
+import {
+  MeshGradient,
+  Metaballs,
+  PaperTexture,
+  Warp,
+} from "@paper-design/shaders-react";
 
 const pastEvents = [
   {
@@ -90,6 +93,62 @@ function ShaderField({
       speed={speed}
       maxPixelCount={1400000}
     />
+  );
+}
+
+function LiquidField({
+  pointer,
+  progress,
+  reducedMotion,
+}: {
+  pointer: { x: number; y: number };
+  progress: number;
+  reducedMotion: boolean;
+}) {
+  const pointerEnergy = Math.min(
+    1,
+    Math.hypot(pointer.x / 0.17, pointer.y / 0.12),
+  );
+
+  return (
+    <div className="liquid-field">
+      <div className="liquid-base">
+        <MeshGradient
+          width="100%"
+          height="100%"
+          colors={["#130d0f", "#e85f47", "#6bd8ce", "#dce85a", "#b73d80", "#24184d"]}
+          distortion={0.72 + pointerEnergy * 0.16}
+          swirl={0.62 + pointerEnergy * 0.22}
+          grainMixer={0.18}
+          grainOverlay={0.035}
+          fit="cover"
+          scale={1.13 + progress * 0.14}
+          rotation={-10 + progress * 15 + pointer.x * 26}
+          offsetX={pointer.x * 0.72}
+          offsetY={pointer.y * 0.72}
+          speed={reducedMotion ? 0 : 0.24}
+          maxPixelCount={1400000}
+        />
+      </div>
+
+      <div className="liquid-response" style={{ opacity: 0.32 + pointerEnergy * 0.28 }}>
+        <Metaballs
+          width="100%"
+          height="100%"
+          colorBack="#00000000"
+          colors={["#6bd8cecc", "#e85f47bb", "#dce85aaa", "#b73d80b8"]}
+          count={11}
+          size={0.4 + pointerEnergy * 0.08}
+          fit="cover"
+          scale={1.08 + pointerEnergy * 0.12}
+          rotation={pointer.x * 52 - pointer.y * 24}
+          offsetX={pointer.x * 2.7}
+          offsetY={pointer.y * 2.7}
+          speed={reducedMotion ? 0 : 0.16}
+          maxPixelCount={900000}
+        />
+      </div>
+    </div>
   );
 }
 
@@ -206,72 +265,9 @@ export function HomePage() {
     }
   }
 
-  const titleExitRaw = reducedMotion
-    ? 0
-    : Math.min(1, Math.max(0, (heroProgress - 0.06) / 0.5));
-  const titleExit =
-    titleExitRaw * titleExitRaw * (3 - 2 * titleExitRaw);
-  const titleFade = reducedMotion
-    ? 1
-    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.72) / 0.1));
-  const chromeFade = reducedMotion
-    ? 1
-    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.42) / 0.12));
-  const arrivalProgress = reducedMotion
-    ? 0
-    : Math.min(1, Math.max(0, (heroProgress - 0.9) / 0.08));
-  const crossingDistance = (heroProgress - 0.78) / 0.08;
-  const crossingGlow = reducedMotion
-    ? 0
-    : Math.exp(-(crossingDistance * crossingDistance)) * 0.88;
-
-  const newsletterContent = (
-    <div className="newsletter-content">
-      <div className="scene-index">01 / NEWSLETTER</div>
-      <h2 id="newsletter-title">Stay close to what’s next.</h2>
-      <p>One note when something worth leaving the house for is coming up.</p>
-
-      <form onSubmit={handleSubmit} noValidate>
-        <label htmlFor="newsletter-email">Email address</label>
-        <div className="newsletter-form-row">
-          <input
-            id="newsletter-email"
-            name="email"
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            placeholder="YOUR EMAIL ADDRESS"
-            required
-            aria-describedby="newsletter-consent form-status"
-            disabled={
-              formState === "submitting" ||
-              (!reducedMotion && arrivalProgress < 0.72)
-            }
-          />
-          <button
-            type="submit"
-            disabled={
-              formState === "submitting" ||
-              (!reducedMotion && arrivalProgress < 0.72)
-            }
-          >
-            {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
-          </button>
-        </div>
-        <p className="newsletter-consent" id="newsletter-consent">
-          By subscribing, you agree to receive occasional event and community emails from UX
-          Design Den. Unsubscribe at any time. <a href="/privacy">Privacy</a>
-        </p>
-        <p
-          className={`form-status ${formState === "error" ? "is-error" : ""}`}
-          id="form-status"
-          aria-live="polite"
-        >
-          {message}
-        </p>
-      </form>
-    </div>
-  );
+  const titleShift = reducedMotion ? 0 : heroProgress * 46;
+  const portalScale = reducedMotion ? 1 : 1 + heroProgress * 0.36;
+  const portalRotation = reducedMotion ? -4 : -4 + heroProgress * 9;
 
   return (
     <div className="site-shell">
@@ -281,17 +277,8 @@ export function HomePage() {
             className="hero-sticky"
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}
-            style={
-              {
-                "--grid-tilt": `${heroProgress * 17}deg`,
-                "--grid-scale": 1 + heroProgress * 0.9,
-                "--grid-opacity": 1 - heroProgress,
-              } as CSSProperties
-            }
           >
-            <div className="hero-depth-grid" aria-hidden="true" />
-
-            <header className="hero-nav" style={{ opacity: chromeFade }}>
+            <header className="hero-nav">
               <a className="wordmark" href="#top" aria-label="UX Design Den home">
                 UX DESIGN<br />DEN
               </a>
@@ -303,16 +290,16 @@ export function HomePage() {
               </nav>
             </header>
 
-            <div className="hero-intro" style={{ opacity: chromeFade }}>
+            <div className="hero-intro">
               <p>Design practice.<br />Without the pressure.</p>
             </div>
 
-            <div className="hero-title-wrap" style={{ opacity: titleFade }}>
+            <div className="hero-title-wrap">
               <h1>
-                <span style={{ transform: `translate3d(${-titleExit * 10}vw, ${-titleExit * 82}vh, 0)` }}>
+                <span style={{ transform: `translate3d(${-titleShift * 0.32}px, ${-titleShift}px, 0)` }}>
                   Welcome
                 </span>
-                <span style={{ transform: `translate3d(${titleExit * 12}vw, ${titleExit * 86}vh, 0)` }}>
+                <span style={{ transform: `translate3d(${titleShift * 0.45}px, ${-titleShift * 0.62}px, 0)` }}>
                   to the Den
                 </span>
               </h1>
@@ -321,69 +308,90 @@ export function HomePage() {
             <div
               className="hero-portal"
               aria-hidden="true"
-              style={{
-                opacity: reducedMotion ? 0.9 : Math.min(1, heroProgress / 0.09),
-                transform: "translate(-50%, -50%)",
-              }}
+              style={{ transform: `translateX(-50%) rotate(${portalRotation}deg) scale(${portalScale})` }}
             >
-              <DenPortal3D
+              <LiquidField
                 pointer={pointer}
                 progress={heroProgress}
                 reducedMotion={reducedMotion}
               />
+
+              <div className="portal-paper">
+                <PaperTexture
+                  width="100%"
+                  height="100%"
+                  colorFront="#ecdcc1"
+                  colorBack="#271216"
+                  contrast={0.42}
+                  roughness={0.62}
+                  fiber={0.58}
+                  fiberSize={0.36}
+                  crumples={0.28}
+                  crumpleSize={0.58}
+                  folds={0.14}
+                  foldCount={5}
+                  drops={0.28}
+                  fade={0.24}
+                  seed={31}
+                  speed={0}
+                  maxPixelCount={800000}
+                />
+              </div>
             </div>
 
-            <div
-              className="portal-crossing-glow"
-              aria-hidden="true"
-              style={{ opacity: crossingGlow }}
-            />
-
-            <div className="threshold-label" style={{ opacity: chromeFade }}>
-              <span>THE THRESHOLD</span>
-              <span aria-hidden="true">↘</span>
-            </div>
-            <p className="hero-count" style={{ opacity: chromeFade }} aria-label={`${Math.round(heroProgress * 100)} percent through introduction`}>
+            <p className="hero-count" aria-label={`${Math.round(heroProgress * 100)} percent through introduction`}>
               {String(Math.round(heroProgress * 100)).padStart(2, "0")}<br />/100
             </p>
-            <p className="scroll-cue" style={{ opacity: chromeFade }}>Scroll to enter <span aria-hidden="true">↓</span></p>
-
-            {!reducedMotion && (
-              <section
-                className="arrival-scene"
-                aria-labelledby="newsletter-title"
-                aria-hidden={arrivalProgress < 0.5}
-                style={
-                  {
-                    "--arrival-opacity": arrivalProgress,
-                    "--arrival-shift": `${(1 - arrivalProgress) * 44}px`,
-                    pointerEvents: arrivalProgress > 0.72 ? "auto" : "none",
-                  } as CSSProperties
-                }
-              >
-                <div className="arrival-vignette" aria-hidden="true" />
-                {newsletterContent}
-              </section>
-            )}
+            <p className="scroll-cue">Scroll to enter <span aria-hidden="true">↓</span></p>
           </div>
-          {!reducedMotion && (
-            <span className="newsletter-anchor" id="newsletter" aria-hidden="true" />
-          )}
         </section>
 
-        {reducedMotion && (
-          <section className="newsletter-scene" id="newsletter" aria-labelledby="newsletter-title">
-            <div className="newsletter-beam" aria-hidden="true">
-              <ShaderField
-                colors={["#100b0c", "#23b7b7", "#dce85a", "#6bd8ce", "#241014"]}
-                rotation={-6}
-                scale={1.08}
-                speed={0}
-              />
-            </div>
-            {newsletterContent}
-          </section>
-        )}
+        <section className="newsletter-scene" id="newsletter" aria-labelledby="newsletter-title">
+          <div className="newsletter-beam" aria-hidden="true">
+            <ShaderField
+              colors={["#100b0c", "#e85f47", "#dce85a", "#6bd8ce", "#241014"]}
+              rotation={-6}
+              scale={1.08}
+              speed={reducedMotion ? 0 : 0.1}
+            />
+          </div>
+          <div className="newsletter-content">
+            <div className="scene-index">01 / NEWSLETTER</div>
+            <h2 id="newsletter-title">Stay close to what’s next.</h2>
+            <p>One note when something worth leaving the house for is coming up.</p>
+
+            <form onSubmit={handleSubmit} noValidate>
+              <label htmlFor="newsletter-email">Email address</label>
+              <div className="newsletter-form-row">
+                <input
+                  id="newsletter-email"
+                  name="email"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  placeholder="YOUR EMAIL ADDRESS"
+                  required
+                  aria-describedby="newsletter-consent form-status"
+                  disabled={formState === "submitting"}
+                />
+                <button type="submit" disabled={formState === "submitting"}>
+                  {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
+                </button>
+              </div>
+              <p className="newsletter-consent" id="newsletter-consent">
+                By subscribing, you agree to receive occasional event and community emails from UX
+                Design Den. Unsubscribe at any time. <a href="/privacy">Privacy</a>
+              </p>
+              <p
+                className={`form-status ${formState === "error" ? "is-error" : ""}`}
+                id="form-status"
+                aria-live="polite"
+              >
+                {message}
+              </p>
+            </form>
+          </div>
+        </section>
 
         <section className="mission-scene" aria-labelledby="mission-title">
           <div className="scene-index">/ MISSION</div>
