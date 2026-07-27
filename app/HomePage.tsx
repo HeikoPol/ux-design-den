@@ -239,7 +239,7 @@ export function HomePage() {
   const newsletterContent = (
     <div className="newsletter-content">
       <div className="scene-index">01 / NEWSLETTER</div>
-      <h2 id="newsletter-title">Stay close<br />to the Den.</h2>
+      <h2 id="newsletter-title">Stay close<br />to what’s next.</h2>
       <p>One note when something worth leaving the house for is coming up.</p>
 
       <form onSubmit={handleSubmit} noValidate>
