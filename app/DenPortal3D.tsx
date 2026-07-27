@@ -75,7 +75,9 @@ export function DenPortal3D({
     }
 
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.7));
+    renderer.setPixelRatio(
+      Math.min(Math.max(window.devicePixelRatio * 1.25, 2), 2.5),
+    );
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.domElement.setAttribute("aria-hidden", "true");
     mount.appendChild(renderer.domElement);

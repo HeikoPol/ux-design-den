@@ -216,7 +216,7 @@ export function HomePage() {
     ? 0.58
     : 0.08 +
       (1 - Math.pow(1 - portalReveal, 3)) * 0.54 +
-      Math.pow(swallowProgress, 1.35) * 3.8;
+      Math.pow(swallowProgress, 1.35) * 2;
   const titleExitRaw = reducedMotion
     ? 0
     : Math.min(1, Math.max(0, (heroProgress - 0.06) / 0.5));
