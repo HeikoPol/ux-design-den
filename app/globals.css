@@ -65,7 +65,7 @@ a {
 
 .hero-stage {
   position: relative;
-  height: 220svh;
+  height: 280svh;
   background: var(--ink);
 }
 
@@ -211,10 +211,9 @@ footer a:hover {
   position: absolute;
   z-index: 2;
   left: 50%;
-  top: 52%;
-  width: min(78vw, 1120px);
-  height: min(57svh, 660px);
-  min-height: 390px;
+  top: 50%;
+  width: 100vw;
+  height: 100svh;
   transform-origin: 50% 50%;
   will-change: transform, opacity;
   pointer-events: none;
@@ -231,8 +230,8 @@ footer a:hover {
 
 .den-portal-canvas {
   filter: saturate(1.18) contrast(1.08);
-  -webkit-mask-image: radial-gradient(ellipse 62% 48% at 50% 50%, #000 45%, rgba(0, 0, 0, 0.88) 60%, transparent 78%);
-  mask-image: radial-gradient(ellipse 62% 48% at 50% 50%, #000 45%, rgba(0, 0, 0, 0.88) 60%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 58% 45% at 50% 50%, #000 42%, rgba(0, 0, 0, 0.93) 58%, transparent 79%);
+  mask-image: radial-gradient(ellipse 58% 45% at 50% 50%, #000 42%, rgba(0, 0, 0, 0.93) 58%, transparent 79%);
 }
 
 .den-portal-canvas[data-webgl="unavailable"] {
@@ -257,6 +256,48 @@ footer a:hover {
   transform: translate(-50%, -50%);
   pointer-events: none;
   transition: opacity 100ms linear;
+}
+
+.portal-crossing-glow {
+  position: absolute;
+  z-index: 6;
+  inset: -20%;
+  background:
+    radial-gradient(ellipse at center, rgba(233, 230, 223, 0.92) 0 4%, rgba(220, 232, 90, 0.58) 11%, rgba(107, 216, 206, 0.22) 26%, transparent 58%);
+  mix-blend-mode: screen;
+  filter: blur(22px);
+  transform: scale(1.2);
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.arrival-scene {
+  position: absolute;
+  z-index: 7;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  opacity: var(--arrival-opacity);
+  transform: translate3d(0, var(--arrival-shift), 0);
+  will-change: opacity, transform;
+}
+
+.arrival-vignette {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 52% 44% at 50% 48%, rgba(10, 7, 9, 0.2) 0 38%, rgba(13, 9, 11, 0.56) 72%, rgba(13, 9, 11, 0.9) 100%),
+    linear-gradient(to bottom, rgba(13, 9, 11, 0.25), rgba(13, 9, 11, 0.72));
+  pointer-events: none;
+}
+
+.newsletter-anchor {
+  position: absolute;
+  left: 0;
+  bottom: 100svh;
+  width: 1px;
+  height: 1px;
 }
 
 .liquid-field,
@@ -806,6 +847,29 @@ footer a:hover {
   color: #ff9d87;
 }
 
+.arrival-scene .newsletter-content {
+  z-index: 1;
+  min-height: 100svh;
+  padding-top: clamp(76px, 8vw, 120px);
+  padding-bottom: clamp(48px, 6vw, 82px);
+  align-content: center;
+}
+
+.arrival-scene .newsletter-content h2 {
+  text-shadow: 0 3px 42px rgba(0, 0, 0, 0.72);
+}
+
+.arrival-scene .newsletter-content > p {
+  color: rgba(233, 230, 223, 0.82);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.86);
+}
+
+.arrival-scene .newsletter-content form {
+  background: rgba(12, 9, 11, 0.86);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
+}
+
 footer {
   padding: 24px clamp(24px, 6vw, 92px) 32px;
   display: grid;
@@ -1069,7 +1133,7 @@ footer p {
 
 @media (max-width: 620px) {
   .hero-stage {
-    height: 190svh;
+    height: 245svh;
   }
 
   .hero-sticky {
@@ -1100,14 +1164,19 @@ footer p {
   }
 
   .hero-portal {
-    top: 54%;
-    width: 132vw;
-    height: 48svh;
-    min-height: 340px;
+    top: 51%;
+    width: 122vw;
+    height: 100svh;
   }
 
   .threshold-label {
     width: 74vw;
+  }
+
+  .arrival-scene .newsletter-content {
+    min-height: 100svh;
+    padding-top: 68px;
+    padding-bottom: 42px;
   }
 
   .hero-intro {

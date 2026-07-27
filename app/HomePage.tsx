@@ -208,21 +208,79 @@ export function HomePage() {
 
   const portalReveal = reducedMotion
     ? 1
-    : Math.min(1, Math.max(0, heroProgress / 0.28));
+    : Math.min(1, Math.max(0, heroProgress / 0.3));
+  const swallowProgress = reducedMotion
+    ? 0
+    : Math.min(1, Math.max(0, (heroProgress - 0.48) / 0.48));
   const portalScale = reducedMotion
-    ? 0.82
-    : 0.16 +
-      (1 - Math.pow(1 - portalReveal, 3)) * 0.86 +
-      Math.max(0, heroProgress - 0.68) * 1.4;
+    ? 0.58
+    : 0.08 +
+      (1 - Math.pow(1 - portalReveal, 3)) * 0.54 +
+      Math.pow(swallowProgress, 2) * 1.3;
   const titleSpread = reducedMotion
     ? 42
-    : Math.min(1, heroProgress / 0.52) * 116;
+    : Math.min(1, heroProgress / 0.55) * 140;
   const titleFade = reducedMotion
     ? 1
-    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.7) / 0.22));
+    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.58) / 0.18));
   const chromeFade = reducedMotion
     ? 1
-    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.76) / 0.16));
+    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.62) / 0.14));
+  const arrivalProgress = reducedMotion
+    ? 0
+    : Math.min(1, Math.max(0, (heroProgress - 0.76) / 0.18));
+  const crossingDistance = (heroProgress - 0.7) / 0.085;
+  const crossingGlow = reducedMotion
+    ? 0
+    : Math.exp(-(crossingDistance * crossingDistance)) * 0.88;
+
+  const newsletterContent = (
+    <div className="newsletter-content">
+      <div className="scene-index">01 / NEWSLETTER</div>
+      <h2 id="newsletter-title">Stay close<br />to the Den.</h2>
+      <p>One note when something worth leaving the house for is coming up.</p>
+
+      <form onSubmit={handleSubmit} noValidate>
+        <label htmlFor="newsletter-email">Email address</label>
+        <div className="newsletter-form-row">
+          <input
+            id="newsletter-email"
+            name="email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            placeholder="YOUR EMAIL ADDRESS"
+            required
+            aria-describedby="newsletter-consent form-status"
+            disabled={
+              formState === "submitting" ||
+              (!reducedMotion && arrivalProgress < 0.72)
+            }
+          />
+          <button
+            type="submit"
+            disabled={
+              formState === "submitting" ||
+              (!reducedMotion && arrivalProgress < 0.72)
+            }
+          >
+            {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
+          </button>
+        </div>
+        <p className="newsletter-consent" id="newsletter-consent">
+          By subscribing, you agree to receive occasional event and community emails from UX
+          Design Den. Unsubscribe at any time. <a href="/privacy">Privacy</a>
+        </p>
+        <p
+          className={`form-status ${formState === "error" ? "is-error" : ""}`}
+          id="form-status"
+          aria-live="polite"
+        >
+          {message}
+        </p>
+      </form>
+    </div>
+  );
 
   return (
     <div className="site-shell">
@@ -235,8 +293,8 @@ export function HomePage() {
             style={
               {
                 "--grid-tilt": `${heroProgress * 17}deg`,
-                "--grid-scale": 1 + heroProgress * 0.42,
-                "--grid-opacity": 1 - heroProgress * 0.58,
+                "--grid-scale": 1 + heroProgress * 0.9,
+                "--grid-opacity": 1 - heroProgress,
               } as CSSProperties
             }
           >
@@ -284,6 +342,12 @@ export function HomePage() {
               />
             </div>
 
+            <div
+              className="portal-crossing-glow"
+              aria-hidden="true"
+              style={{ opacity: crossingGlow }}
+            />
+
             <div className="threshold-label" style={{ opacity: chromeFade }}>
               <span>THE THRESHOLD</span>
               <span aria-hidden="true">↘</span>
@@ -292,55 +356,43 @@ export function HomePage() {
               {String(Math.round(heroProgress * 100)).padStart(2, "0")}<br />/100
             </p>
             <p className="scroll-cue" style={{ opacity: chromeFade }}>Scroll to enter <span aria-hidden="true">↓</span></p>
-          </div>
-        </section>
 
-        <section className="newsletter-scene" id="newsletter" aria-labelledby="newsletter-title">
-          <div className="newsletter-beam" aria-hidden="true">
-            <ShaderField
-              colors={["#100b0c", "#e85f47", "#dce85a", "#6bd8ce", "#241014"]}
-              rotation={-6}
-              scale={1.08}
-              speed={reducedMotion ? 0 : 0.1}
-            />
-          </div>
-          <div className="newsletter-content">
-            <div className="scene-index">01 / NEWSLETTER</div>
-            <h2 id="newsletter-title">Stay close<br />to the Den.</h2>
-            <p>One note when something worth leaving the house for is coming up.</p>
-
-            <form onSubmit={handleSubmit} noValidate>
-              <label htmlFor="newsletter-email">Email address</label>
-              <div className="newsletter-form-row">
-                <input
-                  id="newsletter-email"
-                  name="email"
-                  type="email"
-                  inputMode="email"
-                  autoComplete="email"
-                  placeholder="YOUR EMAIL ADDRESS"
-                  required
-                  aria-describedby="newsletter-consent form-status"
-                  disabled={formState === "submitting"}
-                />
-                <button type="submit" disabled={formState === "submitting"}>
-                  {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
-                </button>
-              </div>
-              <p className="newsletter-consent" id="newsletter-consent">
-                By subscribing, you agree to receive occasional event and community emails from UX
-                Design Den. Unsubscribe at any time. <a href="/privacy">Privacy</a>
-              </p>
-              <p
-                className={`form-status ${formState === "error" ? "is-error" : ""}`}
-                id="form-status"
-                aria-live="polite"
+            {!reducedMotion && (
+              <section
+                className="arrival-scene"
+                aria-labelledby="newsletter-title"
+                aria-hidden={arrivalProgress < 0.5}
+                style={
+                  {
+                    "--arrival-opacity": arrivalProgress,
+                    "--arrival-shift": `${(1 - arrivalProgress) * 44}px`,
+                    pointerEvents: arrivalProgress > 0.72 ? "auto" : "none",
+                  } as CSSProperties
+                }
               >
-                {message}
-              </p>
-            </form>
+                <div className="arrival-vignette" aria-hidden="true" />
+                {newsletterContent}
+              </section>
+            )}
           </div>
+          {!reducedMotion && (
+            <span className="newsletter-anchor" id="newsletter" aria-hidden="true" />
+          )}
         </section>
+
+        {reducedMotion && (
+          <section className="newsletter-scene" id="newsletter" aria-labelledby="newsletter-title">
+            <div className="newsletter-beam" aria-hidden="true">
+              <ShaderField
+                colors={["#100b0c", "#e85f47", "#dce85a", "#6bd8ce", "#241014"]}
+                rotation={-6}
+                scale={1.08}
+                speed={0}
+              />
+            </div>
+            {newsletterContent}
+          </section>
+        )}
 
         <section className="mission-scene" aria-labelledby="mission-title">
           <div className="scene-index">/ MISSION</div>

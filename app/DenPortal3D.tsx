@@ -283,6 +283,10 @@ export function DenPortal3D({
       group.position.x = Math.sin(travel * Math.PI * 2) * 0.18;
       particles.rotation.z = -elapsed * 0.018 * motionMultiplier;
       core.scale.setScalar(1 + Math.sin(elapsed * 1.2) * 0.08 * motionMultiplier);
+      tunnelMaterial.opacity = 0.34 + travel * 0.24;
+      wireMaterial.opacity = 0.055 + travel * 0.055;
+      particleMaterial.opacity = 0.62 + travel * 0.24;
+      coreMaterial.opacity = 0.48 + travel * 0.3;
 
       camera.lookAt(
         camera.position.x * 0.18,
