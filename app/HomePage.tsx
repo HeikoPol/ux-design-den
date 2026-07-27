@@ -206,17 +206,6 @@ export function HomePage() {
     }
   }
 
-  const portalReveal = reducedMotion
-    ? 1
-    : Math.min(1, Math.max(0, heroProgress / 0.3));
-  const swallowProgress = reducedMotion
-    ? 0
-    : Math.min(1, Math.max(0, (heroProgress - 0.22) / 0.62));
-  const portalScale = reducedMotion
-    ? 0.58
-    : 0.08 +
-      (1 - Math.pow(1 - portalReveal, 3)) * 0.54 +
-      Math.pow(swallowProgress, 1.35) * 2;
   const titleExitRaw = reducedMotion
     ? 0
     : Math.min(1, Math.max(0, (heroProgress - 0.06) / 0.5));
@@ -334,7 +323,7 @@ export function HomePage() {
               aria-hidden="true"
               style={{
                 opacity: reducedMotion ? 0.9 : Math.min(1, heroProgress / 0.09),
-                transform: `translate(-50%, -50%) scale(${portalScale})`,
+                transform: "translate(-50%, -50%)",
               }}
             >
               <DenPortal3D

@@ -215,31 +215,17 @@ footer a:hover {
   top: 50%;
   width: 100vw;
   height: 100svh;
-  transform-origin: 50% 50%;
-  will-change: transform, opacity;
+  will-change: opacity;
   pointer-events: none;
 }
 
-.den-portal-canvas,
-.den-portal-canvas canvas {
+.den-portal-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   display: block;
-}
-
-.den-portal-canvas {
-  filter: saturate(1.18) contrast(1.08);
-  -webkit-mask-image: radial-gradient(ellipse 58% 45% at 50% 50%, #000 42%, rgba(0, 0, 0, 0.93) 58%, transparent 79%);
-  mask-image: radial-gradient(ellipse 58% 45% at 50% 50%, #000 42%, rgba(0, 0, 0, 0.93) 58%, transparent 79%);
-}
-
-.den-portal-canvas[data-webgl="unavailable"] {
-  border: 1px solid rgba(107, 216, 206, 0.65);
-  border-radius: 50%;
-  background:
-    radial-gradient(ellipse at center, #0f0b0d 0 24%, var(--brand-teal) 25%, #6bd8ce 29%, #111011 45%, transparent 67%);
+  shape-rendering: geometricPrecision;
 }
 
 .threshold-label {
