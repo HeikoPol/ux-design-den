@@ -13,7 +13,7 @@ import {
   PaperTexture,
   Warp,
 } from "@paper-design/shaders-react";
-import { SitePointerEffects } from "./HeroPointerEffects";
+import { AxisCursor } from "./AxisCursor";
 
 const pastEvents = [
   {
@@ -267,12 +267,12 @@ export function HomePage() {
   }
 
   const titleShift = reducedMotion ? 0 : heroProgress * 46;
-  const portalScale = reducedMotion ? 1 : 1 + heroProgress * 1.75;
-  const portalRotation = reducedMotion ? -4 : -4 + heroProgress * 24;
+  const portalScale = reducedMotion ? 1 : 1 + heroProgress * 0.36;
+  const portalRotation = reducedMotion ? -4 : -4 + heroProgress * 9;
 
   return (
     <div className="site-shell">
-      <SitePointerEffects disabled={reducedMotion} />
+      <AxisCursor disabled={reducedMotion} />
 
       <main>
         <section className="hero-stage" ref={heroRef} id="top">
