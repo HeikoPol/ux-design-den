@@ -38,7 +38,7 @@ function easeInOut(value: number) {
 
 function seeded(index: number, salt: number) {
   const value = Math.sin(index * 127.1 + salt * 311.7) * 43758.5453;
-  return value - Math.floor(value);
+  return Number((value - Math.floor(value)).toFixed(8));
 }
 
 function ringState(
@@ -138,7 +138,8 @@ export function DenPortal3D({
       color: PALETTE[state.index % PALETTE.length],
       depth: state.depth,
       path: pathFromPoints(points, true),
-      strokeWidth: 0.8 + state.depth * 1.9,
+      strokeOpacity: (0.16 + state.depth * 0.72).toFixed(4),
+      strokeWidth: (0.8 + state.depth * 1.9).toFixed(3),
     };
   });
 
@@ -160,11 +161,11 @@ export function DenPortal3D({
 
     return {
       color: PALETTE[seed.paletteIndex],
-      opacity: 0.2 + depth * 0.8,
+      height: (seed.size * (0.45 + depth * 1.2)).toFixed(2),
+      opacity: (0.2 + depth * 0.8).toFixed(4),
       rotation: (seed.offset * 180 + travel * 120 + index) % 180,
-      size: seed.size * (0.45 + depth * 1.2),
-      x: point.x,
-      y: point.y,
+      x: point.x.toFixed(2),
+      y: point.y.toFixed(2),
     };
   });
 
@@ -204,7 +205,7 @@ export function DenPortal3D({
               d={ring.path}
               stroke={ring.color}
               strokeWidth={ring.strokeWidth}
-              strokeOpacity={0.16 + ring.depth * 0.72}
+              strokeOpacity={ring.strokeOpacity}
               vectorEffect="non-scaling-stroke"
             />
           ))}
@@ -214,13 +215,13 @@ export function DenPortal3D({
           {particles.map((particle, index) => (
             <rect
               key={`particle-${index}`}
-              x={particle.x - particle.size / 2}
-              y={particle.y - particle.size / 2}
-              width={particle.size}
-              height={particle.size}
+              x={(Number(particle.x) - Number(particle.height) / 2).toFixed(2)}
+              y={(Number(particle.y) - Number(particle.height) / 2).toFixed(2)}
+              width={particle.height}
+              height={particle.height}
               fill={particle.color}
               opacity={particle.opacity}
-              transform={`rotate(${particle.rotation.toFixed(2)} ${particle.x.toFixed(2)} ${particle.y.toFixed(2)})`}
+              transform={`rotate(${particle.rotation.toFixed(2)} ${particle.x} ${particle.y})`}
             />
           ))}
         </g>
@@ -230,7 +231,7 @@ export function DenPortal3D({
           cy="0"
           r="78"
           fill="#23b7b7"
-          opacity={0.68 + travel * 0.22}
+          opacity={(0.68 + travel * 0.22).toFixed(4)}
           transform={`scale(${corePulse.toFixed(4)})`}
         />
         <circle
