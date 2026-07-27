@@ -1,18 +1,15 @@
 "use client";
 
 import {
+  CSSProperties,
   FormEvent,
   PointerEvent,
   useEffect,
   useRef,
   useState,
 } from "react";
-import {
-  MeshGradient,
-  Metaballs,
-  PaperTexture,
-  Warp,
-} from "@paper-design/shaders-react";
+import { Warp } from "@paper-design/shaders-react";
+import { DenPortal3D } from "./DenPortal3D";
 
 const pastEvents = [
   {
@@ -93,62 +90,6 @@ function ShaderField({
       speed={speed}
       maxPixelCount={1400000}
     />
-  );
-}
-
-function LiquidField({
-  pointer,
-  progress,
-  reducedMotion,
-}: {
-  pointer: { x: number; y: number };
-  progress: number;
-  reducedMotion: boolean;
-}) {
-  const pointerEnergy = Math.min(
-    1,
-    Math.hypot(pointer.x / 0.17, pointer.y / 0.12),
-  );
-
-  return (
-    <div className="liquid-field">
-      <div className="liquid-base">
-        <MeshGradient
-          width="100%"
-          height="100%"
-          colors={["#130d0f", "#e85f47", "#6bd8ce", "#dce85a", "#b73d80", "#24184d"]}
-          distortion={0.72 + pointerEnergy * 0.16}
-          swirl={0.62 + pointerEnergy * 0.22}
-          grainMixer={0.18}
-          grainOverlay={0.035}
-          fit="cover"
-          scale={1.13 + progress * 0.14}
-          rotation={-10 + progress * 15 + pointer.x * 26}
-          offsetX={pointer.x * 0.72}
-          offsetY={pointer.y * 0.72}
-          speed={reducedMotion ? 0 : 0.24}
-          maxPixelCount={1400000}
-        />
-      </div>
-
-      <div className="liquid-response" style={{ opacity: 0.32 + pointerEnergy * 0.28 }}>
-        <Metaballs
-          width="100%"
-          height="100%"
-          colorBack="#00000000"
-          colors={["#6bd8cecc", "#e85f47bb", "#dce85aaa", "#b73d80b8"]}
-          count={11}
-          size={0.4 + pointerEnergy * 0.08}
-          fit="cover"
-          scale={1.08 + pointerEnergy * 0.12}
-          rotation={pointer.x * 52 - pointer.y * 24}
-          offsetX={pointer.x * 2.7}
-          offsetY={pointer.y * 2.7}
-          speed={reducedMotion ? 0 : 0.16}
-          maxPixelCount={900000}
-        />
-      </div>
-    </div>
   );
 }
 
@@ -265,9 +206,23 @@ export function HomePage() {
     }
   }
 
-  const titleShift = reducedMotion ? 0 : heroProgress * 46;
-  const portalScale = reducedMotion ? 1 : 1 + heroProgress * 0.36;
-  const portalRotation = reducedMotion ? -4 : -4 + heroProgress * 9;
+  const portalReveal = reducedMotion
+    ? 1
+    : Math.min(1, Math.max(0, heroProgress / 0.28));
+  const portalScale = reducedMotion
+    ? 0.82
+    : 0.16 +
+      (1 - Math.pow(1 - portalReveal, 3)) * 0.86 +
+      Math.max(0, heroProgress - 0.68) * 1.4;
+  const titleSpread = reducedMotion
+    ? 42
+    : Math.min(1, heroProgress / 0.52) * 116;
+  const titleFade = reducedMotion
+    ? 1
+    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.7) / 0.22));
+  const chromeFade = reducedMotion
+    ? 1
+    : 1 - Math.min(1, Math.max(0, (heroProgress - 0.76) / 0.16));
 
   return (
     <div className="site-shell">
@@ -277,8 +232,17 @@ export function HomePage() {
             className="hero-sticky"
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}
+            style={
+              {
+                "--grid-tilt": `${heroProgress * 17}deg`,
+                "--grid-scale": 1 + heroProgress * 0.42,
+                "--grid-opacity": 1 - heroProgress * 0.58,
+              } as CSSProperties
+            }
           >
-            <header className="hero-nav">
+            <div className="hero-depth-grid" aria-hidden="true" />
+
+            <header className="hero-nav" style={{ opacity: chromeFade }}>
               <a className="wordmark" href="#top" aria-label="UX Design Den home">
                 UX DESIGN<br />DEN
               </a>
@@ -290,16 +254,16 @@ export function HomePage() {
               </nav>
             </header>
 
-            <div className="hero-intro">
+            <div className="hero-intro" style={{ opacity: chromeFade }}>
               <p>Design practice.<br />Without the pressure.</p>
             </div>
 
-            <div className="hero-title-wrap">
+            <div className="hero-title-wrap" style={{ opacity: titleFade }}>
               <h1>
-                <span style={{ transform: `translate3d(${-titleShift * 0.32}px, ${-titleShift}px, 0)` }}>
+                <span style={{ transform: `translate3d(${-titleSpread * 0.09}px, ${-titleSpread}px, 0)` }}>
                   Welcome
                 </span>
-                <span style={{ transform: `translate3d(${titleShift * 0.45}px, ${-titleShift * 0.62}px, 0)` }}>
+                <span style={{ transform: `translate3d(${titleSpread * 0.12}px, ${titleSpread}px, 0)` }}>
                   to the Den
                 </span>
               </h1>
@@ -308,41 +272,26 @@ export function HomePage() {
             <div
               className="hero-portal"
               aria-hidden="true"
-              style={{ transform: `translateX(-50%) rotate(${portalRotation}deg) scale(${portalScale})` }}
+              style={{
+                opacity: reducedMotion ? 0.9 : Math.min(1, heroProgress / 0.09),
+                transform: `translate(-50%, -50%) scale(${portalScale})`,
+              }}
             >
-              <LiquidField
+              <DenPortal3D
                 pointer={pointer}
                 progress={heroProgress}
                 reducedMotion={reducedMotion}
               />
-
-              <div className="portal-paper">
-                <PaperTexture
-                  width="100%"
-                  height="100%"
-                  colorFront="#ecdcc1"
-                  colorBack="#271216"
-                  contrast={0.42}
-                  roughness={0.62}
-                  fiber={0.58}
-                  fiberSize={0.36}
-                  crumples={0.28}
-                  crumpleSize={0.58}
-                  folds={0.14}
-                  foldCount={5}
-                  drops={0.28}
-                  fade={0.24}
-                  seed={31}
-                  speed={0}
-                  maxPixelCount={800000}
-                />
-              </div>
             </div>
 
-            <p className="hero-count" aria-label={`${Math.round(heroProgress * 100)} percent through introduction`}>
+            <div className="threshold-label" style={{ opacity: chromeFade }}>
+              <span>THE THRESHOLD</span>
+              <span aria-hidden="true">↘</span>
+            </div>
+            <p className="hero-count" style={{ opacity: chromeFade }} aria-label={`${Math.round(heroProgress * 100)} percent through introduction`}>
               {String(Math.round(heroProgress * 100)).padStart(2, "0")}<br />/100
             </p>
-            <p className="scroll-cue">Scroll to enter <span aria-hidden="true">↓</span></p>
+            <p className="scroll-cue" style={{ opacity: chromeFade }}>Scroll to enter <span aria-hidden="true">↓</span></p>
           </div>
         </section>
 
