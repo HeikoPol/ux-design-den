@@ -398,14 +398,29 @@ export function HomePage() {
 
         <section className="next-scene" id="next" aria-labelledby="next-title">
           <div className="scene-index">02 / NEXT EVENT</div>
-          <p className="next-status"><span aria-hidden="true" /> Nothing announced yet</p>
-          <h2 id="next-title">The next one<br />is brewing.</h2>
-          <p className="next-copy">
-            Workshops, experiments, and good conversations. Follow the calendar for the next drop.
-          </p>
-          <a className="orbit-link" href="https://luma.com/UXDD" target="_blank" rel="noreferrer">
-            <span>Open Luma</span>
-            <span aria-hidden="true">↗</span>
+          <p className="next-status"><span aria-hidden="true" /> Event full / waitlist open</p>
+          <a
+            className="next-event-card"
+            href="https://luma.com/oq43d0wr"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="UXDD Portfolio Review Session on Luma"
+          >
+            <div className="next-event-media">
+              <img
+                src="/events/portfolio-review.jpg"
+                alt="UXDD Portfolio Review Session event poster"
+              />
+            </div>
+            <div className="next-event-details">
+              <p className="next-event-date">WED / AUG 26 / 5:30–7:30 PM</p>
+              <h2 id="next-title">Portfolio<br />Review Session</h2>
+              <p className="next-copy">
+                Three minutes per portfolio, with real-time feedback from hiring managers and senior designers.
+              </p>
+              <p className="next-event-location">Northeastern University / Vancouver</p>
+              <span className="next-event-open">Join the waitlist <span aria-hidden="true">↗</span></span>
+            </div>
           </a>
         </section>
 
