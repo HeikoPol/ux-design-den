@@ -691,22 +691,21 @@ footer a:hover {
 .hero-newsletter {
   position: absolute;
   z-index: 7;
-  top: 45%;
+  top: 61%;
   left: 50%;
   width: min(720px, calc(100vw - 48px));
-  padding: 14px 16px 12px;
+  padding: 12px 14px 10px;
   display: grid;
-  grid-template-columns: 108px minmax(0, 1fr);
-  gap: 20px;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 16px;
   align-items: start;
   transform: translateX(-50%);
-  border: 1px solid rgba(233, 230, 223, 0.35);
-  background: var(--ink);
+  background: rgba(17, 16, 17, 0.96);
 }
 
 .hero-newsletter h2 {
   margin: 0;
-  padding-top: 15px;
+  padding-top: 13px;
   color: var(--muted);
   font-size: 0.68rem;
   font-weight: 700;
@@ -733,15 +732,16 @@ footer a:hover {
 
 .newsletter-form-row {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
 }
 
 .newsletter-form-row input {
   min-width: 0;
-  height: 48px;
-  padding: 0;
-  border: 0;
-  border-bottom: 1px solid rgba(233, 230, 223, 0.72);
+  height: 40px;
+  padding: 0 13px;
+  border: 1px solid rgba(233, 230, 223, 0.72);
   background: transparent;
   color: var(--chalk);
   font-family: var(--display-font);
@@ -751,8 +751,9 @@ footer a:hover {
 }
 
 .newsletter-form-row input:focus {
-  border-bottom-color: var(--acid);
-  outline: 2px solid transparent;
+  border-color: var(--acid);
+  outline: 1px solid var(--acid);
+  outline-offset: 1px;
 }
 
 .newsletter-form-row input::placeholder {
@@ -761,14 +762,14 @@ footer a:hover {
 
 .newsletter-form-row button {
   align-self: center;
-  min-width: 142px;
-  height: 44px;
-  margin-left: 14px;
-  padding: 0 20px;
+  min-width: 116px;
+  height: 36px;
+  margin: 0;
+  padding: 0 14px;
   border: 0;
   background: var(--chalk);
   color: var(--ink);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 760;
   cursor: pointer;
   transition: background 160ms ease, color 160ms ease;
@@ -1174,7 +1175,7 @@ footer p {
   }
 
   .hero-newsletter {
-    top: 43%;
+    top: 55%;
     width: calc(100vw - 40px);
     padding: 12px;
     grid-template-columns: 1fr;
@@ -1187,15 +1188,15 @@ footer p {
   }
 
   .newsletter-form-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .newsletter-form-row button {
-    width: 100%;
-    min-width: 0;
-    height: 58px;
+    width: auto;
+    min-width: 108px;
+    height: 36px;
     margin: 0;
-    padding: 0 20px;
+    padding: 0 10px;
   }
 
   .newsletter-consent {
