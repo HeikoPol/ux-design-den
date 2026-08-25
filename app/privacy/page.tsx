@@ -66,7 +66,7 @@ export default function PrivacyPage() {
   return (
     <LegalPage
       eyebrow="PRIVACY"
-      title="Your inbox. Your information."
+      title="Privacy, plainly."
       intro="The short version: we collect your email only when you give it to us, use it to keep you close to UX Den, and give you a simple way to leave. This notice explains the details."
       sections={sections}
     />

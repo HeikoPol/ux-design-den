@@ -352,7 +352,7 @@ export function HomePage() {
         <section className="newsletter-scene" id="newsletter" aria-labelledby="newsletter-title">
           <div className="newsletter-content">
             <div className="scene-index">01 / NEWSLETTER</div>
-            <h2 id="newsletter-title">Stay close to what’s next.</h2>
+            <h2 id="newsletter-title">Stay Updated</h2>
             <p>One note when something worth leaving the house for is coming up.</p>
 
             <form onSubmit={handleSubmit} noValidate>
