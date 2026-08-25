@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { LegalPage } from "../LegalPage";
 
 export const metadata: Metadata = {
-  title: "Privacy | UX Design Den",
-  description: "How UX Design Den handles personal information submitted through this website.",
+  title: "Privacy | UX Den",
+  description: "How UX Den handles personal information submitted through this website.",
 };
 
 const sections = [
@@ -17,7 +17,7 @@ const sections = [
   {
     title: "Why we use it",
     items: [
-      "To send occasional UX Design Den event and community emails.",
+      "To send occasional UX Den event and community emails.",
       "To operate, secure, and troubleshoot the website.",
       "To respond to privacy, access, correction, or deletion requests.",
     ],
@@ -50,14 +50,14 @@ const sections = [
   {
     title: "Cookies and similar technology",
     paragraphs: [
-      "UX Design Den does not intentionally use advertising or analytics cookies. Our hosting providers may use strictly necessary technologies to deliver, secure, and maintain the site.",
+      "UX Den does not intentionally use advertising or analytics cookies. Our hosting providers may use strictly necessary technologies to deliver, secure, and maintain the site.",
     ],
   },
   {
     title: "Changes and contact",
     paragraphs: [
       "We may update this notice as the site or our practices change. The latest version will always appear here with a revised date.",
-      "Privacy contact: UX Design Den, Vancouver, British Columbia, Canada — uxdesignden-bc@gmail.com.",
+      "Privacy contact: UX Den, Vancouver, British Columbia, Canada — uxdesignden-bc@gmail.com.",
     ],
   },
 ];
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
     <LegalPage
       eyebrow="PRIVACY"
       title="Your inbox. Your information."
-      intro="The short version: we collect your email only when you give it to us, use it to keep you close to UX Design Den, and give you a simple way to leave. This notice explains the details."
+      intro="The short version: we collect your email only when you give it to us, use it to keep you close to UX Den, and give you a simple way to leave. This notice explains the details."
       sections={sections}
     />
   );

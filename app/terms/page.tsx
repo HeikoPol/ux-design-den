@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { LegalPage } from "../LegalPage";
 
 export const metadata: Metadata = {
-  title: "Terms | UX Design Den",
-  description: "The terms that apply when using the UX Design Den website.",
+  title: "Terms | UX Den",
+  description: "The terms that apply when using the UX Den website.",
 };
 
 const sections = [
@@ -28,13 +28,13 @@ const sections = [
   {
     title: "External services",
     paragraphs: [
-      "This site links to services we do not control, including Luma and LinkedIn. Their own terms and privacy practices apply when you visit them. A link does not mean that UX Design Den is responsible for their content, availability, or services.",
+      "This site links to services we do not control, including Luma and LinkedIn. Their own terms and privacy practices apply when you visit them. A link does not mean that UX Den is responsible for their content, availability, or services.",
     ],
   },
   {
     title: "Content and intellectual property",
     paragraphs: [
-      "The UX Design Den name, site design, written content, graphics, and other materials are owned by UX Design Den or used with permission. You may view and share links to the site for personal, non-commercial use. Please ask before copying, republishing, or commercially using site materials. Event images and third-party materials remain the property of their respective owners.",
+      "The UX Den name, site design, written content, graphics, and other materials are owned by UX Den or used with permission. You may view and share links to the site for personal, non-commercial use. Please ask before copying, republishing, or commercially using site materials. Event images and third-party materials remain the property of their respective owners.",
     ],
   },
   {
@@ -46,14 +46,14 @@ const sections = [
   {
     title: "Availability and responsibility",
     paragraphs: [
-      "The site and its content are provided on an “as available” basis. We try to keep information accurate and the site working, but do not promise that either will always be complete, current, uninterrupted, or error-free. To the extent permitted by law, UX Design Den is not responsible for indirect or consequential loss resulting from use of the site, external services, or event information. Nothing in these terms excludes rights or responsibilities that cannot legally be excluded.",
+      "The site and its content are provided on an “as available” basis. We try to keep information accurate and the site working, but do not promise that either will always be complete, current, uninterrupted, or error-free. To the extent permitted by law, UX Den is not responsible for indirect or consequential loss resulting from use of the site, external services, or event information. Nothing in these terms excludes rights or responsibilities that cannot legally be excluded.",
     ],
   },
   {
     title: "Law, changes, and contact",
     paragraphs: [
       "These terms are governed by the laws of British Columbia and the applicable laws of Canada. We may update them as the site changes. The version posted here applies from its last-updated date.",
-      "Questions: UX Design Den, Vancouver, British Columbia, Canada — uxdesignden-bc@gmail.com.",
+      "Questions: UX Den, Vancouver, British Columbia, Canada — uxdesignden-bc@gmail.com.",
     ],
   },
 ];
@@ -63,7 +63,7 @@ export default function TermsPage() {
     <LegalPage
       eyebrow="TERMS"
       title="Keep it kind. Keep it useful."
-      intro="These are the ground rules for using the UX Design Den website. They are intentionally short and written in plain language."
+      intro="These are the ground rules for using the UX Den website. They are intentionally short and written in plain language."
       sections={sections}
     />
   );

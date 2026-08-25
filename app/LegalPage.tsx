@@ -18,8 +18,8 @@ export function LegalPage({
   return (
     <div className="legal-shell">
       <header className="legal-nav">
-        <a className="wordmark" href="/" aria-label="UX Design Den home">
-          UX DESIGN<br />DEN
+        <a className="wordmark" href="/" aria-label="UX Den home">
+          UX<br />DEN
         </a>
         <a className="legal-back" href="/">
           Back to the Den ↗
@@ -30,7 +30,7 @@ export function LegalPage({
         <div className="legal-heading">
           <p className="scene-index">/ {eyebrow}</p>
           <h1>{title}</h1>
-          <p className="legal-updated">Last updated July 21, 2026</p>
+          <p className="legal-updated">Last updated August 25, 2026</p>
         </div>
 
         <article className="legal-document">
@@ -53,7 +53,7 @@ export function LegalPage({
       </main>
 
       <footer className="legal-footer">
-        <p>UX DESIGN DEN</p>
+        <p>UX DEN</p>
         <a href="mailto:uxdesignden-bc@gmail.com">uxdesignden-bc@gmail.com</a>
         <nav className="footer-legal" aria-label="Legal">
           <a href="/privacy">Privacy</a>

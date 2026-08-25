@@ -282,8 +282,8 @@ export function HomePage() {
             onPointerLeave={handlePointerLeave}
           >
             <header className="hero-nav">
-              <a className="wordmark" href="#top" aria-label="UX Design Den home">
-                UX DESIGN<br />DEN
+              <a className="wordmark" href="#top" aria-label="UX Den home">
+                UX<br />DEN
               </a>
               <p className="nav-signal"><span aria-hidden="true" /> Vancouver, BC</p>
               <nav aria-label="Primary navigation">
@@ -375,7 +375,7 @@ export function HomePage() {
               </div>
               <p className="newsletter-consent" id="newsletter-consent">
                 By subscribing, you agree to receive occasional event and community emails from UX
-                Design Den. Unsubscribe at any time. <a href="/privacy">Privacy</a>
+                Den. Unsubscribe at any time. <a href="/privacy">Privacy</a>
               </p>
               <p
                 className={`form-status ${formState === "error" ? "is-error" : ""}`}
@@ -446,7 +446,7 @@ export function HomePage() {
         </section>
 
         <footer>
-          <p>UX DESIGN DEN</p>
+          <p>UX DEN</p>
           <a href="mailto:uxdesignden-bc@gmail.com">uxdesignden-bc@gmail.com</a>
           <a href="https://www.linkedin.com/groups/16579023/" target="_blank" rel="noreferrer">
             LinkedIn group ↗
