@@ -25,7 +25,7 @@ const pastEvents = [
     summary:
       "Improv as a design tool for confidence, connection, and speaking up without the pressure to perform.",
     href: "https://luma.com/l3xpha7j",
-    image: "/events/community-room.jpg",
+    image: "/events/geek-out.webp",
     colors: ["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"],
     className: "event-row-cool",
   },
@@ -38,7 +38,7 @@ const pastEvents = [
     summary:
       "A practical workshop for shaping design skills into products, consulting work, and sustainable revenue.",
     href: "https://luma.com/g3izk916",
-    image: "/events/community-room.jpg",
+    image: "/events/side-hustle.jpg",
     colors: ["#150c0d", "#ed674b", "#f0d85b", "#438ed2"],
     className: "event-row-warm",
   },
