@@ -308,6 +308,39 @@ export function HomePage() {
               </h1>
             </div>
 
+            <div className="hero-newsletter" id="newsletter" role="region" aria-labelledby="newsletter-title">
+              <h2 id="newsletter-title">Stay Updated</h2>
+              <form onSubmit={handleSubmit} noValidate>
+                <label htmlFor="newsletter-email">Email address</label>
+                <div className="newsletter-form-row">
+                  <input
+                    id="newsletter-email"
+                    name="email"
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    placeholder="YOUR EMAIL ADDRESS"
+                    required
+                    aria-describedby="newsletter-consent form-status"
+                    disabled={formState === "submitting"}
+                  />
+                  <button type="submit" disabled={formState === "submitting"}>
+                    {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
+                  </button>
+                </div>
+                <p className="newsletter-consent" id="newsletter-consent">
+                  Occasional UX Den updates. Unsubscribe anytime. <a href="/privacy">Privacy</a>
+                </p>
+                <p
+                  className={`form-status ${formState === "error" ? "is-error" : ""}`}
+                  id="form-status"
+                  aria-live="polite"
+                >
+                  {message}
+                </p>
+              </form>
+            </div>
+
             <div
               className="hero-portal"
               aria-hidden="true"
@@ -346,45 +379,6 @@ export function HomePage() {
               {String(Math.round(heroProgress * 100)).padStart(2, "0")}<br />/100
             </p>
             <p className="scroll-cue">Scroll to enter <span aria-hidden="true">↓</span></p>
-          </div>
-        </section>
-
-        <section className="newsletter-scene" id="newsletter" aria-labelledby="newsletter-title">
-          <div className="newsletter-content">
-            <div className="scene-index">01 / NEWSLETTER</div>
-            <h2 id="newsletter-title">Stay Updated</h2>
-            <p>One note when something worth leaving the house for is coming up.</p>
-
-            <form onSubmit={handleSubmit} noValidate>
-              <label htmlFor="newsletter-email">Email address</label>
-              <div className="newsletter-form-row">
-                <input
-                  id="newsletter-email"
-                  name="email"
-                  type="email"
-                  inputMode="email"
-                  autoComplete="email"
-                  placeholder="YOUR EMAIL ADDRESS"
-                  required
-                  aria-describedby="newsletter-consent form-status"
-                  disabled={formState === "submitting"}
-                />
-                <button type="submit" disabled={formState === "submitting"}>
-                  {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
-                </button>
-              </div>
-              <p className="newsletter-consent" id="newsletter-consent">
-                By subscribing, you agree to receive occasional event and community emails from UX
-                Den. Unsubscribe at any time. <a href="/privacy">Privacy</a>
-              </p>
-              <p
-                className={`form-status ${formState === "error" ? "is-error" : ""}`}
-                id="form-status"
-                aria-live="polite"
-              >
-                {message}
-              </p>
-            </form>
           </div>
         </section>
 
@@ -430,34 +424,36 @@ export function HomePage() {
             <p>02 / Vancouver</p>
           </div>
 
-          {pastEvents.map((event, eventIndex) => (
-            <article className={`event-row ${event.className}`} key={event.href}>
-              <a href={event.href} target="_blank" rel="noreferrer" aria-label={`${event.title} on Luma`}>
-                <div className="event-row-top">
-                  <span>{event.index}</span>
-                  <span>{event.date}</span>
-                  <span>{event.location}</span>
-                </div>
-                <div className="event-art" aria-hidden="true">
-                  <img className="event-art-photo" src={event.image} alt="" loading="lazy" />
-                  <div className="event-art-shader">
-                    <ShaderField
-                      colors={event.colors}
-                      rotation={eventIndex === 0 ? -18 : 14}
-                      scale={1.1}
-                      speed={reducedMotion ? 0 : 0.09 + eventIndex * 0.025}
-                    />
+          <div className="event-grid">
+            {pastEvents.map((event, eventIndex) => (
+              <article className={`event-row ${event.className}`} key={event.href}>
+                <a href={event.href} target="_blank" rel="noreferrer" aria-label={`${event.title} on Luma`}>
+                  <div className="event-row-top">
+                    <span>{event.index}</span>
+                    <span>{event.date}</span>
+                    <span>Vancouver</span>
                   </div>
-                  <div className="event-art-grain" />
-                </div>
-                <div className="event-copy">
-                  <h3>{event.shortTitle}</h3>
-                  <p>{event.summary}</p>
-                </div>
-                <span className="event-open">View on Luma ↗</span>
-              </a>
-            </article>
-          ))}
+                  <div className="event-art" aria-hidden="true">
+                    <img className="event-art-photo" src={event.image} alt="" loading="lazy" />
+                    <div className="event-art-shader">
+                      <ShaderField
+                        colors={event.colors}
+                        rotation={eventIndex === 0 ? -18 : 14}
+                        scale={1.1}
+                        speed={reducedMotion ? 0 : 0.09 + eventIndex * 0.025}
+                      />
+                    </div>
+                    <div className="event-art-grain" />
+                  </div>
+                  <div className="event-copy">
+                    <h3>{event.shortTitle}</h3>
+                    <p>{event.summary}</p>
+                  </div>
+                  <span className="event-open">View on Luma ↗</span>
+                </a>
+              </article>
+            ))}
+          </div>
         </section>
 
         <footer>

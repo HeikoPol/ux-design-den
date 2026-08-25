@@ -65,7 +65,7 @@ a {
 
 .hero-stage {
   position: relative;
-  height: 158svh;
+  height: 132svh;
   background: var(--ink);
 }
 
@@ -207,9 +207,9 @@ footer a:hover {
 .hero-title-wrap {
   position: absolute;
   z-index: 4;
-  top: 22%;
+  top: 17%;
   left: 50%;
-  width: min(75vw, 980px);
+  width: min(70vw, 900px);
   transform: translateX(-50%);
   pointer-events: none;
 }
@@ -217,7 +217,7 @@ footer a:hover {
 .hero-title-wrap h1 {
   margin: 0;
   font-family: var(--display-font);
-  font-size: clamp(5rem, 9.3vw, 9.6rem);
+  font-size: clamp(4.8rem, 8vw, 8.3rem);
   font-weight: 700;
   line-height: 0.78;
   letter-spacing: -0.072em;
@@ -233,10 +233,10 @@ footer a:hover {
   position: absolute;
   z-index: 2;
   left: 50%;
-  bottom: -16%;
-  width: min(72vw, 1040px);
-  height: 61svh;
-  min-height: 430px;
+  bottom: -15%;
+  width: min(66vw, 920px);
+  height: 56svh;
+  min-height: 390px;
   overflow: hidden;
   clip-path: polygon(8% 7%, 91% 0, 100% 85%, 81% 100%, 4% 91%, 0 23%);
   transform-origin: 50% 74%;
@@ -313,8 +313,8 @@ footer a:hover {
 }
 
 .mission-scene {
-  min-height: 92svh;
-  padding: clamp(80px, 10vw, 150px) clamp(24px, 6vw, 92px);
+  min-height: 60svh;
+  padding: clamp(64px, 7vw, 104px) clamp(24px, 6vw, 92px);
   display: grid;
   grid-template-columns: minmax(120px, 0.26fr) 1fr;
   grid-template-rows: auto 1fr auto;
@@ -335,11 +335,11 @@ footer a:hover {
 }
 
 .mission-scene h2 {
-  max-width: 1050px;
+  max-width: 920px;
   margin: 0;
   grid-column: 2;
   font-family: var(--display-font);
-  font-size: clamp(3.3rem, 7.5vw, 8rem);
+  font-size: clamp(2.8rem, 5.4vw, 5.8rem);
   font-weight: 500;
   line-height: 0.98;
   letter-spacing: -0.065em;
@@ -356,13 +356,13 @@ footer a:hover {
 
 .next-scene {
   position: relative;
-  min-height: 104svh;
-  padding: clamp(80px, 9vw, 136px) clamp(24px, 6vw, 92px);
+  min-height: auto;
+  padding: clamp(64px, 7vw, 104px) clamp(24px, 6vw, 92px);
   display: grid;
   grid-template-columns: minmax(140px, 0.28fr) minmax(0, 1fr);
   grid-template-rows: auto 1fr;
   column-gap: clamp(28px, 4vw, 72px);
-  row-gap: clamp(56px, 7vw, 100px);
+  row-gap: clamp(36px, 4vw, 62px);
   overflow: hidden;
   background-color: var(--ink-rich);
   background-image:
@@ -401,11 +401,13 @@ footer a:hover {
   z-index: 2;
   grid-column: 1 / -1;
   align-self: center;
-  padding: clamp(28px, 4vw, 60px) 0;
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  padding: clamp(24px, 3vw, 42px) 0;
   display: grid;
-  grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1.18fr);
+  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1fr);
   align-items: center;
-  gap: clamp(40px, 7vw, 124px);
+  gap: clamp(36px, 5vw, 76px);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
@@ -413,7 +415,7 @@ footer a:hover {
 .next-event-media {
   position: relative;
   width: 100%;
-  max-width: 650px;
+  max-width: 470px;
   aspect-ratio: 1;
   overflow: hidden;
   clip-path: polygon(1.5% 5%, 95% 0, 100% 94%, 5% 100%);
@@ -457,7 +459,7 @@ footer a:hover {
 .next-event-location {
   margin: 0;
   color: var(--muted);
-  font-size: clamp(0.72rem, 1vw, 0.86rem);
+  font-size: clamp(0.68rem, 0.9vw, 0.78rem);
   font-weight: 650;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -466,15 +468,15 @@ footer a:hover {
 .next-scene h2 {
   margin: 0;
   font-family: var(--display-font);
-  font-size: clamp(3.6rem, 7.8vw, 8.6rem);
+  font-size: clamp(2.8rem, 5.2vw, 5.6rem);
   font-weight: 500;
   line-height: 0.9;
   letter-spacing: -0.075em;
 }
 
 .next-copy {
-  max-width: 460px;
-  margin: clamp(28px, 3vw, 48px) 0 18px;
+  max-width: 430px;
+  margin: clamp(22px, 2.4vw, 34px) 0 16px;
   color: var(--muted);
   font-size: 0.92rem;
 }
@@ -485,7 +487,7 @@ footer a:hover {
 
 .next-event-open {
   width: fit-content;
-  margin-top: clamp(30px, 4vw, 54px);
+  margin-top: clamp(24px, 3vw, 38px);
   padding-bottom: 8px;
   display: flex;
   gap: 32px;
@@ -508,8 +510,8 @@ footer a:hover {
 }
 
 .archive-head {
-  min-height: 34svh;
-  padding: clamp(58px, 8vw, 110px) clamp(24px, 6vw, 92px);
+  min-height: auto;
+  padding: clamp(56px, 6vw, 88px) clamp(24px, 6vw, 92px) clamp(34px, 4vw, 56px);
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -522,7 +524,7 @@ footer a:hover {
 .archive-head h2 {
   margin: 0;
   font-family: var(--display-font);
-  font-size: clamp(3.6rem, 8vw, 8.2rem);
+  font-size: clamp(2.8rem, 5vw, 5.4rem);
   font-weight: 500;
   line-height: 0.84;
   letter-spacing: -0.07em;
@@ -534,12 +536,23 @@ footer a:hover {
   font-size: 0.75rem;
 }
 
+.event-grid {
+  padding: 0 clamp(24px, 6vw, 92px) clamp(64px, 7vw, 104px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 30px);
+  background-image:
+    linear-gradient(to right, var(--grid-light) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-light) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+}
+
 .event-row {
   position: relative;
-  min-height: 74svh;
+  min-height: 0;
   overflow: hidden;
   perspective: 1200px;
-  perspective-origin: 68% 46%;
+  perspective-origin: 50% 46%;
   background-color: var(--ink);
   background-image:
     linear-gradient(to right, var(--grid-dark) 1px, transparent 1px),
@@ -548,39 +561,36 @@ footer a:hover {
   color: var(--chalk);
 }
 
-.event-row + .event-row {
-  border-top: 1px solid rgba(233, 230, 223, 0.15);
-}
-
 .event-row > a {
-  min-height: 74svh;
-  padding: clamp(28px, 4vw, 58px) clamp(24px, 6vw, 92px);
+  min-height: 570px;
+  padding: clamp(20px, 2.2vw, 32px);
   display: grid;
-  grid-template-columns: 1fr minmax(320px, 0.68fr);
-  grid-template-rows: auto 1fr auto;
-  gap: 30px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  gap: clamp(18px, 2vw, 28px);
 }
 
 .event-row-top {
   position: relative;
   z-index: 3;
-  grid-column: 1 / -1;
+  grid-column: 1;
   display: grid;
-  grid-template-columns: 80px 1fr auto;
+  grid-template-columns: 42px 1fr auto;
   color: var(--muted);
   font-size: 0.72rem;
 }
 
 .event-art {
-  position: absolute;
+  position: relative;
   z-index: 1;
-  top: 14%;
-  right: 7%;
-  width: min(53vw, 760px);
-  height: 68%;
+  top: auto;
+  right: auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   clip-path: polygon(7% 4%, 95% 0, 100% 87%, 81% 100%, 0 92%, 3% 16%);
-  transform: rotateX(3.2deg) rotateY(-6deg) rotateZ(-2deg) scale(0.94);
+  transform: rotateX(2deg) rotateY(-3deg) rotateZ(-1deg) scale(0.97);
   transform-origin: 52% 48%;
   transform-style: preserve-3d;
   backface-visibility: hidden;
@@ -589,9 +599,9 @@ footer a:hover {
 
 .event-row-warm .event-art {
   right: auto;
-  left: 9%;
+  left: auto;
   clip-path: polygon(0 11%, 88% 0, 100% 18%, 94% 96%, 14% 100%, 4% 82%);
-  transform: rotateX(-3deg) rotateY(6.5deg) rotateZ(2.4deg) scale(0.94);
+  transform: rotateX(-2deg) rotateY(3deg) rotateZ(1deg) scale(0.97);
 }
 
 .event-art-photo {
@@ -642,46 +652,32 @@ footer a:hover {
 .event-copy {
   position: relative;
   z-index: 2;
-  grid-column: 1 / -1;
-  align-self: center;
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(270px, 0.65fr);
-  align-items: end;
-  gap: 52px;
-}
-
-.event-row-warm .event-copy h3 {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.event-row-warm .event-copy p {
   grid-column: 1;
-  grid-row: 1;
+  align-self: start;
 }
 
 .event-copy h3 {
   margin: 0;
   font-family: var(--display-font);
-  font-size: clamp(4rem, 8.6vw, 9rem);
+  font-size: clamp(2.2rem, 3.6vw, 4rem);
   font-weight: 500;
-  line-height: 0.82;
+  line-height: 0.9;
   letter-spacing: -0.075em;
   text-shadow: 0 2px 24px rgba(10, 7, 8, 0.72);
 }
 
 .event-copy p {
-  max-width: 420px;
-  margin: 0 0 8px;
-  color: #f1ede6;
-  font-size: 0.86rem;
-  text-shadow: 0 2px 18px rgba(10, 7, 8, 0.92), 0 1px 2px rgba(10, 7, 8, 0.95);
+  max-width: 480px;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-shadow: none;
 }
 
 .event-open {
   position: relative;
   z-index: 3;
-  grid-column: 2;
+  grid-column: 1;
   justify-self: end;
   align-self: end;
   font-size: 0.78rem;
@@ -692,63 +688,38 @@ footer a:hover {
   color: var(--acid);
 }
 
-.newsletter-scene {
-  position: relative;
-  min-height: 92svh;
-  overflow: hidden;
-  isolation: isolate;
-  background-color: var(--ink-rich);
-  background-image:
-    linear-gradient(to right, var(--grid-dark) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-dark) 1px, transparent 1px);
-  background-size: var(--grid-size) var(--grid-size);
-  border-top: 1px solid rgba(233, 230, 223, 0.12);
-  border-bottom: 1px solid rgba(233, 230, 223, 0.12);
-}
-
-.newsletter-content {
-  position: relative;
-  z-index: 2;
-  min-height: 92svh;
-  padding: clamp(68px, 7vw, 108px) clamp(24px, 6vw, 92px) clamp(62px, 7vw, 96px);
+.hero-newsletter {
+  position: absolute;
+  z-index: 7;
+  top: 45%;
+  left: 50%;
+  width: min(720px, calc(100vw - 48px));
+  padding: 14px 16px 12px;
   display: grid;
-  grid-template-columns: minmax(130px, 0.22fr) minmax(0, 1fr) minmax(260px, 0.42fr);
-  align-content: start;
-  column-gap: 38px;
+  grid-template-columns: 108px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  transform: translateX(-50%);
+  border: 1px solid rgba(233, 230, 223, 0.35);
+  background: var(--ink);
 }
 
-.newsletter-content h2 {
-  grid-column: 2 / 4;
+.hero-newsletter h2 {
   margin: 0;
-  max-width: none;
-  font-family: var(--display-font);
-  font-size: clamp(3.2rem, 6.4vw, 6.8rem);
-  font-weight: 500;
-  line-height: 0.9;
-  letter-spacing: -0.078em;
-  white-space: nowrap;
+  padding-top: 15px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.newsletter-content > p {
-  grid-column: 2;
-  max-width: 450px;
-  margin: 32px 0 38px;
-  color: #d1cabf;
-  font-size: 0.9rem;
-}
-
-.newsletter-content form {
+.hero-newsletter form {
   position: relative;
-  z-index: 3;
-  grid-column: 2 / 4;
-  width: min(100%, 1180px);
-  padding: 8px 10px 8px 26px;
-  border: 1px solid rgba(233, 230, 223, 0.72);
-  background: rgba(16, 13, 14, 0.97);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+  min-width: 0;
 }
 
-.newsletter-content label {
+.hero-newsletter label {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -767,14 +738,14 @@ footer a:hover {
 
 .newsletter-form-row input {
   min-width: 0;
-  height: 76px;
+  height: 48px;
   padding: 0;
   border: 0;
   border-bottom: 1px solid rgba(233, 230, 223, 0.72);
   background: transparent;
   color: var(--chalk);
   font-family: var(--display-font);
-  font-size: clamp(1.2rem, 2.2vw, 2rem);
+  font-size: clamp(0.9rem, 1.25vw, 1.08rem);
   font-weight: 500;
   transition: border-color 160ms ease;
 }
@@ -790,14 +761,14 @@ footer a:hover {
 
 .newsletter-form-row button {
   align-self: center;
-  min-width: 184px;
-  height: 60px;
-  margin-left: 22px;
-  padding: 0 30px;
+  min-width: 142px;
+  height: 44px;
+  margin-left: 14px;
+  padding: 0 20px;
   border: 0;
   background: var(--chalk);
   color: var(--ink);
-  font-size: 0.78rem;
+  font-size: 0.68rem;
   font-weight: 760;
   cursor: pointer;
   transition: background 160ms ease, color 160ms ease;
@@ -815,10 +786,10 @@ footer a:hover {
 }
 
 .newsletter-consent {
-  max-width: 760px;
-  margin: 4px 0 8px;
+  max-width: 520px;
+  margin: 7px 0 0;
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: 0.58rem;
   line-height: 1.5;
 }
 
@@ -836,7 +807,7 @@ footer a:hover {
 .form-status {
   position: absolute;
   top: calc(100% + 9px);
-  left: 26px;
+  left: 0;
   min-height: 22px;
   margin: 0;
   color: var(--acid);
@@ -1021,22 +992,22 @@ footer p {
     display: none;
   }
 
-  .mission-scene,
-  .newsletter-content {
+  .mission-scene {
     grid-template-columns: 1fr;
   }
 
   .mission-scene h2,
-  .mission-note,
-  .newsletter-content h2,
-  .newsletter-content > p,
-  .newsletter-content form {
+  .mission-note {
     grid-column: 1;
   }
 
-  .mission-scene .scene-index,
-  .newsletter-content .scene-index {
+  .mission-scene .scene-index {
     margin-bottom: 42px;
+  }
+
+  .hero-newsletter {
+    width: min(680px, calc(100vw - 48px));
+    grid-template-columns: 94px minmax(0, 1fr);
   }
 
   .next-scene {
@@ -1058,25 +1029,7 @@ footer p {
   }
 
   .event-row > a {
-    grid-template-columns: 1fr;
-  }
-
-  .event-copy {
-    grid-template-columns: 1fr;
-    align-items: start;
-    gap: 28px;
-  }
-
-  .event-copy p,
-  .event-row-warm .event-copy p,
-  .event-row-warm .event-copy h3 {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  .event-open {
-    grid-column: 1;
-    justify-self: start;
+    min-height: 520px;
   }
 
   footer {
@@ -1098,7 +1051,7 @@ footer p {
 
 @media (max-width: 620px) {
   .hero-stage {
-    height: 135svh;
+    height: 120svh;
   }
 
   .hero-sticky {
@@ -1119,17 +1072,17 @@ footer p {
   }
 
   .hero-title-wrap {
-    top: 28%;
+    top: 20%;
     width: calc(100vw - 40px);
   }
 
   .hero-title-wrap h1 {
-    font-size: clamp(4.25rem, 20vw, 5.3rem);
+    font-size: clamp(3.8rem, 18vw, 4.8rem);
     line-height: 0.8;
   }
 
   .hero-portal {
-    bottom: -5%;
+    bottom: -8%;
     width: 112vw;
     height: 52svh;
     min-height: 360px;
@@ -1147,11 +1100,11 @@ footer p {
   }
 
   .mission-scene {
-    min-height: 82svh;
+    min-height: 64svh;
   }
 
   .mission-scene h2 {
-    font-size: clamp(3.1rem, 14.5vw, 4.2rem);
+    font-size: clamp(2.7rem, 12vw, 3.8rem);
   }
 
   .next-scene {
@@ -1179,7 +1132,7 @@ footer p {
   }
 
   .next-scene h2 {
-    font-size: clamp(3.7rem, 17vw, 5.4rem);
+    font-size: clamp(3.1rem, 14vw, 4.3rem);
   }
 
   .next-copy {
@@ -1187,17 +1140,20 @@ footer p {
   }
 
   .archive-head {
-    min-height: 28svh;
+    min-height: auto;
   }
 
   .archive-head h2 {
     max-width: 240px;
-    font-size: 4rem;
+    font-size: 3.2rem;
   }
 
-  .event-row,
+  .event-grid {
+    grid-template-columns: 1fr;
+  }
+
   .event-row > a {
-    min-height: 76svh;
+    min-height: auto;
   }
 
   .event-row-top {
@@ -1208,21 +1164,8 @@ footer p {
     display: none;
   }
 
-  .event-art,
-  .event-row-warm .event-art {
-    top: 19%;
-    left: 8%;
-    right: auto;
-    width: 100%;
-    height: 46%;
-  }
-
-  .event-copy {
-    align-self: end;
-  }
-
   .event-copy h3 {
-    font-size: clamp(3.5rem, 17vw, 4.6rem);
+    font-size: clamp(2.6rem, 12vw, 3.7rem);
   }
 
   .event-copy p {
@@ -1230,22 +1173,17 @@ footer p {
     text-shadow: none;
   }
 
-  .newsletter-content {
-    min-height: 86svh;
-    padding: 70px 20px 54px;
+  .hero-newsletter {
+    top: 43%;
+    width: calc(100vw - 40px);
+    padding: 12px;
+    grid-template-columns: 1fr;
+    gap: 7px;
   }
 
-  .newsletter-content h2 {
-    font-size: clamp(3.5rem, 16vw, 4.7rem);
-    white-space: normal;
-  }
-
-  .newsletter-content > p {
-    margin: 28px 0 32px;
-  }
-
-  .newsletter-content form {
-    padding: 8px 12px;
+  .hero-newsletter h2 {
+    padding: 0;
+    font-size: 0.6rem;
   }
 
   .newsletter-form-row {
@@ -1261,11 +1199,11 @@ footer p {
   }
 
   .newsletter-consent {
-    margin: 12px 0 6px;
+    margin: 8px 0 2px;
   }
 
   .form-status {
-    left: 12px;
+    left: 0;
   }
 
   footer {
