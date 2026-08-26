@@ -691,7 +691,7 @@ footer a:hover {
 .hero-newsletter {
   position: absolute;
   z-index: 7;
-  top: 61%;
+  top: 59%;
   left: 50%;
   width: min(720px, calc(100vw - 48px));
   padding: 27px 22px 23px;
@@ -1176,7 +1176,7 @@ footer p {
   }
 
   .hero-newsletter {
-    top: 55%;
+    top: 53%;
     width: calc(100vw - 40px);
     padding: 21px 15px 18px;
     grid-template-columns: 1fr;
