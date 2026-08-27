@@ -1,0 +1,32 @@
+# /etc/systemd/system/uxden.service
+[Unit]
+Description=UX Den website (uxden.ca)
+After=network.target
+
+[Service]
+Type=simple
+User=uxden
+Group=uxden
+WorkingDirectory=/srv/uxden/app
+ExecStart=/usr/bin/node dist/standalone/server.js
+# vinext reads HOST (not HOSTNAME) for the bind address.
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=HOST=127.0.0.1
+# Keep the subscriber database outside the app directory so redeploys
+# can never touch it.
+Environment=NEWSLETTER_DB_PATH=/srv/uxden/data/newsletter.db
+# Runtime secrets (Supabase keys, webhook URLs, ...) live here, not in git.
+EnvironmentFile=-/srv/uxden/app/.env
+Restart=on-failure
+RestartSec=3
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/uxden/data
+
+[Install]
+WantedBy=multi-user.target

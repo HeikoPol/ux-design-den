@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type LegalSection = {
   title: string;
   paragraphs?: string[];
@@ -18,12 +20,12 @@ export function LegalPage({
   return (
     <div className="legal-shell">
       <header className="legal-nav">
-        <a className="wordmark" href="/" aria-label="UX Den home">
+        <Link className="wordmark" href="/" aria-label="UX Den home">
           UX<br />DEN
-        </a>
-        <a className="legal-back" href="/">
+        </Link>
+        <Link className="legal-back" href="/">
           Back to the Den ↗
-        </a>
+        </Link>
       </header>
 
       <main className="legal-main">

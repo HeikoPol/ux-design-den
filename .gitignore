@@ -40,3 +40,8 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# newsletter sqlite database
+/data/
+!.env.example
+tsconfig.tsbuildinfo

@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Self-hosted Node bundle at dist/standalone/ (run with `npm run start`).
+  output: "standalone",
 };
 
 export default nextConfig;
