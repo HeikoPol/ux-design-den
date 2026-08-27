@@ -11,7 +11,8 @@ WorkingDirectory=/srv/uxden/app
 ExecStart=/usr/bin/node dist/standalone/server.js
 # vinext reads HOST (not HOSTNAME) for the bind address.
 Environment=NODE_ENV=production
-Environment=PORT=3000
+# 3000 and 3001 are taken by the other sites on this VPS.
+Environment=PORT=3002
 Environment=HOST=127.0.0.1
 # Keep the subscriber database outside the app directory so redeploys
 # can never touch it.

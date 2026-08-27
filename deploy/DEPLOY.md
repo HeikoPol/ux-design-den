@@ -62,8 +62,11 @@ runtime — a service restart is enough.
 sudo cp /srv/uxden/app/deploy/uxden.service /etc/systemd/system/uxden.service && sudo systemctl enable --now uxden
 ```
 
+The VPS's Caddy is shared with other sites, so uxden.ca is a snippet imported
+by the main Caddyfile rather than a full replacement:
+
 ```bash
-sudo cp /srv/uxden/app/deploy/Caddyfile /etc/caddy/Caddyfile && sudo systemctl reload caddy
+sudo cp /srv/uxden/app/deploy/uxden.caddy /etc/caddy/uxden.caddy && sudo sh -c 'grep -q "import uxden.caddy" /etc/caddy/Caddyfile || echo "import uxden.caddy" >> /etc/caddy/Caddyfile' && sudo systemctl reload caddy
 ```
 
 Caddy fetches the TLS certificates for `uxden.ca` and `www.uxden.ca` on first
@@ -91,5 +94,5 @@ sudo -u uxden node -e "const{DatabaseSync}=require('node:sqlite');const db=new D
 
 - `systemctl status uxden` / `journalctl -u uxden -e` — app logs.
 - `journalctl -u caddy -e` — TLS/proxy issues (usually DNS not propagated yet).
-- Port 3000 is bound to `127.0.0.1` only; the site is reachable exclusively
-  through Caddy.
+- Port 3002 is bound to `127.0.0.1` only; the site is reachable exclusively
+  through Caddy. (3000 and 3001 belong to the other sites on this VPS.)

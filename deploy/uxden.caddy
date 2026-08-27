@@ -1,0 +1,14 @@
+# /etc/caddy/uxden.caddy
+# Site snippet for the shared Caddy on the VPS. Enable it by adding
+#   import uxden.caddy
+# to /etc/caddy/Caddyfile, then `systemctl reload caddy`.
+# Caddy obtains and renews the TLS certificates automatically.
+
+uxden.ca {
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:3002
+}
+
+www.uxden.ca {
+	redir https://uxden.ca{uri} permanent
+}
