@@ -66,6 +66,10 @@ a {
 .hero-stage {
   position: relative;
   height: 132svh;
+  /* The sticky child is floored at 650px; on short viewports the stage must
+     grow with it (plus the 32svh scroll range) or the hero overhangs the
+     mission section below. */
+  min-height: calc(650px + 32svh);
   background: var(--ink);
 }
 
@@ -1059,6 +1063,7 @@ footer p {
 @media (max-width: 620px) {
   .hero-stage {
     height: 120svh;
+    min-height: calc(600px + 20svh);
   }
 
   .hero-sticky {
