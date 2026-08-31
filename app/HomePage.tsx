@@ -255,6 +255,13 @@ export function HomePage() {
     });
   }
 
+  function handleEmailInput() {
+    if (formState === "error") {
+      setFormState("idle");
+      setMessage("");
+    }
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formElement = event.currentTarget;
@@ -336,6 +343,7 @@ export function HomePage() {
                     placeholder="YOUR EMAIL ADDRESS"
                     required
                     aria-describedby="newsletter-consent form-status"
+                    onChange={handleEmailInput}
                     disabled={formState === "submitting"}
                   />
                   <button type="submit" disabled={formState === "submitting"}>
