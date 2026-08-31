@@ -2,6 +2,7 @@
 
 import {
   FormEvent,
+  MouseEvent,
   PointerEvent,
   useEffect,
   useRef,
@@ -241,6 +242,19 @@ export function HomePage() {
     easePointerToTarget();
   }
 
+  function handleNewsletterNav(event: MouseEvent<HTMLAnchorElement>) {
+    const hero = heroRef.current;
+    if (!hero) return;
+    // The signup panel lives inside the sticky hero, so native anchor
+    // scrolling overshoots past the stage. Land at full hero entry instead,
+    // which keeps the nav and intro line in view above the panel.
+    event.preventDefault();
+    window.scrollTo({
+      top: Math.max(0, hero.offsetTop + hero.offsetHeight - window.innerHeight),
+      behavior: reducedMotion ? "auto" : "smooth",
+    });
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formElement = event.currentTarget;
@@ -287,7 +301,7 @@ export function HomePage() {
               </a>
               <p className="nav-signal"><span aria-hidden="true" /> Vancouver, BC</p>
               <nav aria-label="Primary navigation">
-                <a href="#newsletter">Newsletter</a>
+                <a href="#newsletter" onClick={handleNewsletterNav}>Newsletter</a>
                 <a href="#next">Next</a>
                 <a href="#past">Past (02)</a>
               </nav>

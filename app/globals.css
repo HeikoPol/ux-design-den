@@ -74,7 +74,9 @@ a {
   top: 0;
   height: 100svh;
   min-height: 650px;
-  overflow: hidden;
+  /* clip, not hidden: anchor navigation to #newsletter must never scroll
+     this box internally, or the absolutely-positioned nav gets pushed out. */
+  overflow: clip;
   isolation: isolate;
   background-color: var(--ink);
   background-image:
@@ -693,6 +695,9 @@ footer a:hover {
   z-index: 7;
   top: 59%;
   left: 50%;
+  /* Direct /#newsletter visits bypass the nav click handler; keep the jump
+     from pinning the panel flush to the viewport top. */
+  scroll-margin-top: 40svh;
   width: min(720px, calc(100vw - 48px));
   padding: 27px 22px 23px;
   display: grid;
