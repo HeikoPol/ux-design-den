@@ -4,6 +4,11 @@
  *   sqlite   (default) — local SQLite file, no external services. Set
  *              NEWSLETTER_DB_PATH to change the location (default
  *              ./data/newsletter.db, created on first write).
+ *   kit      — subscribes to a Kit (kit.com) form via API v4. Requires
+ *              KIT_API_KEY (a V4 key from Settings → Developer) and
+ *              KIT_FORM_ID (the numeric id of the form to subscribe to).
+ *              If the form uses double opt-in, Kit sends the confirmation
+ *              email automatically.
  *   supabase — inserts into a `newsletter_subscribers` table via the Supabase
  *              REST API. Requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.
  *              The table needs a unique constraint on `email`.
@@ -54,6 +59,41 @@ async function createSqliteStore(): Promise<NewsletterStore> {
     async subscribe(email, source) {
       const result = insert.run(email, source);
       return { alreadySubscribed: result.changes === 0 };
+    },
+  };
+}
+
+function createKitStore(): NewsletterStore {
+  const headers = {
+    "content-type": "application/json",
+    "x-kit-api-key": requireEnv("KIT_API_KEY"),
+  };
+  const formId = requireEnv("KIT_FORM_ID");
+
+  return {
+    async subscribe(email) {
+      // Upserts the subscriber; a plain create leaves them outside any list,
+      // so the form-subscribe call below is what actually signs them up.
+      const created = await fetch("https://api.kit.com/v4/subscribers", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ email_address: email }),
+      });
+      if (!created.ok) {
+        throw new Error(`Kit create subscriber failed with status ${created.status}`);
+      }
+
+      const added = await fetch(`https://api.kit.com/v4/forms/${formId}/subscribers`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ email_address: email, referrer: "https://uxden.ca" }),
+      });
+      if (!added.ok) {
+        throw new Error(`Kit form subscribe failed with status ${added.status}`);
+      }
+      // Kit upserts and answers 200 whether the subscriber is new or already
+      // on the form, so repeat signups just see the success message.
+      return { alreadySubscribed: false };
     },
   };
 }
@@ -120,6 +160,9 @@ export function getNewsletterStore(): Promise<NewsletterStore> {
     switch (backend) {
       case "sqlite":
         store = createSqliteStore();
+        break;
+      case "kit":
+        store = Promise.resolve(createKitStore());
         break;
       case "supabase":
         store = Promise.resolve(createSupabaseStore());
