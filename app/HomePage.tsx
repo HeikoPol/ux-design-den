@@ -19,6 +19,19 @@ import { AxisCursor } from "./AxisCursor";
 const pastEvents = [
   {
     index: "01",
+    title: "UXDD Portfolio Review Session",
+    shortTitle: "Portfolio Review Session",
+    date: "August 26",
+    location: "Northeastern University Vancouver",
+    summary:
+      "Three minutes per portfolio, with real-time feedback from hiring managers and senior designers.",
+    href: "https://luma.com/oq43d0wr",
+    image: "/events/portfolio-review-live.webp",
+    colors: ["#150c0d", "#ed674b", "#f0d85b", "#438ed2"],
+    className: "event-row-warm",
+  },
+  {
+    index: "02",
     title: "Geek-Out Session: An Improv Night for Designers",
     shortTitle: "Geek-Out Session",
     date: "June 23",
@@ -31,7 +44,7 @@ const pastEvents = [
     className: "event-row-cool",
   },
   {
-    index: "02",
+    index: "03",
     title: "The Side-Hustle Blueprint for Designers",
     shortTitle: "Side-Hustle Blueprint",
     date: "May 30",
@@ -310,7 +323,7 @@ export function HomePage() {
               <nav aria-label="Primary navigation">
                 <a href="#newsletter" onClick={handleNewsletterNav}>Newsletter</a>
                 <a href="#next">Next</a>
-                <a href="#past">Past (02)</a>
+                <a href="#past">Past (03)</a>
               </nav>
             </header>
 
@@ -414,28 +427,31 @@ export function HomePage() {
 
         <section className="next-scene" id="next" aria-labelledby="next-title">
           <div className="scene-index">02 / NEXT EVENT</div>
-          <p className="next-status"><span aria-hidden="true" /> Event full / waitlist open</p>
+          <p className="next-status"><span aria-hidden="true" /> Next session in the works</p>
           <a
             className="next-event-card"
-            href="https://luma.com/oq43d0wr"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="UXDD Portfolio Review Session on Luma"
+            href="#newsletter"
+            onClick={handleNewsletterNav}
+            aria-label="Next event to be announced — join the newsletter to hear first"
           >
             <div className="next-event-media">
-              <img
-                src="/events/portfolio-review.jpg"
-                alt="UXDD Portfolio Review Session event poster"
-              />
+              <div className="next-media-shader" aria-hidden="true">
+                <ShaderField
+                  colors={["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"]}
+                  rotation={-14}
+                  scale={1.18}
+                  speed={reducedMotion ? 0 : 0.1}
+                />
+              </div>
             </div>
             <div className="next-event-details">
-              <p className="next-event-date">WED / AUG 26 / 5:30–7:30 PM</p>
-              <h2 id="next-title">Portfolio<br />Review Session</h2>
+              <p className="next-event-date">DATE &amp; VENUE / TBA</p>
+              <h2 id="next-title">To be<br />announced</h2>
               <p className="next-copy">
-                Three minutes per portfolio, with real-time feedback from hiring managers and senior designers.
+                The next session is taking shape. Newsletter subscribers hear about it first.
               </p>
-              <p className="next-event-location">Northeastern University / Vancouver</p>
-              <span className="next-event-open">Join the waitlist <span aria-hidden="true">↗</span></span>
+              <p className="next-event-location">Vancouver, BC</p>
+              <span className="next-event-open">Get notified first <span aria-hidden="true">↗</span></span>
             </div>
           </a>
         </section>
@@ -443,7 +459,7 @@ export function HomePage() {
         <section className="archive" id="past" aria-labelledby="archive-title">
           <div className="archive-head">
             <h2 id="archive-title">Past sessions</h2>
-            <p>02 / Vancouver</p>
+            <p>03 / Vancouver</p>
           </div>
 
           <div className="event-grid">
