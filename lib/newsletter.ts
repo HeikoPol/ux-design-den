@@ -74,10 +74,13 @@ function createKitStore(): NewsletterStore {
     async subscribe(email) {
       // Upserts the subscriber; a plain create leaves them outside any list,
       // so the form-subscribe call below is what actually signs them up.
+      // state "inactive" so double opt-in fires on the form subscribe — Kit's
+      // default is "active", which suppresses the confirmation email. Existing
+      // subscribers keep their state (the endpoint never updates state).
       const created = await fetch("https://api.kit.com/v4/subscribers", {
         method: "POST",
         headers,
-        body: JSON.stringify({ email_address: email }),
+        body: JSON.stringify({ email_address: email, state: "inactive" }),
       });
       if (!created.ok) {
         throw new Error(`Kit create subscriber failed with status ${created.status}`);
