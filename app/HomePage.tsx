@@ -59,6 +59,9 @@ const pastEvents = [
 ];
 
 type FormState = "idle" | "submitting" | "success" | "error";
+type FormStep = "email" | "name";
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -178,6 +181,9 @@ export function HomePage() {
   const [heroProgress, setHeroProgress] = useState(0);
   const [formState, setFormState] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
+  const [formStep, setFormStep] = useState<FormStep>("email");
+  const [pendingEmail, setPendingEmail] = useState("");
+  const signupInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const update = () => {
@@ -275,11 +281,43 @@ export function HomePage() {
     }
   }
 
+  const lastStepRef = useRef<FormStep>("email");
+  useEffect(() => {
+    if (lastStepRef.current === formStep) return;
+    lastStepRef.current = formStep;
+    const input = signupInputRef.current;
+    if (!input) return;
+    // Coming back via Edit restores the email; the fresh name field starts empty.
+    if (formStep === "email" && pendingEmail) input.value = pendingEmail;
+    input.focus();
+  }, [formStep, pendingEmail]);
+
+  function handleEditEmail() {
+    setFormStep("email");
+    setFormState("idle");
+    setMessage("");
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formElement = event.currentTarget;
     const form = new FormData(formElement);
-    const email = String(form.get("email") ?? "");
+
+    if (formStep === "email") {
+      const email = String(form.get("email") ?? "").trim().toLowerCase();
+      if (!email || email.length > 254 || !EMAIL_PATTERN.test(email)) {
+        setFormState("error");
+        setMessage("Please enter a valid email address.");
+        return;
+      }
+      setPendingEmail(email);
+      setFormState("idle");
+      setMessage("");
+      setFormStep("name");
+      return;
+    }
+
+    const name = String(form.get("name") ?? "").trim().slice(0, 100);
     setFormState("submitting");
     setMessage("");
 
@@ -287,12 +325,14 @@ export function HomePage() {
       const response = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: pendingEmail, name }),
       });
       const result = (await response.json()) as { message?: string };
       if (!response.ok) throw new Error(result.message || "Please try again.");
       setFormState("success");
       setMessage(result.message || "You’re on the list.");
+      setFormStep("email");
+      setPendingEmail("");
       formElement.reset();
     } catch (error) {
       setFormState("error");
@@ -345,26 +385,45 @@ export function HomePage() {
             <div className="hero-newsletter" id="newsletter" role="region" aria-labelledby="newsletter-title">
               <h2 id="newsletter-title">Stay Updated</h2>
               <form onSubmit={handleSubmit} noValidate>
-                <label htmlFor="newsletter-email">Email address</label>
+                <label htmlFor="newsletter-email">
+                  {formStep === "email" ? "Email address" : "First name (optional)"}
+                </label>
                 <div className="newsletter-form-row">
                   <input
+                    key={formStep}
+                    ref={signupInputRef}
                     id="newsletter-email"
-                    name="email"
-                    type="email"
-                    inputMode="email"
-                    autoComplete="email"
-                    placeholder="YOUR EMAIL ADDRESS"
-                    required
+                    name={formStep === "email" ? "email" : "name"}
+                    type={formStep === "email" ? "email" : "text"}
+                    inputMode={formStep === "email" ? "email" : "text"}
+                    autoComplete={formStep === "email" ? "email" : "given-name"}
+                    placeholder={formStep === "email" ? "YOUR EMAIL ADDRESS" : "YOUR FIRST NAME (OPTIONAL)"}
+                    required={formStep === "email"}
                     aria-describedby="newsletter-consent form-status"
                     onChange={handleEmailInput}
                     disabled={formState === "submitting"}
                   />
                   <button type="submit" disabled={formState === "submitting"}>
-                    {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
+                    {formState === "submitting"
+                      ? "JOINING…"
+                      : formStep === "email"
+                        ? "COUNT ME IN ↗"
+                        : "JOIN THE DEN ↗"}
                   </button>
                 </div>
                 <p className="newsletter-consent" id="newsletter-consent">
-                  Occasional UX Den updates. Unsubscribe anytime. <a href="/privacy">Privacy</a>
+                  {formStep === "name" ? (
+                    <>
+                      Signing up as {pendingEmail}.{" "}
+                      <button type="button" className="newsletter-edit" onClick={handleEditEmail}>
+                        Edit
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      Occasional UX Den updates. Unsubscribe anytime. <a href="/privacy">Privacy</a>
+                    </>
+                  )}
                 </p>
                 <p
                   className={`form-status ${formState === "error" ? "is-error" : ""}`}

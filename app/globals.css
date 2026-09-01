@@ -821,13 +821,24 @@ footer a:hover {
 }
 
 .form-status {
-  position: absolute;
-  top: calc(100% + 9px);
-  left: 0;
+  /* In-flow so the panel grows around it — absolutely positioned it rendered
+     past the panel's background and clipped. */
   min-height: 22px;
-  margin: 0;
+  margin: 8px 0 0;
   color: var(--acid);
   font-size: 0.8rem;
+}
+
+.newsletter-edit {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--chalk);
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(233, 230, 223, 0.45);
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 
 .form-status.is-error {
@@ -1217,10 +1228,6 @@ footer p {
 
   .newsletter-consent {
     margin: 8px 0 2px;
-  }
-
-  .form-status {
-    left: 0;
   }
 
   footer {

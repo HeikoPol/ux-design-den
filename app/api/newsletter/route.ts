@@ -8,15 +8,16 @@ export async function POST(request: Request) {
       return Response.json({ message: "Please submit a valid email address." }, { status: 415 });
     }
 
-    const body = (await request.json()) as { email?: unknown };
+    const body = (await request.json()) as { email?: unknown; name?: unknown };
     const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+    const name = typeof body.name === "string" ? body.name.trim().slice(0, 100) : "";
 
     if (!email || email.length > 254 || !EMAIL_PATTERN.test(email)) {
       return Response.json({ message: "Please enter a valid email address." }, { status: 400 });
     }
 
     const store = await getNewsletterStore();
-    const { alreadySubscribed } = await store.subscribe(email, "website");
+    const { alreadySubscribed } = await store.subscribe(email, "website", name || undefined);
 
     return Response.json(
       { message: alreadySubscribed ? "You’re already on the list." : "You’re on the list." },

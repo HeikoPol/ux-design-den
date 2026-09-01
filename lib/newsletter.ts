@@ -22,7 +22,7 @@ export interface SubscribeResult {
 }
 
 export interface NewsletterStore {
-  subscribe(email: string, source: string): Promise<SubscribeResult>;
+  subscribe(email: string, source: string, firstName?: string): Promise<SubscribeResult>;
 }
 
 function requireEnv(name: string): string {
@@ -50,14 +50,19 @@ async function createSqliteStore(): Promise<NewsletterStore> {
       created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     )`,
   );
+  try {
+    db.exec("ALTER TABLE newsletter_subscribers ADD COLUMN first_name TEXT");
+  } catch {
+    // Column already exists on databases created after names were added.
+  }
 
   const insert = db.prepare(
-    "INSERT OR IGNORE INTO newsletter_subscribers (email, source) VALUES (?, ?)",
+    "INSERT OR IGNORE INTO newsletter_subscribers (email, source, first_name) VALUES (?, ?, ?)",
   );
 
   return {
-    async subscribe(email, source) {
-      const result = insert.run(email, source);
+    async subscribe(email, source, firstName) {
+      const result = insert.run(email, source, firstName ?? null);
       return { alreadySubscribed: result.changes === 0 };
     },
   };
@@ -71,7 +76,7 @@ function createKitStore(): NewsletterStore {
   const formId = requireEnv("KIT_FORM_ID");
 
   return {
-    async subscribe(email) {
+    async subscribe(email, _source, firstName) {
       // Upserts the subscriber; a plain create leaves them outside any list,
       // so the form-subscribe call below is what actually signs them up.
       // state "inactive" so double opt-in fires on the form subscribe — Kit's
@@ -80,7 +85,11 @@ function createKitStore(): NewsletterStore {
       const created = await fetch("https://api.kit.com/v4/subscribers", {
         method: "POST",
         headers,
-        body: JSON.stringify({ email_address: email, state: "inactive" }),
+        body: JSON.stringify({
+          email_address: email,
+          state: "inactive",
+          ...(firstName ? { first_name: firstName } : {}),
+        }),
       });
       if (!created.ok) {
         throw new Error(`Kit create subscriber failed with status ${created.status}`);
@@ -106,7 +115,8 @@ function createSupabaseStore(): NewsletterStore {
   const key = requireEnv("SUPABASE_SERVICE_ROLE_KEY");
 
   return {
-    async subscribe(email, source) {
+    async subscribe(email, source, firstName) {
+      // The table needs a nullable `first_name` column when collecting names.
       const response = await fetch(`${url}/rest/v1/newsletter_subscribers`, {
         method: "POST",
         headers: {
@@ -115,7 +125,7 @@ function createSupabaseStore(): NewsletterStore {
           authorization: `Bearer ${key}`,
           prefer: "return=minimal",
         },
-        body: JSON.stringify({ email, source }),
+        body: JSON.stringify({ email, source, ...(firstName ? { first_name: firstName } : {}) }),
       });
 
       // PostgREST reports a unique-constraint violation as 409.
@@ -135,14 +145,14 @@ function createWebhookStore(): NewsletterStore {
   const auth = process.env.NEWSLETTER_WEBHOOK_AUTH;
 
   return {
-    async subscribe(email, source) {
+    async subscribe(email, source, firstName) {
       const response = await fetch(url, {
         method: "POST",
         headers: {
           "content-type": "application/json",
           ...(auth ? { authorization: auth } : {}),
         },
-        body: JSON.stringify({ email, source }),
+        body: JSON.stringify({ email, source, ...(firstName ? { first_name: firstName } : {}) }),
       });
 
       if (!response.ok) {
