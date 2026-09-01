@@ -4,6 +4,10 @@
  *   sqlite   (default) — local SQLite file, no external services. Set
  *              NEWSLETTER_DB_PATH to change the location (default
  *              ./data/newsletter.db, created on first write).
+ *   listmonk — subscribes via a self-hosted listmonk's public subscription
+ *              API. Requires LISTMONK_LIST_UUID; LISTMONK_URL defaults to
+ *              http://127.0.0.1:9000 (listmonk on the same VPS). Double
+ *              opt-in is handled by the list's setting in listmonk.
  *   kit      — subscribes to a Kit (kit.com) form via API v4. Requires
  *              KIT_API_KEY (a V4 key from Settings → Developer) and
  *              KIT_FORM_ID (the numeric id of the form to subscribe to).
@@ -64,6 +68,32 @@ async function createSqliteStore(): Promise<NewsletterStore> {
     async subscribe(email, source, firstName) {
       const result = insert.run(email, source, firstName ?? null);
       return { alreadySubscribed: result.changes === 0 };
+    },
+  };
+}
+
+function createListmonkStore(): NewsletterStore {
+  const url = (process.env.LISTMONK_URL ?? "http://127.0.0.1:9000").replace(/\/$/, "");
+  const listUuid = requireEnv("LISTMONK_LIST_UUID");
+
+  return {
+    async subscribe(email, _source, firstName) {
+      const response = await fetch(`${url}/api/public/subscription`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          email,
+          name: firstName ?? "",
+          list_uuids: [listUuid],
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`listmonk subscription failed with status ${response.status}`);
+      }
+      // The public endpoint deliberately answers the same for new and known
+      // addresses (no enumeration), so repeat signups see the success copy.
+      return { alreadySubscribed: false };
     },
   };
 }
@@ -173,6 +203,9 @@ export function getNewsletterStore(): Promise<NewsletterStore> {
     switch (backend) {
       case "sqlite":
         store = createSqliteStore();
+        break;
+      case "listmonk":
+        store = Promise.resolve(createListmonkStore());
         break;
       case "kit":
         store = Promise.resolve(createKitStore());

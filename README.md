@@ -36,6 +36,8 @@ Signups from the hero form go through a small storage adapter
 
 - `sqlite` (default) — local file via Node's built-in `node:sqlite`, no
   external services. Stable on Node 24; experimental (warning only) on 22/23.
+- `listmonk` — subscribes via the self-hosted listmonk on the VPS
+  (news.uxden.ca), which owns double opt-in and sending.
 - `kit` — subscribes signups to a Kit (kit.com) form via API v4.
 - `supabase` — inserts into a Supabase table over its REST API.
 - `webhook` — POSTs each signup to any URL (marketing tools, Zapier, ...).
