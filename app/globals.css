@@ -548,20 +548,41 @@ footer a:hover {
 }
 
 .event-grid {
-  padding: 0 clamp(24px, 6vw, 92px) clamp(64px, 7vw, 104px);
+  padding: 0 clamp(24px, 6vw, 92px) clamp(48px, 5vw, 72px);
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: min(520px, 82vw);
   gap: clamp(16px, 2vw, 30px);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: clamp(24px, 6vw, 92px);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(18, 16, 15, 0.55) transparent;
   background-image:
     linear-gradient(to right, var(--grid-light) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-light) 1px, transparent 1px);
   background-size: var(--grid-size) var(--grid-size);
 }
 
+.event-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.event-grid::-webkit-scrollbar-thumb {
+  background: rgba(18, 16, 15, 0.55);
+  border-radius: 4px;
+}
+
+.event-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .event-row {
   position: relative;
   min-height: 0;
   overflow: hidden;
+  scroll-snap-align: start;
   perspective: 1200px;
   perspective-origin: 50% 46%;
   background-color: var(--ink);
@@ -1200,7 +1221,7 @@ footer p {
   }
 
   .event-grid {
-    grid-template-columns: 1fr;
+    grid-auto-columns: min(320px, 84vw);
   }
 
   .event-row > a {
