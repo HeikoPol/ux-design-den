@@ -829,6 +829,15 @@ footer a:hover {
   font-size: 0.8rem;
 }
 
+.newsletter-trap {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .newsletter-success-message {
   /* Mirrors the form row's height so the panel barely shifts on swap. */
   min-height: 44px;

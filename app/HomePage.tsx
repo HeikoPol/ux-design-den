@@ -330,6 +330,7 @@ export function HomePage() {
     }
 
     const name = String(form.get("name") ?? "").trim().slice(0, 100);
+    const website = String(form.get("website") ?? "");
     setFormState("submitting");
     setMessage("");
 
@@ -337,7 +338,7 @@ export function HomePage() {
       const response = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: pendingEmail, name }),
+        body: JSON.stringify({ email: pendingEmail, name, website }),
       });
       const result = (await response.json()) as { message?: string };
       if (!response.ok) throw new Error(result.message || "Please try again.");
@@ -396,6 +397,16 @@ export function HomePage() {
             <div className="hero-newsletter" id="newsletter" role="region" aria-labelledby="newsletter-title">
               <h2 id="newsletter-title">Stay Updated</h2>
               <form onSubmit={handleSubmit} noValidate>
+                <div className="newsletter-trap" aria-hidden="true">
+                  <label htmlFor="newsletter-website">Leave this field empty</label>
+                  <input
+                    id="newsletter-website"
+                    name="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
                 {formState === "success" ? (
                   <div className="newsletter-success" role="status" aria-live="polite">
                     <p className="newsletter-success-message">{message}</p>
