@@ -298,6 +298,18 @@ export function HomePage() {
     setMessage("");
   }
 
+  const wasSuccessRef = useRef(false);
+  useEffect(() => {
+    if (wasSuccessRef.current && formState === "idle") signupInputRef.current?.focus();
+    wasSuccessRef.current = formState === "success";
+  }, [formState]);
+
+  function handleResetSignup() {
+    setFormState("idle");
+    setMessage("");
+    setPendingEmail("");
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formElement = event.currentTarget;
@@ -329,11 +341,10 @@ export function HomePage() {
       });
       const result = (await response.json()) as { message?: string };
       if (!response.ok) throw new Error(result.message || "Please try again.");
+      // Keep pendingEmail for the success view; handleResetSignup clears it.
       setFormState("success");
       setMessage(result.message || "You’re on the list.");
       setFormStep("email");
-      setPendingEmail("");
-      formElement.reset();
     } catch (error) {
       setFormState("error");
       setMessage(error instanceof Error ? error.message : "Please try again.");
@@ -385,6 +396,18 @@ export function HomePage() {
             <div className="hero-newsletter" id="newsletter" role="region" aria-labelledby="newsletter-title">
               <h2 id="newsletter-title">Stay Updated</h2>
               <form onSubmit={handleSubmit} noValidate>
+                {formState === "success" ? (
+                  <div className="newsletter-success" role="status" aria-live="polite">
+                    <p className="newsletter-success-message">{message}</p>
+                    <p className="newsletter-consent">
+                      {pendingEmail}{" — "}
+                      <button type="button" className="newsletter-edit" onClick={handleResetSignup}>
+                        Add another email
+                      </button>
+                    </p>
+                  </div>
+                ) : (
+                  <>
                 <label htmlFor="newsletter-email">
                   {formStep === "email" ? "Email address" : "First name (optional)"}
                 </label>
@@ -432,6 +455,8 @@ export function HomePage() {
                 >
                   {message}
                 </p>
+                  </>
+                )}
               </form>
             </div>
 

@@ -20,7 +20,11 @@ export async function POST(request: Request) {
     const { alreadySubscribed } = await store.subscribe(email, "website", name || undefined);
 
     return Response.json(
-      { message: alreadySubscribed ? "You’re already on the list." : "You’re on the list." },
+      {
+        message: alreadySubscribed
+          ? "You’re already on the list."
+          : "Almost there — check your inbox to confirm.",
+      },
       { status: alreadySubscribed ? 200 : 201, headers: { "Cache-Control": "no-store" } },
     );
   } catch {

@@ -829,6 +829,20 @@ footer a:hover {
   font-size: 0.8rem;
 }
 
+.newsletter-success-message {
+  /* Mirrors the form row's height so the panel barely shifts on swap. */
+  min-height: 44px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  color: var(--acid);
+  font-family: var(--display-font);
+  font-size: 1.02rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .newsletter-edit {
   padding: 0;
   border: 0;
