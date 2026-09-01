@@ -184,6 +184,43 @@ export function HomePage() {
   const [formStep, setFormStep] = useState<FormStep>("email");
   const [pendingEmail, setPendingEmail] = useState("");
   const signupInputRef = useRef<HTMLInputElement>(null);
+  const archiveRef = useRef<HTMLElement>(null);
+  const eventGridRef = useRef<HTMLDivElement>(null);
+
+  // Vertical wheel input over the archive drives the card strip; once the
+  // strip hits either end, the event passes through and the page scrolls on.
+  // Touch scrolling never fires wheel events, so phones keep native swiping.
+  useEffect(() => {
+    const section = archiveRef.current;
+    const grid = eventGridRef.current;
+    if (!section || !grid) return;
+
+    let snapRestore: number | undefined;
+    const onWheel = (event: WheelEvent) => {
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+      const delta = event.deltaMode === 1 ? event.deltaY * 32 : event.deltaY;
+      const max = grid.scrollWidth - grid.clientWidth;
+      if (max <= 0) return;
+      const atEnd = delta > 0 && grid.scrollLeft >= max - 1;
+      const atStart = delta < 0 && grid.scrollLeft <= 0;
+      if (atEnd || atStart) return;
+      event.preventDefault();
+      // Snap fights incremental wheel deltas (it pulls the strip back to the
+      // nearest card between ticks); pause it and let it settle afterwards.
+      grid.style.scrollSnapType = "none";
+      grid.scrollLeft += delta;
+      if (snapRestore) window.clearTimeout(snapRestore);
+      snapRestore = window.setTimeout(() => {
+        grid.style.scrollSnapType = "";
+      }, 300);
+    };
+
+    section.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      section.removeEventListener("wheel", onWheel);
+      if (snapRestore) window.clearTimeout(snapRestore);
+    };
+  }, []);
 
   useEffect(() => {
     const update = () => {
@@ -551,13 +588,13 @@ export function HomePage() {
           </a>
         </section>
 
-        <section className="archive" id="past" aria-labelledby="archive-title">
+        <section className="archive" id="past" aria-labelledby="archive-title" ref={archiveRef}>
           <div className="archive-head">
             <h2 id="archive-title">Past sessions</h2>
             <p>03 / Vancouver</p>
           </div>
 
-          <div className="event-grid">
+          <div className="event-grid" ref={eventGridRef}>
             {pastEvents.map((event, eventIndex) => (
               <article className={`event-row ${event.className}`} key={event.href}>
                 <a href={event.href} target="_blank" rel="noreferrer" aria-label={`${event.title} on Luma`}>
