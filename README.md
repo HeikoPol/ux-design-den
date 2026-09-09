@@ -46,6 +46,13 @@ See `.env.example` for the variables each backend needs. Adding another
 provider means implementing the two-line `NewsletterStore` interface in
 `lib/newsletter.ts`.
 
+Production runs `listmonk` on the VPS with Resend as the SMTP relay. For how a
+signup travels from the form to a confirmed subscriber, a delivered newsletter
+and an unsubscribe — and which service handles each step — see the
+[newsletter pipeline diagram](https://claude.ai/code/artifact/801d91c2-7883-430f-9f46-0cbdd639f3c0).
+Setup and troubleshooting for that stack live in
+[deploy/DEPLOY.md](deploy/DEPLOY.md#7-newsletter-listmonk-resend-bounces).
+
 ## Deployment
 
 The site runs on a VPS behind Caddy with the domain `uxden.ca`. Full
