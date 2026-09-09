@@ -1,0 +1,25 @@
+[Unit]
+Description=Resend to listmonk bounce adapter (news.uxden.ca)
+After=network.target listmonk.service
+Wants=listmonk.service
+
+[Service]
+Type=simple
+User=listmonk
+Group=listmonk
+ExecStart=/usr/bin/node /srv/listmonk/resend-bounce-adapter.mjs
+Environment=PORT=9001
+Environment=LISTMONK_URL=http://127.0.0.1:9000
+# RESEND_WEBHOOK_SECRET, LISTMONK_API_USER, LISTMONK_API_TOKEN live here, not in git.
+EnvironmentFile=/etc/resend-bounce.env
+Restart=on-failure
+RestartSec=3
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target
