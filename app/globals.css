@@ -729,7 +729,9 @@ footer a:hover {
      from pinning the panel flush to the viewport top. */
   scroll-margin-top: 40svh;
   width: min(720px, calc(100vw - 48px));
-  padding: 27px 22px 23px;
+  /* No bottom padding: stacking the fields made the panel taller, and the
+     always-present form-status line below already reserves 22px. */
+  padding: 27px 22px 0;
   display: grid;
   grid-template-columns: 108px minmax(0, 1fr);
   gap: 20px;
@@ -766,11 +768,17 @@ footer a:hover {
   border: 0;
 }
 
+/* Email owns the first row; the optional name shares the second with the
+   submit, keeping the panel to two rows. */
 .newsletter-form-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 9px;
+}
+
+.newsletter-form-row #newsletter-email {
+  grid-column: 1 / -1;
 }
 
 .newsletter-form-row input {
@@ -1258,8 +1266,10 @@ footer p {
     font-size: 0.68rem;
   }
 
+  /* At this width the name field and the button can't share a row without
+     truncating the placeholder — give each its own. */
   .newsletter-form-row {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .newsletter-form-row button {

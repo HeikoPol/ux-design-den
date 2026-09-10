@@ -59,7 +59,6 @@ const pastEvents = [
 ];
 
 type FormState = "idle" | "submitting" | "success" | "error";
-type FormStep = "email" | "name";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -181,7 +180,7 @@ export function HomePage() {
   const [heroProgress, setHeroProgress] = useState(0);
   const [formState, setFormState] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
-  const [formStep, setFormStep] = useState<FormStep>("email");
+  // Kept only for the success view, which names the address that just signed up.
   const [pendingEmail, setPendingEmail] = useState("");
   const signupInputRef = useRef<HTMLInputElement>(null);
   const archiveRef = useRef<HTMLElement>(null);
@@ -318,23 +317,6 @@ export function HomePage() {
     }
   }
 
-  const lastStepRef = useRef<FormStep>("email");
-  useEffect(() => {
-    if (lastStepRef.current === formStep) return;
-    lastStepRef.current = formStep;
-    const input = signupInputRef.current;
-    if (!input) return;
-    // Coming back via Edit restores the email; the fresh name field starts empty.
-    if (formStep === "email" && pendingEmail) input.value = pendingEmail;
-    input.focus();
-  }, [formStep, pendingEmail]);
-
-  function handleEditEmail() {
-    setFormStep("email");
-    setFormState("idle");
-    setMessage("");
-  }
-
   const wasSuccessRef = useRef(false);
   useEffect(() => {
     if (wasSuccessRef.current && formState === "idle") signupInputRef.current?.focus();
@@ -352,22 +334,20 @@ export function HomePage() {
     const formElement = event.currentTarget;
     const form = new FormData(formElement);
 
-    if (formStep === "email") {
-      const email = String(form.get("email") ?? "").trim().toLowerCase();
-      if (!email || email.length > 254 || !EMAIL_PATTERN.test(email)) {
-        setFormState("error");
-        setMessage("Please enter a valid email address.");
-        return;
-      }
-      setPendingEmail(email);
-      setFormState("idle");
-      setMessage("");
-      setFormStep("name");
+    const email = String(form.get("email") ?? "").trim().toLowerCase();
+    // The name is optional, so an empty one is submitted as an empty string and
+    // the API treats it as absent.
+    const name = String(form.get("name") ?? "").trim().slice(0, 100);
+    const website = String(form.get("website") ?? "");
+
+    if (!email || email.length > 254 || !EMAIL_PATTERN.test(email)) {
+      setFormState("error");
+      setMessage("Please enter a valid email address.");
+      signupInputRef.current?.focus();
       return;
     }
 
-    const name = String(form.get("name") ?? "").trim().slice(0, 100);
-    const website = String(form.get("website") ?? "");
+    setPendingEmail(email);
     setFormState("submitting");
     setMessage("");
 
@@ -375,14 +355,13 @@ export function HomePage() {
       const response = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: pendingEmail, name, website }),
+        body: JSON.stringify({ email, name, website }),
       });
       const result = (await response.json()) as { message?: string };
       if (!response.ok) throw new Error(result.message || "Please try again.");
       // Keep pendingEmail for the success view; handleResetSignup clears it.
       setFormState("success");
       setMessage(result.message || "You’re on the list.");
-      setFormStep("email");
     } catch (error) {
       setFormState("error");
       setMessage(error instanceof Error ? error.message : "Please try again.");
@@ -456,45 +435,37 @@ export function HomePage() {
                   </div>
                 ) : (
                   <>
-                <label htmlFor="newsletter-email">
-                  {formStep === "email" ? "Email address" : "First name (optional)"}
-                </label>
+                <label htmlFor="newsletter-email">Email address</label>
+                <label htmlFor="newsletter-name">First name (optional)</label>
                 <div className="newsletter-form-row">
                   <input
-                    key={formStep}
                     ref={signupInputRef}
                     id="newsletter-email"
-                    name={formStep === "email" ? "email" : "name"}
-                    type={formStep === "email" ? "email" : "text"}
-                    inputMode={formStep === "email" ? "email" : "text"}
-                    autoComplete={formStep === "email" ? "email" : "given-name"}
-                    placeholder={formStep === "email" ? "YOUR EMAIL ADDRESS" : "YOUR FIRST NAME (OPTIONAL)"}
-                    required={formStep === "email"}
+                    name="email"
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    placeholder="YOUR EMAIL ADDRESS"
+                    required
                     aria-describedby="newsletter-consent form-status"
                     onChange={handleEmailInput}
                     disabled={formState === "submitting"}
                   />
+                  <input
+                    id="newsletter-name"
+                    name="name"
+                    type="text"
+                    autoComplete="given-name"
+                    placeholder="FIRST NAME (OPTIONAL)"
+                    aria-describedby="newsletter-consent"
+                    disabled={formState === "submitting"}
+                  />
                   <button type="submit" disabled={formState === "submitting"}>
-                    {formState === "submitting"
-                      ? "JOINING…"
-                      : formStep === "email"
-                        ? "COUNT ME IN ↗"
-                        : "JOIN THE DEN ↗"}
+                    {formState === "submitting" ? "JOINING…" : "COUNT ME IN ↗"}
                   </button>
                 </div>
                 <p className="newsletter-consent" id="newsletter-consent">
-                  {formStep === "name" ? (
-                    <>
-                      Signing up as {pendingEmail}.{" "}
-                      <button type="button" className="newsletter-edit" onClick={handleEditEmail}>
-                        Edit
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      Occasional UX Den updates. Unsubscribe anytime. <a href="/privacy">Privacy</a>
-                    </>
-                  )}
+                  Occasional UX Den updates. Unsubscribe anytime. <a href="/privacy">Privacy</a>
                 </p>
                 <p
                   className={`form-status ${formState === "error" ? "is-error" : ""}`}
