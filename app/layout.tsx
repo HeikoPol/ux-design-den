@@ -1,19 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { HOME_DESCRIPTION, HOME_TITLE, SITE_ORIGIN, organizationSchema } from "../lib/seo";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://ux-design-den.heiko636955.chatgpt.site",
-  ),
-  title: "UX Den",
-  description:
-    "A low-pressure community for designers and design-adjacent people to learn, practice, and grow.",
-  openGraph: {
-    title: "UX Den",
-    description: "Creative workshops and good company for Vancouver designers.",
-    siteName: "UX Den",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "UX Den — a design community in Vancouver" }],
-  },
+  metadataBase: new URL(SITE_ORIGIN),
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
@@ -33,6 +25,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Saira:wght@300;400;500;600;700;800&display=swap"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
       </head>
       <body>{children}</body>

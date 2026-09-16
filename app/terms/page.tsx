@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
 import { LegalPage } from "../LegalPage";
+import { pageMetadata } from "../../lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Terms | UX Den",
   description: "The terms that apply when using the UX Den website.",
-};
+  path: "/terms",
+});
 
 const sections = [
   {
