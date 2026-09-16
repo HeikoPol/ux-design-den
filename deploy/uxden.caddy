@@ -10,8 +10,10 @@ uxden.ca {
 	# Event art is served at fixed, named widths and never edited in place —
 	# a new image gets a new filename — so browsers may keep it for a year.
 	# og.jpg is deliberately excluded: social crawlers should re-fetch it.
+	# The > prefix defers the write until after the upstream responds; without
+	# it the app's own max-age=3600 lands afterwards and wins.
 	@immutable path /events/* /favicon.svg /favicon-*.png /apple-touch-icon.png /grain.webp
-	header @immutable Cache-Control "public, max-age=31536000, immutable"
+	header @immutable >Cache-Control "public, max-age=31536000, immutable"
 
 	reverse_proxy 127.0.0.1:3002
 }
