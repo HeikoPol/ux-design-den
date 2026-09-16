@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: "UX Den",
     description: "Creative workshops and good company for Vancouver designers.",
     siteName: "UX Den",
-    images: ["/og.png"],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "UX Den — a design community in Vancouver" }],
   },
   icons: {
     icon: [

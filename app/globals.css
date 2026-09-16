@@ -667,7 +667,7 @@ footer a:hover {
   z-index: 3;
   position: absolute;
   inset: 0;
-  background: url("/og.png") center / cover;
+  background: url("/grain.webp") center / cover;
   opacity: 0.2;
   mix-blend-mode: overlay;
 }

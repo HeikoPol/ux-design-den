@@ -26,7 +26,7 @@ const pastEvents = [
     summary:
       "Three minutes per portfolio, with real-time feedback from hiring managers and senior designers.",
     href: "https://luma.com/oq43d0wr",
-    image: "/events/portfolio-review-live.webp",
+    art: { name: "portfolio-review-live", widths: [600, 900, 1200], width: 1200, height: 1020 },
     colors: ["#150c0d", "#ed674b", "#f0d85b", "#438ed2"],
     className: "event-row-warm",
   },
@@ -39,7 +39,7 @@ const pastEvents = [
     summary:
       "Improv as a design tool for confidence, connection, and speaking up without the pressure to perform.",
     href: "https://luma.com/l3xpha7j",
-    image: "/events/geek-out.webp",
+    art: { name: "geek-out", widths: [600, 860], width: 860, height: 640 },
     colors: ["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"],
     className: "event-row-cool",
   },
@@ -52,11 +52,24 @@ const pastEvents = [
     summary:
       "A practical workshop for shaping design skills into products, consulting work, and sustainable revenue.",
     href: "https://luma.com/g3izk916",
-    image: "/events/side-hustle.jpg",
+    art: { name: "side-hustle", widths: [600, 900, 1200], width: 1200, height: 901 },
     colors: ["#150c0d", "#ed674b", "#f0d85b", "#438ed2"],
     className: "event-row-warm",
   },
 ];
+
+/**
+ * Event art ships as AVIF and WebP at a few widths. Cards are min(520px, 82vw)
+ * wide and the photo sits at 114% inside, so 1200px covers 2x density on the
+ * widest card; nothing larger is ever displayed.
+ */
+type EventArt = { name: string; widths: number[]; width: number; height: number };
+
+function artSrcSet(art: EventArt, ext: "avif" | "webp"): string {
+  return art.widths.map((w) => `/events/${art.name}-${w}.${ext} ${w}w`).join(", ");
+}
+
+const ART_SIZES = "(max-width: 634px) 94vw, 600px";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -575,7 +588,20 @@ export function HomePage() {
                     <span>Vancouver</span>
                   </div>
                   <div className="event-art" aria-hidden="true">
-                    <img className="event-art-photo" src={event.image} alt="" loading="lazy" />
+                    <picture>
+                      <source type="image/avif" srcSet={artSrcSet(event.art, "avif")} sizes={ART_SIZES} />
+                      <img
+                        className="event-art-photo"
+                        src={`/events/${event.art.name}-${event.art.widths.at(-1)}.webp`}
+                        srcSet={artSrcSet(event.art, "webp")}
+                        sizes={ART_SIZES}
+                        width={event.art.width}
+                        height={event.art.height}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
                     <div className="event-art-shader">
                       <ShaderField
                         colors={event.colors}
