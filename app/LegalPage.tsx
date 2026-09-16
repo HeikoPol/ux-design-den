@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "./Logo";
 
 type LegalSection = {
   title: string;
@@ -21,7 +22,7 @@ export function LegalPage({
     <div className="legal-shell">
       <header className="legal-nav">
         <Link className="wordmark" href="/" aria-label="UX Den home">
-          UX<br />DEN
+          <Logo />
         </Link>
         <Link className="legal-back" href="/">
           Back to the Den ↗

@@ -15,6 +15,7 @@ import {
   Warp,
 } from "@paper-design/shaders-react";
 import { AxisCursor } from "./AxisCursor";
+import { Logo } from "./Logo";
 
 const pastEvents = [
   {
@@ -398,7 +399,7 @@ export function HomePage() {
           >
             <header className="hero-nav">
               <a className="wordmark" href="#top" aria-label="UX Den home">
-                UX<br />DEN
+                <Logo />
               </a>
               <p className="nav-signal"><span aria-hidden="true" /> Vancouver, BC</p>
               <nav aria-label="Primary navigation">

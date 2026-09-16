@@ -149,11 +149,20 @@ a {
 
 .wordmark {
   width: fit-content;
-  font-family: var(--display-font);
-  font-size: clamp(1.15rem, 1.7vw, 1.6rem);
-  font-weight: 700;
-  line-height: 0.75;
-  letter-spacing: -0.055em;
+  display: block;
+}
+
+/* Sized to the height the two-line text wordmark used to occupy. Letters take
+   the surrounding colour; the dot is fixed to the brand mint. */
+.logo {
+  height: clamp(28px, 2.6vw, 38px);
+  width: auto;
+  display: block;
+  fill: currentColor;
+}
+
+.logo-dot {
+  fill: var(--mint);
 }
 
 .nav-signal {
