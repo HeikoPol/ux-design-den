@@ -7,6 +7,7 @@
   --muted: #aaa49b;
   --coral: #e8694e;
   --mint: #6bd8ce;
+  --logo-teal: #37c8c1; /* the dot in the brand mark — sampled from the logo file, not a palette colour */
   --acid: #dce85a;
   --magenta: #cf4d91;
   --line: rgba(233, 230, 223, 0.25);
@@ -162,7 +163,7 @@ a {
 }
 
 .logo-dot {
-  fill: var(--mint);
+  fill: var(--logo-teal);
 }
 
 .nav-signal {
