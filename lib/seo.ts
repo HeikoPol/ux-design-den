@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { nextEvent } from "./events";
 
 /**
  * Shared SEO pieces. Each page builds its metadata through pageMetadata() so
@@ -54,11 +55,7 @@ export function pageMetadata({
 }
 
 /**
- * Organization markup, emitted once from the root layout. Event markup is
- * deliberately absent: the "next session" on the home page is a placeholder,
- * and Google penalises Event schema that doesn't describe a real dated event.
- * When one is scheduled, add an Event object here with startDate, location and
- * the Luma URL as the offers/url, and it'll be eligible for event rich results.
+ * Organization markup, emitted once from the root layout.
  */
 export const organizationSchema = {
   "@context": "https://schema.org",
@@ -75,3 +72,36 @@ export const organizationSchema = {
   },
   sameAs: ["https://www.linkedin.com/groups/16579023/"],
 };
+
+/**
+ * Event markup for the upcoming session, emitted from the home page — the
+ * page that actually presents the event. Null when nothing is scheduled, so
+ * nothing is emitted; Google penalises Event schema for undated placeholders.
+ */
+export const eventSchema = nextEvent
+  ? {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      name: nextEvent.title,
+      startDate: nextEvent.start,
+      endDate: nextEvent.end,
+      eventStatus: "https://schema.org/EventScheduled",
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      description: nextEvent.description,
+      image: `${SITE_ORIGIN}${nextEvent.image}`,
+      url: nextEvent.href,
+      location: {
+        "@type": "Place",
+        name: nextEvent.venue,
+        address: { "@type": "PostalAddress", ...nextEvent.address },
+      },
+      organizer: { "@type": "Organization", name: SITE_NAME, url: SITE_ORIGIN },
+      offers: {
+        "@type": "Offer",
+        url: nextEvent.href,
+        price: nextEvent.free ? "0" : undefined,
+        priceCurrency: "CAD",
+        availability: "https://schema.org/InStock",
+      },
+    }
+  : null;

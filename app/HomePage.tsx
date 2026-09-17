@@ -16,6 +16,7 @@ import {
 } from "@paper-design/shaders-react";
 import { AxisCursor } from "./AxisCursor";
 import { Logo } from "./Logo";
+import { nextEvent } from "../lib/events";
 
 const pastEvents = [
   {
@@ -544,33 +545,71 @@ export function HomePage() {
 
         <section className="next-scene" id="next" aria-labelledby="next-title">
           <div className="scene-index">02 / NEXT EVENT</div>
-          <p className="next-status"><span aria-hidden="true" /> Next session in the works</p>
-          <a
-            className="next-event-card"
-            href="#newsletter"
-            onClick={handleNewsletterNav}
-            aria-label="Next event to be announced — join the newsletter to hear first"
-          >
-            <div className="next-event-media">
-              <div className="next-media-shader" aria-hidden="true">
-                <ShaderField
-                  colors={["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"]}
-                  rotation={-14}
-                  scale={1.18}
-                  speed={reducedMotion ? 0 : 0.1}
-                />
+          <p className="next-status">
+            <span aria-hidden="true" />{" "}
+            {nextEvent ? "Registration open" : "Next session in the works"}
+          </p>
+          {nextEvent ? (
+            <a
+              className="next-event-card"
+              href={nextEvent.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${nextEvent.title} on Luma`}
+            >
+              <div className="next-event-media">
+                <div className="next-media-shader" aria-hidden="true">
+                  <ShaderField
+                    colors={["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"]}
+                    rotation={-14}
+                    scale={1.18}
+                    speed={reducedMotion ? 0 : 0.1}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="next-event-details">
-              <p className="next-event-date">DATE &amp; VENUE / TBA</p>
-              <h2 id="next-title">To be<br />announced</h2>
-              <p className="next-copy">
-                The next session is taking shape. Newsletter subscribers hear about it first.
-              </p>
-              <p className="next-event-location">Vancouver, BC</p>
-              <span className="next-event-open">Get notified first <span aria-hidden="true">↗</span></span>
-            </div>
-          </a>
+              <div className="next-event-details">
+                <p className="next-event-date">
+                  {nextEvent.dateLabel} · {nextEvent.timeLabel}
+                </p>
+                <h2 id="next-title">{nextEvent.title}</h2>
+                <p className="next-copy">{nextEvent.blurb}</p>
+                <p className="next-event-location">
+                  {nextEvent.venue}, {nextEvent.address.addressLocality}
+                </p>
+                <span className="next-event-open">
+                  {nextEvent.free ? "Free — RSVP on Luma" : "RSVP on Luma"}{" "}
+                  <span aria-hidden="true">↗</span>
+                </span>
+              </div>
+            </a>
+          ) : (
+            <a
+              className="next-event-card"
+              href="#newsletter"
+              onClick={handleNewsletterNav}
+              aria-label="Next event to be announced — join the newsletter to hear first"
+            >
+              <div className="next-event-media">
+                <div className="next-media-shader" aria-hidden="true">
+                  <ShaderField
+                    colors={["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"]}
+                    rotation={-14}
+                    scale={1.18}
+                    speed={reducedMotion ? 0 : 0.1}
+                  />
+                </div>
+              </div>
+              <div className="next-event-details">
+                <p className="next-event-date">DATE &amp; VENUE / TBA</p>
+                <h2 id="next-title">To be<br />announced</h2>
+                <p className="next-copy">
+                  The next session is taking shape. Newsletter subscribers hear about it first.
+                </p>
+                <p className="next-event-location">Vancouver, BC</p>
+                <span className="next-event-open">Get notified first <span aria-hidden="true">↗</span></span>
+              </div>
+            </a>
+          )}
         </section>
 
         <section className="archive" id="past" aria-labelledby="archive-title" ref={archiveRef}>

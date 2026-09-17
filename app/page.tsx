@@ -1,5 +1,5 @@
 import { HomePage } from "./HomePage";
-import { HOME_DESCRIPTION, HOME_TITLE, pageMetadata } from "../lib/seo";
+import { HOME_DESCRIPTION, HOME_TITLE, eventSchema, pageMetadata } from "../lib/seo";
 
 export const metadata = pageMetadata({
   title: HOME_TITLE,
@@ -8,5 +8,15 @@ export const metadata = pageMetadata({
 });
 
 export default function Home() {
-  return <HomePage />;
+  return (
+    <>
+      {eventSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
+        />
+      )}
+      <HomePage />
+    </>
+  );
 }
