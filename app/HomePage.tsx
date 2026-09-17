@@ -16,7 +16,7 @@ import {
 } from "@paper-design/shaders-react";
 import { AxisCursor } from "./AxisCursor";
 import { Logo } from "./Logo";
-import { nextEvent } from "../lib/events";
+import { artSrcSet, nextEvent } from "../lib/events";
 
 const pastEvents = [
   {
@@ -61,17 +61,13 @@ const pastEvents = [
 ];
 
 /**
- * Event art ships as AVIF and WebP at a few widths. Cards are min(520px, 82vw)
- * wide and the photo sits at 114% inside, so 1200px covers 2x density on the
- * widest card; nothing larger is ever displayed.
+ * Past-event art ships as AVIF and WebP at a few widths. Cards are
+ * min(520px, 82vw) wide and the photo sits at 114% inside, so 1200px covers
+ * 2x density on the widest card; nothing larger is ever displayed.
  */
-type EventArt = { name: string; widths: number[]; width: number; height: number };
-
-function artSrcSet(art: EventArt, ext: "avif" | "webp"): string {
-  return art.widths.map((w) => `/events/${art.name}-${w}.${ext} ${w}w`).join(", ");
-}
-
 const ART_SIZES = "(max-width: 634px) 94vw, 600px";
+// The next-event media box is width 100% capped at 470px, square.
+const NEXT_ART_SIZES = "(max-width: 520px) 92vw, 470px";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -558,14 +554,30 @@ export function HomePage() {
               aria-label={`${nextEvent.title} on Luma`}
             >
               <div className="next-event-media">
-                <div className="next-media-shader" aria-hidden="true">
-                  <ShaderField
-                    colors={["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"]}
-                    rotation={-14}
-                    scale={1.18}
-                    speed={reducedMotion ? 0 : 0.1}
-                  />
-                </div>
+                {nextEvent.art ? (
+                  <picture>
+                    <source type="image/avif" srcSet={artSrcSet(nextEvent.art, "avif")} sizes={NEXT_ART_SIZES} />
+                    <img
+                      src={`/events/${nextEvent.art.name}-${nextEvent.art.widths.at(-1)}.webp`}
+                      srcSet={artSrcSet(nextEvent.art, "webp")}
+                      sizes={NEXT_ART_SIZES}
+                      width={nextEvent.art.width}
+                      height={nextEvent.art.height}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                ) : (
+                  <div className="next-media-shader" aria-hidden="true">
+                    <ShaderField
+                      colors={["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"]}
+                      rotation={-14}
+                      scale={1.18}
+                      speed={reducedMotion ? 0 : 0.1}
+                    />
+                  </div>
+                )}
               </div>
               <div className="next-event-details">
                 <p className="next-event-date">
