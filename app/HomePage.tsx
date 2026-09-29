@@ -26,7 +26,7 @@ const pastEvents = [
     date: "September 28",
     location: "Main & 14th Plaza",
     summary:
-      "A Monday morning co-work session. Rain moved us indoors, which turned out to suit the morning fine.",
+      "A Monday morning co-work session over coffee, laptops open, everyone getting a head start on the week.",
     href: "https://luma.com/4hkttl1f",
     art: { name: "coffee-collab-session", widths: [600, 900, 1200], width: 1200, height: 900 },
     colors: ["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"],
