@@ -42,26 +42,11 @@ export type NextEvent = {
   free: boolean;
 };
 
-export const nextEvent: NextEvent | null = {
-  title: "Coffee, Collab, and ‘Countability",
-  start: "2026-09-28T09:00:00-07:00",
-  end: "2026-09-28T13:00:00-07:00",
-  dateLabel: "Mon, Sep 28",
-  timeLabel: "9 AM – 1 PM",
-  venue: "Main & 14th Plaza",
-  address: {
-    streetAddress: "Main St & E 14th Ave",
-    addressLocality: "Vancouver",
-    addressRegion: "BC",
-    postalCode: "V5T 3G3",
-    addressCountry: "CA",
-  },
-  blurb:
-    "Start the week with a morning co-work session. Outdoors at the plaza if the weather holds, a nearby café if it doesn’t. Bring whatever you’re working on.",
-  description:
-    "A Monday morning co-working session for Vancouver designers. Working from home is tempting, but a designated space with others brings accountability, productivity and a sense of community. Weather permitting we’ll be outdoors at the Main & 14th plaza — tables, patio umbrellas and outlets for laptops — with JJ Bean or Forecast as the rainy-day backup. Bring whatever you’re currently working on.",
-  href: "https://luma.com/4hkttl1f",
-  image: "/events/coffee-collab-countability.jpg",
-  art: { name: "coffee-collab-countability", widths: [600, 900, 1080], width: 1080, height: 1080 },
-  free: true,
-};
+export const nextEvent: NextEvent | null = null;
+
+/**
+ * A known date for the next session before its details are settled. Shown on
+ * the placeholder card; deliberately not enough for Event markup, which needs
+ * a name and a venue. Set to null when even the date is unknown.
+ */
+export const nextEventHint: string | null = "Wed, Oct 28";

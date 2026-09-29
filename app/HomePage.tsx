@@ -16,11 +16,24 @@ import {
 } from "@paper-design/shaders-react";
 import { AxisCursor } from "./AxisCursor";
 import { Logo } from "./Logo";
-import { artSrcSet, nextEvent } from "../lib/events";
+import { artSrcSet, nextEvent, nextEventHint } from "../lib/events";
 
 const pastEvents = [
   {
     index: "01",
+    title: "Coffee, Collab, and \u2018Countability",
+    shortTitle: "Coffee, Collab & \u2018Countability",
+    date: "September 28",
+    location: "Main & 14th Plaza",
+    summary:
+      "A Monday morning co-work session. Rain moved us indoors, which turned out to suit the morning fine.",
+    href: "https://luma.com/4hkttl1f",
+    art: { name: "coffee-collab-session", widths: [600, 900, 1200], width: 1200, height: 900 },
+    colors: ["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"],
+    className: "event-row-cool",
+  },
+  {
+    index: "02",
     title: "UXDD Portfolio Review Session",
     shortTitle: "Portfolio Review Session",
     date: "August 26",
@@ -33,7 +46,7 @@ const pastEvents = [
     className: "event-row-warm",
   },
   {
-    index: "02",
+    index: "03",
     title: "Geek-Out Session: An Improv Night for Designers",
     shortTitle: "Geek-Out Session",
     date: "June 23",
@@ -46,7 +59,7 @@ const pastEvents = [
     className: "event-row-cool",
   },
   {
-    index: "03",
+    index: "04",
     title: "The Side-Hustle Blueprint for Designers",
     shortTitle: "Side-Hustle Blueprint",
     date: "May 30",
@@ -402,7 +415,7 @@ export function HomePage() {
               <nav aria-label="Primary navigation">
                 <a href="#newsletter" onClick={handleNewsletterNav}>Newsletter</a>
                 <a href="#next">Next</a>
-                <a href="#past">Past (03)</a>
+                <a href="#past">Past ({String(pastEvents.length).padStart(2, "0")})</a>
               </nav>
             </header>
 
@@ -612,10 +625,14 @@ export function HomePage() {
                 </div>
               </div>
               <div className="next-event-details">
-                <p className="next-event-date">DATE &amp; VENUE / TBA</p>
+                <p className="next-event-date">
+                  {nextEventHint ? `${nextEventHint} · VENUE TBA` : "DATE & VENUE / TBA"}
+                </p>
                 <h2 id="next-title">To be<br />announced</h2>
                 <p className="next-copy">
-                  The next session is taking shape. Newsletter subscribers hear about it first.
+                  {nextEventHint
+                    ? "The date is set and the rest is taking shape. Newsletter subscribers hear the details first."
+                    : "The next session is taking shape. Newsletter subscribers hear about it first."}
                 </p>
                 <p className="next-event-location">Vancouver, BC</p>
                 <span className="next-event-open">Get notified first <span aria-hidden="true">↗</span></span>
@@ -627,7 +644,7 @@ export function HomePage() {
         <section className="archive" id="past" aria-labelledby="archive-title" ref={archiveRef}>
           <div className="archive-head">
             <h2 id="archive-title">Past sessions</h2>
-            <p>03 / Vancouver</p>
+            <p>{String(pastEvents.length).padStart(2, "0")} / Vancouver</p>
           </div>
 
           <div className="event-grid" ref={eventGridRef}>
