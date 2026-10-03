@@ -42,11 +42,33 @@ export type NextEvent = {
   free: boolean;
 };
 
-export const nextEvent: NextEvent | null = null;
+export const nextEvent: NextEvent | null = {
+  title: "I'm a Designer, Ask Me Anything",
+  start: "2026-10-28T17:30:00-07:00",
+  end: "2026-10-28T18:30:00-07:00",
+  dateLabel: "Wed, Oct 28",
+  timeLabel: "5:30 \u2013 6:30 PM",
+  venue: "Northeastern University Vancouver",
+  address: {
+    streetAddress: "410 W Georgia St #1400",
+    addressLocality: "Vancouver",
+    addressRegion: "BC",
+    postalCode: "V6B 1Z3",
+    addressCountry: "CA",
+  },
+  blurb:
+    "An open Q&A with design leaders who have worked across agencies, startups, freelancing and corporate teams. Bring a question.",
+  description:
+    "An open Q&A panel for Vancouver designers. Design work looks different depending on where you do it: an agency runs on billable hours and client politics, a startup trades certainty for influence, freelancing makes you your own account manager, and a corporate team means process and scale. Design leaders who have worked across those settings take questions from the floor, including what they look for when hiring juniors. Hosted with the Information Design & Data Visualization program at Northeastern University Vancouver.",
+  href: "https://luma.com/k73ibpyx",
+  image: "/events/ask-me-anything.jpg",
+  art: { name: "ask-me-anything", widths: [600, 900, 1080], width: 1080, height: 1080 },
+  free: true,
+};
 
 /**
  * A known date for the next session before its details are settled. Shown on
  * the placeholder card; deliberately not enough for Event markup, which needs
  * a name and a venue. Set to null when even the date is unknown.
  */
-export const nextEventHint: string | null = "Wed, Oct 28";
+export const nextEventHint: string | null = null;
