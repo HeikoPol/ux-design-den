@@ -694,7 +694,7 @@ export function HomePage() {
 
         <footer>
           <p>UX DEN</p>
-          <a href="mailto:uxdesignden-bc@gmail.com">uxdesignden-bc@gmail.com</a>
+          <a href="mailto:hello@uxden.ca">hello@uxden.ca</a>
           <a href="https://www.linkedin.com/groups/16579023/" target="_blank" rel="noreferrer">
             LinkedIn group ↗
           </a>

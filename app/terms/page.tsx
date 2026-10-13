@@ -23,7 +23,7 @@ const sections = [
   {
     title: "Newsletter",
     paragraphs: [
-      "If you subscribe, please provide an email address you are authorized to use. Newsletter timing is not guaranteed. You can unsubscribe at any time using the option or instructions in an email, or by contacting uxdesignden-bc@gmail.com.",
+      "If you subscribe, please provide an email address you are authorized to use. Newsletter timing is not guaranteed. You can unsubscribe at any time using the option or instructions in an email, or by contacting hello@uxden.ca.",
     ],
   },
   {
@@ -54,7 +54,7 @@ const sections = [
     title: "Law, changes, and contact",
     paragraphs: [
       "These terms are governed by the laws of British Columbia and the applicable laws of Canada. We may update them as the site changes. The version posted here applies from its last-updated date.",
-      "Questions: UX Den, Vancouver, British Columbia, Canada — uxdesignden-bc@gmail.com.",
+      "Questions: UX Den, Vancouver, British Columbia, Canada — hello@uxden.ca.",
     ],
   },
 ];

@@ -26,7 +26,7 @@ const sections = [
   {
     title: "Consent and unsubscribe",
     paragraphs: [
-      "You choose whether to join the newsletter. You can withdraw your consent at any time by using the unsubscribe option or instructions in an email, or by contacting us at uxdesignden-bc@gmail.com. We will stop sending newsletter messages and remove your address from the active list within the time required by law.",
+      "You choose whether to join the newsletter. You can withdraw your consent at any time by using the unsubscribe option or instructions in an email, or by contacting us at hello@uxden.ca. We will stop sending newsletter messages and remove your address from the active list within the time required by law.",
     ],
   },
   {
@@ -45,7 +45,7 @@ const sections = [
   {
     title: "Your choices and rights",
     paragraphs: [
-      "You may ask to access or correct your personal information, withdraw consent, or request deletion. To make a request or raise a privacy concern, email uxdesignden-bc@gmail.com. We may need to confirm your identity before completing a request.",
+      "You may ask to access or correct your personal information, withdraw consent, or request deletion. To make a request or raise a privacy concern, email hello@uxden.ca. We may need to confirm your identity before completing a request.",
     ],
   },
   {
@@ -58,7 +58,7 @@ const sections = [
     title: "Changes and contact",
     paragraphs: [
       "We may update this notice as the site or our practices change. The latest version will always appear here with a revised date.",
-      "Privacy contact: UX Den, Vancouver, British Columbia, Canada — uxdesignden-bc@gmail.com.",
+      "Privacy contact: UX Den, Vancouver, British Columbia, Canada — hello@uxden.ca.",
     ],
   },
 ];

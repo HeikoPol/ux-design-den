@@ -57,7 +57,7 @@ export function LegalPage({
 
       <footer className="legal-footer">
         <p>UX DEN</p>
-        <a href="mailto:uxdesignden-bc@gmail.com">uxdesignden-bc@gmail.com</a>
+        <a href="mailto:hello@uxden.ca">hello@uxden.ca</a>
         <nav className="footer-legal" aria-label="Legal">
           <a href="/privacy">Privacy</a>
           <a href="/terms">Terms</a>
