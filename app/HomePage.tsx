@@ -21,6 +21,19 @@ import { artSrcSet, nextEvent, nextEventHint } from "../lib/events";
 const pastEvents = [
   {
     index: "01",
+    title: "I'm a Designer, Ask Me Anything",
+    shortTitle: "Ask Me Anything",
+    date: "October 28",
+    location: "Northeastern University Vancouver",
+    summary:
+      "An open Q&A with design leaders working across agencies, startups, in-house teams and freelance practice.",
+    href: "https://luma.com/k73ibpyx",
+    art: { name: "ask-me-anything-session", widths: [600, 900, 1200], width: 1200, height: 675 },
+    colors: ["#120d0e", "#65d8cf", "#dd4b96", "#ddea56"],
+    className: "event-row-cool",
+  },
+  {
+    index: "02",
     title: "Coffee, Collab, and \u2018Countability",
     shortTitle: "Coffee, Collab & \u2018Countability",
     date: "September 28",
@@ -33,7 +46,7 @@ const pastEvents = [
     className: "event-row-cool",
   },
   {
-    index: "02",
+    index: "03",
     title: "UXDD Portfolio Review Session",
     shortTitle: "Portfolio Review Session",
     date: "August 26",
@@ -46,7 +59,7 @@ const pastEvents = [
     className: "event-row-warm",
   },
   {
-    index: "03",
+    index: "04",
     title: "Geek-Out Session: An Improv Night for Designers",
     shortTitle: "Geek-Out Session",
     date: "June 23",
@@ -59,7 +72,7 @@ const pastEvents = [
     className: "event-row-cool",
   },
   {
-    index: "04",
+    index: "05",
     title: "The Side-Hustle Blueprint for Designers",
     shortTitle: "Side-Hustle Blueprint",
     date: "May 30",
