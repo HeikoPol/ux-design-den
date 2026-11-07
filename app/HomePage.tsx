@@ -21,8 +21,8 @@ import { artSrcSet, nextEvent, nextEventHint } from "../lib/events";
 const pastEvents = [
   {
     index: "01",
-    title: "I'm a Designer, Ask Me Anything",
-    shortTitle: "Ask Me Anything",
+    title: "I'm a Designer, Ask me Anything",
+    shortTitle: "I'm a Designer, Ask me Anything",
     date: "October 28",
     location: "Northeastern University Vancouver",
     summary:
