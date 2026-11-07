@@ -557,6 +557,45 @@ footer a:hover {
   font-size: 0.75rem;
 }
 
+/* The strip no longer hijacks the wheel, so it needs a visible affordance.
+   Native horizontal scrolling (trackpad swipe, touch) still works. */
+.archive-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(14px, 2vw, 26px);
+}
+
+.archive-arrows {
+  display: flex;
+  gap: 8px;
+}
+
+.archive-arrows button {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(18, 16, 15, 0.28);
+  background: transparent;
+  color: var(--ink);
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.archive-arrows button:hover:not(:disabled) {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--chalk);
+}
+
+.archive-arrows button:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
 .event-grid {
   padding: 0 clamp(24px, 6vw, 92px) clamp(48px, 5vw, 72px);
   display: grid;
@@ -1236,6 +1275,18 @@ footer p {
   .archive-head h2 {
     max-width: 240px;
     font-size: 3.2rem;
+  }
+
+  .archive-controls {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  /* 44px is the minimum comfortable touch target. */
+  .archive-arrows button {
+    width: 44px;
+    height: 44px;
   }
 
   .event-grid {

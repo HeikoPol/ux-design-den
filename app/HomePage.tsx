@@ -220,43 +220,40 @@ export function HomePage() {
   // Kept only for the success view, which names the address that just signed up.
   const [pendingEmail, setPendingEmail] = useState("");
   const signupInputRef = useRef<HTMLInputElement>(null);
-  const archiveRef = useRef<HTMLElement>(null);
   const eventGridRef = useRef<HTMLDivElement>(null);
+  // Both true when every card already fits, which disables both arrows.
+  const [stripEdges, setStripEdges] = useState({ atStart: true, atEnd: true });
 
-  // Vertical wheel input over the archive drives the card strip; once the
-  // strip hits either end, the event passes through and the page scrolls on.
-  // Touch scrolling never fires wheel events, so phones keep native swiping.
   useEffect(() => {
-    const section = archiveRef.current;
     const grid = eventGridRef.current;
-    if (!section || !grid) return;
+    if (!grid) return;
 
-    let snapRestore: number | undefined;
-    const onWheel = (event: WheelEvent) => {
-      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
-      const delta = event.deltaMode === 1 ? event.deltaY * 32 : event.deltaY;
+    const update = () => {
       const max = grid.scrollWidth - grid.clientWidth;
-      if (max <= 0) return;
-      const atEnd = delta > 0 && grid.scrollLeft >= max - 1;
-      const atStart = delta < 0 && grid.scrollLeft <= 0;
-      if (atEnd || atStart) return;
-      event.preventDefault();
-      // Snap fights incremental wheel deltas (it pulls the strip back to the
-      // nearest card between ticks); pause it and let it settle afterwards.
-      grid.style.scrollSnapType = "none";
-      grid.scrollLeft += delta;
-      if (snapRestore) window.clearTimeout(snapRestore);
-      snapRestore = window.setTimeout(() => {
-        grid.style.scrollSnapType = "";
-      }, 300);
+      setStripEdges({ atStart: grid.scrollLeft <= 1, atEnd: grid.scrollLeft >= max - 1 });
     };
 
-    section.addEventListener("wheel", onWheel, { passive: false });
+    update();
+    grid.addEventListener("scroll", update, { passive: true });
+    const observer = new ResizeObserver(update);
+    observer.observe(grid);
     return () => {
-      section.removeEventListener("wheel", onWheel);
-      if (snapRestore) window.clearTimeout(snapRestore);
+      grid.removeEventListener("scroll", update);
+      observer.disconnect();
     };
   }, []);
+
+  function scrollStrip(direction: -1 | 1) {
+    const grid = eventGridRef.current;
+    if (!grid) return;
+    // One card plus the gap, so a click lands the next card against the same edge.
+    const card = grid.querySelector(".event-row");
+    const gap = parseFloat(getComputedStyle(grid).columnGap) || 0;
+    const step = card ? card.getBoundingClientRect().width + gap : grid.clientWidth * 0.8;
+    grid.scrollBy({ left: step * direction, behavior: reducedMotion ? "auto" : "smooth" });
+  }
+
+
 
   useEffect(() => {
     const update = () => {
@@ -654,13 +651,35 @@ export function HomePage() {
           )}
         </section>
 
-        <section className="archive" id="past" aria-labelledby="archive-title" ref={archiveRef}>
+        <section className="archive" id="past" aria-labelledby="archive-title">
           <div className="archive-head">
             <h2 id="archive-title">Past sessions</h2>
-            <p>{String(pastEvents.length).padStart(2, "0")} / Vancouver</p>
+            <div className="archive-controls">
+              <p>{String(pastEvents.length).padStart(2, "0")} / Vancouver</p>
+              <div className="archive-arrows">
+                <button
+                  type="button"
+                  onClick={() => scrollStrip(-1)}
+                  disabled={stripEdges.atStart}
+                  aria-label="Scroll to earlier sessions"
+                  aria-controls="event-grid"
+                >
+                  <span aria-hidden="true">&#8592;</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollStrip(1)}
+                  disabled={stripEdges.atEnd}
+                  aria-label="Scroll to later sessions"
+                  aria-controls="event-grid"
+                >
+                  <span aria-hidden="true">&#8594;</span>
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div className="event-grid" ref={eventGridRef}>
+          <div className="event-grid" id="event-grid" ref={eventGridRef}>
             {pastEvents.map((event, eventIndex) => (
               <article className={`event-row ${event.className}`} key={event.href}>
                 <a href={event.href} target="_blank" rel="noreferrer" aria-label={`${event.title} on Luma`}>
