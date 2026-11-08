@@ -42,11 +42,34 @@ export type NextEvent = {
   free: boolean;
 };
 
-export const nextEvent: NextEvent | null = null;
+export const nextEvent: NextEvent | null = {
+  title: "UX Den Portfolio Review Session",
+  // 5:30 PM local, per the poster. December is PST, so the offset is -08:00.
+  start: "2026-12-08T17:30:00-08:00",
+  end: "2026-12-08T19:30:00-08:00",
+  dateLabel: "Tue, Dec 8",
+  timeLabel: "5:30 \u2013 7:30 PM",
+  venue: "Northeastern University Vancouver",
+  address: {
+    streetAddress: "410 W Georgia St #1400",
+    addressLocality: "Vancouver",
+    addressRegion: "BC",
+    postalCode: "V6B 1Z3",
+    addressCountry: "CA",
+  },
+  blurb:
+    "Three minutes per portfolio, with real-time feedback from hiring managers and senior designers. Reviewers to be announced.",
+  description:
+    "A portfolio review session for Vancouver designers. Three minutes per portfolio, with real-time feedback from hiring managers and senior designers on whether your UX or product design work answers the questions they actually ask. Reviewers to be announced. Hosted with the Information Design & Data Visualization program at Northeastern University Vancouver.",
+  href: "https://luma.com/tgox4j9u",
+  image: "/events/portfolio-review-dec.jpg",
+  art: { name: "portfolio-review-dec", widths: [600, 900, 1080], width: 1080, height: 1080 },
+  free: true,
+};
 
 /**
  * A known date for the next session before its details are settled. Shown on
  * the placeholder card; deliberately not enough for Event markup, which needs
  * a name and a venue. Set to null when even the date is unknown.
  */
-export const nextEventHint: string | null = "Tue, Dec 8, 5:30 PM";
+export const nextEventHint: string | null = null;
