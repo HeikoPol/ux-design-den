@@ -62,8 +62,8 @@ export const nextEvent: NextEvent | null = {
   description:
     "A portfolio review session for Vancouver designers. Three minutes per portfolio, with real-time feedback from hiring managers and senior designers on whether your UX or product design work answers the questions they actually ask. Reviewers to be announced. Hosted with the Information Design & Data Visualization program at Northeastern University Vancouver.",
   href: "https://luma.com/tgox4j9u",
-  image: "/events/portfolio-review-dec.jpg",
-  art: { name: "portfolio-review-dec", widths: [600, 900, 1080], width: 1080, height: 1080 },
+  image: "/events/portfolio-review-dec-v2.jpg",
+  art: { name: "portfolio-review-dec-v2", widths: [600, 900, 1080], width: 1080, height: 1080 },
   free: true,
 };
 
