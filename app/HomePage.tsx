@@ -47,7 +47,7 @@ const pastEvents = [
   },
   {
     index: "03",
-    title: "UXDD Portfolio Review Session",
+    title: "Portfolio Review Session",
     shortTitle: "Portfolio Review Session",
     date: "August 26",
     location: "Northeastern University Vancouver",

@@ -43,7 +43,7 @@ export type NextEvent = {
 };
 
 export const nextEvent: NextEvent | null = {
-  title: "UX Den Portfolio Review Session",
+  title: "Portfolio Review Session",
   // 5:30 PM local, per the poster. December is PST, so the offset is -08:00.
   start: "2026-12-08T17:30:00-08:00",
   end: "2026-12-08T19:30:00-08:00",
