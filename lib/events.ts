@@ -58,9 +58,9 @@ export const nextEvent: NextEvent | null = {
     addressCountry: "CA",
   },
   blurb:
-    "Three minutes per portfolio, with real-time feedback from hiring managers and senior designers. Reviewers to be announced.",
+    "Three minutes per portfolio, with live feedback from Abhishek Das, senior experience designer at EA, and Olena Pikulina, talent team lead at Navacord.",
   description:
-    "A portfolio review session for Vancouver designers. Three minutes per portfolio, with real-time feedback from hiring managers and senior designers on whether your UX or product design work answers the questions they actually ask. Reviewers to be announced. Hosted with the Information Design & Data Visualization program at Northeastern University Vancouver.",
+    "A portfolio review session for Vancouver designers. Three minutes per portfolio, with real-time feedback from hiring managers and senior designers on whether your UX or product design work answers the questions they actually ask. This session's reviewers are Abhishek Das, a senior experience designer at EA, and Olena Pikulina, who leads the talent team at Navacord, so each portfolio is read from both the design and the hiring side. Hosted with the Information Design & Data Visualization program at Northeastern University Vancouver.",
   href: "https://luma.com/tgox4j9u",
   image: "/events/portfolio-review-dec-v2.jpg",
   art: { name: "portfolio-review-dec-v2", widths: [600, 900, 1080], width: 1080, height: 1080 },
